@@ -27,9 +27,6 @@ const NavIcons = ({flexDirection}) => {
             <a href="https://www.youtube.com/playlist?list=PLR3vDr9Xh9bHEXggcO-0Bz1_UiaCCwqdh" title="Vídeos para la inclusión laboral de personas con discapacidad" target="__blank" rel="noopener noreferrer">
                 <FaHandsAslInterpreting/>
             </a>
-            <button title="Aplicar y quitar alto contraste para esta pagina">
-                <ImBrightnessContrast/>
-            </button>
         </div>
     );
 

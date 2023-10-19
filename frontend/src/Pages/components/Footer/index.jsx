@@ -1,0 +1,64 @@
+import { BsFillTelephoneFill } from "react-icons/bs";
+
+import { NavIcons } from "../NavIcons";
+import { SubTitle } from "../SubTitle";
+import "./styles.css";
+
+const Footer = () => {
+    const altTitleImg1 = "Visitar la Página del Gobierno en Colombia";
+    const altTitleImg2 = "Visitar la Página de la marca de Colombia CO";
+
+    return(
+        <footer className="footer-container">
+            <div className="footer-image-container">
+                <a href="https://www.gov.co/" title={altTitleImg1}>
+                    <img src="/logo_footer.png" title={altTitleImg1} alt={altTitleImg1} />
+                </a>
+                <a href="https://www.colombia.co/" title={altTitleImg2}>
+                    <img src="/logo_co_footer.png" title={altTitleImg2} alt={altTitleImg2} />
+                </a>
+            </div>
+            <div className="footer-info-container">
+                <SubTitle
+                    color="#FFF"
+                    textAlign="start"
+                >
+                    Unidad Administrativa Especial del Servicio Público de Empleo
+                </SubTitle>
+                <p>
+                    Dirección: Carrera 7, No. 31-10, Pisos 13 y 14, Bogotá D.C. 
+                    <br /> <br /> <br />
+                    Horario de Atención: Lunes a Viernes de 8:00 a.m. a 4:00 p.m. en jornada continua
+                </p>
+                <NavIcons/>
+            </div>
+            <div className="footer-contact-container">
+                <div className="sub-title-container">
+                    <BsFillTelephoneFill color="#FFF" />
+                    <SubTitle
+                        textAlign="start"
+                    >
+                        Contacto
+                    </SubTitle>
+                </div>
+
+                <p>
+                    Atención al Ciudadano  <br/>
+                    Dirección: Carrera 7, No. 31-10, Pisos 13 y 14, Bogotá D.C. <br/>
+                    PBX: (+57) 601 7460999 Opción 1. <br/>
+                    En Bogotá: 601 7460999 Opción 1.  <br/>
+                    Horario de Atención: Lunes a Viernes de 8:00 a.m. a 4:00 p.m. en jornada continua. <br/>
+                    <a href="/atencion-al-ciudadano/radique-su-pqrsd" title="Radicar Solicitud PQRSD">PQRSDF</a> | <a href="/atencion-al-ciudadano/contactenos" title="Localización física, canales, horarios y días de atención, correo institucional PQRSD" onfocus="toggleFocus(this)" onblur="toggleFocus(this)">Escríbenos</a>  <br/>
+                    Correspondencia: Lunes a Viernes de 8:00 a.m. a 4:00 p.m. en jornada continua. <br/>
+                    Correo:&nbsp;atencionalciudadano@serviciodeempleo.gov.co&nbsp;<br/>
+                    notificacionesjudiciales@serviciodeempleo.gov.co <br/>
+                    <a href="/getmedia/cf6f1474-edb2-4594-9435-00c7f42748a4/Politica-de-Seguridad-y-Privacidad-de-la-Informacion-Final-Publicada.pdf.aspx" target="_blank" role="button" title="Clic para consultar el documento en PDF de la Política de seguridad de la información" onfocus="toggleFocus(this)" onblur="toggleFocus(this)">Política de seguridad de la información</a> - 
+                    <a href="/mapa-sitio" target="_blank" role="button" onfocus="toggleFocus(this)" onblur="toggleFocus(this)">Mapa del sitio</a>
+                </p>
+
+            </div>
+        </footer>
+    );
+}
+
+export { Footer };

@@ -7,6 +7,7 @@ import './App.css'
 import { Home } from '../Screens/Home';
 import { Navbar } from "../components/NavBar";
 import { NavBarResponsive } from "../components/NavBarResponsive";
+import { Footer } from "../components/Footer";
 
 const Wrapper = ({children}) => {
 const location = useLocation();
@@ -35,6 +36,8 @@ return (
 				<Navbar/>
 				<NavBarResponsive/>
 				<AppRoutes/>
+				
+				<Footer/>
 			</Wrapper>
 		</BrowserRouter>
 	</AppProvider>

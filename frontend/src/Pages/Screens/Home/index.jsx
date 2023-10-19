@@ -1,6 +1,11 @@
+import { Login } from "../../components/Login";
+import "./styles.css";
+
 const Home = () => {
     return(
-        <h1>Home</h1>
+        <div className="home-container">
+            <Login/>
+        </div>
     );
 }
 export { Home };
