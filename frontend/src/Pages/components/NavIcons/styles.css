@@ -1,0 +1,33 @@
+.nav-icons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-icons-container a{
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+
+    transition: transform .25s ease;
+}
+.nav-icons-container button {
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform .25s ease;
+}
+.nav-icons-container a:hover,
+.nav-icons-container button:hover {
+    transform: scale(1.25);
+    padding: 0;
+}
+
+
+.nav-icons-container svg {
+    width: 25px;
+    height: 25px;
+    fill: var(--icon-colors);
+}

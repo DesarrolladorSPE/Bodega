@@ -1,8 +1,12 @@
+import React from "react";
 import { AppProvider } from '../../Context';
-import { BrowserRouter, useRoutes, } from "react-router-dom";
+import { BrowserRouter, useLocation, useRoutes, } from "react-router-dom";
 
 import './App.css'
+
 import { Home } from '../Screens/Home';
+import { Navbar } from "../components/NavBar";
+import { NavBarResponsive } from "../components/NavBarResponsive";
 
 const Wrapper = ({children}) => {
 const location = useLocation();
@@ -28,7 +32,9 @@ return (
 	<AppProvider>
 		<BrowserRouter>
 			<Wrapper>
-			<AppRoutes/>
+				<Navbar/>
+				<NavBarResponsive/>
+				<AppRoutes/>
 			</Wrapper>
 		</BrowserRouter>
 	</AppProvider>
