@@ -1,10 +1,29 @@
 const express = require("express");
-var mysql = require('mysql');
+const cors = require("cors");
 
+const connection = require("./database")
 const routerApi = require("./routes");
 
+//APP and Port
 const app = express(); 
-const port = 3000;
+const port = 3080;
+
+app.use(express.json());
+
+// Cors Configuration
+const whiteList = ["http://localhost:3000", "http://127.0.0.1:5500", "http://localhost:5173"];
+const options = {
+    origin: (origin, callback) => {
+        if(whiteList.includes(origin) || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error("No permitido"));
+        }
+    }
+}
+app.use(cors(options));
+
+
 
 app.get("/", (request, response) => {
     response.send("Servidor iniciado correctamente");
@@ -12,33 +31,6 @@ app.get("/", (request, response) => {
 
 routerApi(app);
 
-//-------------------------------------------
-var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : '',
-    database: "bodega"
-});
-
-connection.connect(function(err) {
-  if (err) {
-    console.error('error connecting: ' + err.stack);
-    return;
-  }
-
-  console.log('connected as id ' + connection.threadId);
-});
-
-app.get("/users", (resquest, response) => {
-    connection.query("SELECT * FROM login", (err, data) => {
-        if (err) {
-            throw err;
-        }
-        return response.json(data);
-    })
-})
-
-//-------------------------------------------
 
 
 app.listen(port, (request, response) => {

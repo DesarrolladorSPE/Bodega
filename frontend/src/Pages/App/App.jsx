@@ -1,13 +1,16 @@
 import React from "react";
-import { AppProvider } from '../../Context';
-import { BrowserRouter, useLocation, useRoutes, } from "react-router-dom";
+import { AppContext, AppProvider } from '../../Context';
+import { BrowserRouter, useLocation, Navigate, useRoutes, } from "react-router-dom";
 
 import './App.css'
 
 import { Home } from '../Screens/Home';
+import { Login } from "../Screens/Login";
+
 import { Navbar } from "../components/NavBar";
 import { NavBarResponsive } from "../components/NavBarResponsive";
 import { Footer } from "../components/Footer";
+import { MainContainer } from "../components/MainContainer";
 
 const Wrapper = ({children}) => {
 const location = useLocation();
@@ -19,8 +22,15 @@ return children;
 }
 
 const AppRoutes = () => {
+	const context = React.useContext(AppContext);
+
 	let routes = useRoutes([
-		{path: "/", element: <Home/>},
+		{path: "/", element: context.isLoged ? <Home/> : <Navigate replace to={"/login"}/> },
+		{path: "/home", element: context.isLoged ? <Home/> : <Navigate replace to={"/login"}/>},
+		{path: "/*", element: context.isLoged ? <Home/> : <Navigate replace to={"/login"}/>},
+
+		{path: "/login", element: context.isLoged ? <Home/> : <Login/>},
+
 	]);
 
 	return routes;
@@ -35,8 +45,9 @@ return (
 			<Wrapper>
 				<Navbar/>
 				<NavBarResponsive/>
-				<AppRoutes/>
-				
+				<MainContainer>
+					<AppRoutes/>
+				</MainContainer>
 				<Footer/>
 			</Wrapper>
 		</BrowserRouter>
