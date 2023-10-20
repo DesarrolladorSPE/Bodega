@@ -29,6 +29,7 @@ app.get("/", (request, response) => {
     response.send("Servidor iniciado correctamente");
 })
 
+
 routerApi(app);
 
 

@@ -33,7 +33,27 @@ const AppProvider = ({children}) => {
                 alert(err)
             }
         }
-        fetchData()
+        fetchData();
+    }, [apiUri]);
+
+
+    const [options, setOptions] = React.useState({});
+    React.useEffect(() => {
+        const fetchData = async () =>{
+            try{
+                const response = await fetch(`${apiUri}/fuentes`);
+                const data = await response.json();
+                setOptions(data);
+                console.log("OPTIONS: ")
+                console.log(options);
+
+            }
+            catch (err){
+                alert(err)
+            }
+        }
+        fetchData();
+        console.log(options);
     }, []);
     
     //Login
@@ -49,6 +69,8 @@ const AppProvider = ({children}) => {
                 apiUri,
                 data,
                 setData,
+                options,
+                setOptions,
 
                 isLoged,
                 setIsLoged

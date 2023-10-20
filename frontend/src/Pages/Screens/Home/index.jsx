@@ -1,10 +1,11 @@
-import { Login } from "../Login";
+import { UploadFile } from "../../components/UploadFile";
+
 import "./styles.css";
 
 const Home = () => {
     return(
         <div className="home-container">
-            <h1>HOME</h1>
+            <UploadFile/>
         </div>
     );
 }
