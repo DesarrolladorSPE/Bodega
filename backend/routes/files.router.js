@@ -3,8 +3,11 @@ const connection = require("../database");
 
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
+const moment = require("moment");
 
 const { uploadCsv } = require("../FilesReader/csv.reader");
+const readCsvName = require("../FilesNameDatabase/csvName");
 
 //Multer config
 let storage = multer.diskStorage({
@@ -44,8 +47,27 @@ router.post("/upload", upload.single("file"), async (request, response) => {
     console.log("Ruta del archivo subido:", uploadedFile.path);
 	let route = __dirname + "/../uploads/" + uploadedFile.filename;
 
-    if (uploadCsv(route, selectedOption)) {
+	let fileName = uploadedFile.filename;
+	let fileDate = moment(uploadedFile.uploadDate).format("YYYY-MM-DD HH:mm:ss");
+
+    if ( await uploadCsv(route, selectedOption)) {
         response.status(200).json({ message: 'Archivo guardado con exito' });
+
+		try {
+			readCsvName(fileName, fileDate);
+
+			fs.unlink(route, (err) => {
+
+				if(err) {
+					console.log(err);
+					throw err;
+				}
+				console.log("Archivo borrado con exito");
+			})
+		} catch (err) {
+			response.status(500).json({ message: 'Ocurrio un error borrando el archivo' });
+		}
+
     } else {
         response.status(500).json({ message: 'Ocurrio un error' });
     }

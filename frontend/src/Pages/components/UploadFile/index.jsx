@@ -10,7 +10,7 @@ const UploadFile = () => {
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
-        
+
         if (file) {
             const allowedExtensions = ['.xlsx', '.csv'];
             const fileExtension = file.name.slice(((file.name.lastIndexOf(".") - 1) >>> 0) + 2);
@@ -39,7 +39,7 @@ const UploadFile = () => {
                 });
                 const data = await response.json();
                 alert(data.message)
-            } 
+            }
             catch (error) {
                 console.error(error);
             }
@@ -61,13 +61,12 @@ const UploadFile = () => {
                 />
 
 
-                <select 
-                    name="fuente" 
+                <select
+                    name="fuente"
                     id="fuente"
                     type="select"
                     onChange={(event) => {
                         setSelectedOption(event.target.value)
-                        console.log(selectedOption);
                     }}
                 >
                     <option value="">Seleccione una opción</option>
