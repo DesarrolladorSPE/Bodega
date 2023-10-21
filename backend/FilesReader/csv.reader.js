@@ -42,7 +42,7 @@ const uploadCsv = async (path, fuente) => {
 						await new Promise((resolve, reject) => {
 							connection.query(query, flattenedValues, (err, result) => {
 								if (err) {
-									console.log("No se pudo insertar el registro de: ", idValue ? `ID: ${idValue}` : `Fila: ${values.indexOf(element)}`);
+									console.log("No se pudo insertar el registro de: ", idValue ? `ID: ${idValue}, Fila: ${values.indexOf(element)}` : `Fila: ${values.indexOf(element)}`);
 									wrongRecorsArray.push(element);
 								}
 								else {
@@ -65,8 +65,6 @@ const uploadCsv = async (path, fuente) => {
 			throw err;
 		});
 	stream.pipe(fileStream);
-	resolve(wrongRecorsArray);
-
 }
 
-module.exports = {uploadCsv, columnNames, wrongRecorsArray};
+module.exports = {uploadCsv, columnNames};

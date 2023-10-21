@@ -7,6 +7,7 @@ const moment = require("moment");
 const { uploadCsv, wrongRecorsArray } = require("../FilesReader/csv.reader");
 const readCsvName = require("../FilesNameDatabase/csvName");
 const upload =require("../middlewares/multer.config");
+const { uploadExcel } = require("../FilesReader/excel.reader");
 
 
 //Routing
@@ -33,12 +34,24 @@ router.post("/upload", upload.single("file"), async (request, response) => {
         return response.status(400).json({ message: 'No se ha subido ningún archivo o no se ha seleccionado ninguna fuente.' });
     }
 
+	const fileExtension = uploadedFile.filename.split('.').pop();
+	console.log(fileExtension);
+
+
+
 	let route = __dirname + "/../uploads/" + uploadedFile.filename;
 
-	try {
-		await uploadCsv(route, selectedOption)
 
-		console.log(wrongRecorsArray)
+
+	try {
+		switch(fileExtension) {
+			case "csv":
+				await uploadCsv(route, selectedOption);break;
+			case "xlsx":
+				await uploadExcel(route, selectedOption);break;
+			default: response.status(500).json({ message: 'El archivo subido no es valido' });
+		}
+
 		readCsvName(fileName, fileDate);
 
 		fs.unlink(route, (err) => {
@@ -46,6 +59,7 @@ router.post("/upload", upload.single("file"), async (request, response) => {
 				console.log(err);
 				throw err;
 			}})
+
 		response.status(200).json({ message: 'Archivo guaraddo con exito' });
 	} catch (err) {
 		response.status(500).json({ message: 'Ocurrio un error borrando el archivo' });
