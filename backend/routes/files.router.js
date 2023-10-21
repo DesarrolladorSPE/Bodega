@@ -4,7 +4,7 @@ const connection = require("../database");
 const fs = require("fs");
 const moment = require("moment");
 
-const { uploadCsv } = require("../FilesReader/csv.reader");
+const { uploadCsv, wrongRecorsArray } = require("../FilesReader/csv.reader");
 const readCsvName = require("../FilesNameDatabase/csvName");
 const upload =require("../middlewares/multer.config");
 
@@ -37,6 +37,7 @@ router.post("/upload", upload.single("file"), async (request, response) => {
 
 	try {
 		await uploadCsv(route, selectedOption);
+		console.log(wrongRecorsArray)
 		await readCsvName(fileName, fileDate);
 
 		await fs.unlink(route, (err) => {
