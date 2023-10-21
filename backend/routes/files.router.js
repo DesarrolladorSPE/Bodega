@@ -4,8 +4,8 @@ const connection = require("../database");
 const fs = require("fs");
 const moment = require("moment");
 
-const { uploadCsv, wrongRecorsArray } = require("../FilesReader/csv.reader");
-const readCsvName = require("../FilesNameDatabase/csvName");
+const { uploadCsv } = require("../FilesReader/csv.reader");
+const readFileName = require("../FilesNameDatabase/fileName");
 const upload =require("../middlewares/multer.config");
 const { uploadExcel } = require("../FilesReader/excel.reader");
 
@@ -23,11 +23,13 @@ router.get("/", (request, response) => {
 })
 
 router.post("/upload", upload.single("file"), async (request, response) => {
+	// Informacion enviada desde el Front
     const uploadedFile = request.file;
+    const selectedOption = request.get('selectedOption');
+
+	// Nombre y fecha del archivo enviado
 	let fileName = uploadedFile.filename;
 	let fileDate = moment(uploadedFile.uploadDate).format("YYYY-MM-DD HH:mm:ss");
-
-    const selectedOption = request.get('selectedOption');
 
 
     if (!uploadedFile || !selectedOption) {
@@ -35,35 +37,36 @@ router.post("/upload", upload.single("file"), async (request, response) => {
     }
 
 	const fileExtension = uploadedFile.filename.split('.').pop();
-	console.log(fileExtension);
-
-
-
 	let route = __dirname + "/../uploads/" + uploadedFile.filename;
-
-
+	let wrongRecordsArray = {};
 
 	try {
 		switch(fileExtension) {
 			case "csv":
-				await uploadCsv(route, selectedOption);break;
+				wrongRecordsArray = await uploadCsv(route, selectedOption);break;
 			case "xlsx":
-				await uploadExcel(route, selectedOption);break;
+				wrongRecordsArray = await uploadExcel(route, selectedOption);break;
 			default: response.status(500).json({ message: 'El archivo subido no es valido' });
 		}
 
-		readCsvName(fileName, fileDate);
+		readFileName(fileName, fileDate);
 
 		fs.unlink(route, (err) => {
 			if(err) {
-				console.log(err);
 				throw err;
-			}})
+			}
+		})
 
-		response.status(200).json({ message: 'Archivo guaraddo con exito' });
+		console.log(wrongRecordsArray);
+		if(wrongRecordsArray) {
+			console.log(wrongRecordsArray);
+			// response.status(200).json({ message: wrongRecordsArray.response, data: wrongRecordsArray.wrongRecordsArray });
+			response.status(200).json({ message: wrongRecordsArray.response });
+		}
+		// response.status(200).json({ message: "Guardado Correctamente" });
 	} catch (err) {
 		response.status(500).json({ message: 'Ocurrio un error borrando el archivo' });
-		console.log(err)
+		console.error(err);
 	}
 });
 

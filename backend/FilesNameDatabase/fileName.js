@@ -1,7 +1,6 @@
-const connection = require("../database");
+const { connection } = require("../database");
 
-
-const readCsvName = (fileName, fileDate) => {
+const readFileName = (fileName, fileDate) => {
 	try {
 		let query = "INSERT INTO archivos (nombre, fecha) VALUES (?, ?)"
 		connection.query(query, [fileName, fileDate], (err, result) => {
@@ -14,8 +13,7 @@ const readCsvName = (fileName, fileDate) => {
 	} catch (err) {
 		console.log(err);
 		throw err;
-		return false;
 	}
 }
 
-module.exports = readCsvName;
+module.exports = readFileName;

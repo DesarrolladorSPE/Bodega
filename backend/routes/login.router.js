@@ -1,6 +1,6 @@
 const express = require('express');
 
-const connection = require("../database")
+const { connection } = require("../database")
 const router = express.Router();
 
 router.post('/', (request, response) => {
@@ -16,7 +16,7 @@ router.post('/', (request, response) => {
             if (results.length > 0) {
                 // Usuario autenticado
                 response.status(200).json({ message: "Inicio de sesión exitoso" });
-            } 
+            }
             else {
                 // Usuario no encontrado en la base de datos
                 response.status(401).json({ message: "Credenciales incorrectas" });

@@ -1,4 +1,4 @@
-const connection = require("./index");
+const { connection } = require("./index");
 
 const getFileIdInDatabase = async () => {
     const query = "SELECT id FROM reportes";

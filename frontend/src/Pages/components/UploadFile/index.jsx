@@ -39,6 +39,7 @@ const UploadFile = () => {
                 });
                 const data = await response.json();
                 alert(data.message)
+				// console.log(data.wrongRecordsArray)
             }
             catch (error) {
                 console.error(error);
