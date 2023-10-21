@@ -34,20 +34,21 @@ router.get("/", (request, response) => {
 
 router.post("/upload", upload.single("file"), async (request, response) => {
     const uploadedFile = request.file;
-
     const selectedOption = request.get('selectedOption');
-    console.log(selectedOption)
 
-    if (!uploadedFile) {
-        return response.status(400).json({ message: 'No se ha subido ningún archivo.' });
+
+    if (!uploadedFile || !selectedOption) {
+        return response.status(400).json({ message: 'No se ha subido ningún archivo o no se ha seleccionado ninguna fuente.' });
     }
 
     console.log("Ruta del archivo subido:", uploadedFile.path);
-    if (uploadCsv(__dirname + "/../uploads/" + uploadedFile.filename, selectedOption)) {
+	let route = __dirname + "/../uploads/" + uploadedFile.filename;
+
+    if (uploadCsv(route, selectedOption)) {
         response.status(200).json({ message: 'Archivo guardado con exito' });
     } else {
         response.status(500).json({ message: 'Ocurrio un error' });
-    }   
+    }
 
 });
 

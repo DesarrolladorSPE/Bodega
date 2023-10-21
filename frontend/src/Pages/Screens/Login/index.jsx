@@ -26,7 +26,7 @@ const Login = () => {
                 }),
             });
             const data = await response.json();
-            // alert(data.message)
+            alert(data.message)
             if(response.status === 200) {
                 context.setIsLoged(true);
                 navigate("/home");

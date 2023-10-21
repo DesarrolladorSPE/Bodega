@@ -5,7 +5,7 @@ import { AppContext } from "../../../Context";
 const UploadFile = () => {
     const context = React.useContext(AppContext);
     const [selectedFile, setSelectedFile] = React.useState(null);
-    const [selectedOption, setSelectedOption] = React.useState(1);
+    const [selectedOption, setSelectedOption] = React.useState(null);
 
 
     const handleFileChange = (event) => {
@@ -44,7 +44,7 @@ const UploadFile = () => {
                 console.error(error);
             }
         } else {
-            alert('Por favor, seleccione un archivo válido antes de cargar.');
+            alert('Por favor, seleccione un archivo o fuente válido antes de cargar.');
         }
     };
 

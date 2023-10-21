@@ -26,7 +26,7 @@ const Footer = () => {
                     Unidad Administrativa Especial del Servicio Público de Empleo
                 </SubTitle>
                 <p>
-                    Dirección: Carrera 7, No. 31-10, Pisos 13 y 14, Bogotá D.C. 
+                    Dirección: Carrera 7, No. 31-10, Pisos 13 y 14, Bogotá D.C.
                     <br /> <br /> <br />
                     Horario de Atención: Lunes a Viernes de 8:00 a.m. a 4:00 p.m. en jornada continua
                 </p>
@@ -48,12 +48,12 @@ const Footer = () => {
                     PBX: (+57) 601 7460999 Opción 1. <br/>
                     En Bogotá: 601 7460999 Opción 1.  <br/>
                     Horario de Atención: Lunes a Viernes de 8:00 a.m. a 4:00 p.m. en jornada continua. <br/>
-                    <a href="/atencion-al-ciudadano/radique-su-pqrsd" title="Radicar Solicitud PQRSD">PQRSDF</a> | <a href="/atencion-al-ciudadano/contactenos" title="Localización física, canales, horarios y días de atención, correo institucional PQRSD" onfocus="toggleFocus(this)" onblur="toggleFocus(this)">Escríbenos</a>  <br/>
+                    <a href="/atencion-al-ciudadano/radique-su-pqrsd" title="Radicar Solicitud PQRSD">PQRSDF</a> | <a href="/atencion-al-ciudadano/contactenos" title="Localización física, canales, horarios y días de atención, correo institucional PQRSD">Escríbenos</a>  <br/>
                     Correspondencia: Lunes a Viernes de 8:00 a.m. a 4:00 p.m. en jornada continua. <br/>
                     Correo:&nbsp;atencionalciudadano@serviciodeempleo.gov.co&nbsp;<br/>
                     notificacionesjudiciales@serviciodeempleo.gov.co <br/>
-                    <a href="/getmedia/cf6f1474-edb2-4594-9435-00c7f42748a4/Politica-de-Seguridad-y-Privacidad-de-la-Informacion-Final-Publicada.pdf.aspx" target="_blank" role="button" title="Clic para consultar el documento en PDF de la Política de seguridad de la información" onfocus="toggleFocus(this)" onblur="toggleFocus(this)">Política de seguridad de la información</a> - 
-                    <a href="/mapa-sitio" target="_blank" role="button" onfocus="toggleFocus(this)" onblur="toggleFocus(this)">Mapa del sitio</a>
+                    <a href="/getmedia/cf6f1474-edb2-4594-9435-00c7f42748a4/Politica-de-Seguridad-y-Privacidad-de-la-Informacion-Final-Publicada.pdf.aspx" target="_blank" role="button" title="Clic para consultar el documento en PDF de la Política de seguridad de la información">Política de seguridad de la información</a> -
+                    <a href="/mapa-sitio" target="_blank" role="button">Mapa del sitio</a>
                 </p>
 
             </div>

@@ -7,7 +7,6 @@ const columnNames = "id, punto_atencion_id, ano, mes, tipo, prestador, departame
 
 
 const uploadCsv = (path, fuente) => {
-    console.log("FUENTE: ", fuente);
     let stream = fs.createReadStream(path);
     let csvDataColl = [];
 
@@ -25,7 +24,7 @@ const uploadCsv = (path, fuente) => {
             const placeholders = Array(columnNames.split(', ').length).fill("?").join(", ");
             const values = csvDataColl.map((row) => {
                 const rowValues = row[0].split(';');
-                return [`${fuente}`, ...rowValues]; 
+                return [`${fuente}`, ...rowValues];
             });
 
             let query = `INSERT INTO reportes (fuente, ${columnNames}) VALUES (?,${placeholders})`;

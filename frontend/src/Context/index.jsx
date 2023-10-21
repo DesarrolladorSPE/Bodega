@@ -8,7 +8,7 @@ const AppProvider = ({children}) => {
         function handleResize() {
           setWindowWidth(window.innerWidth);
         }
-    
+
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
       }, []);
@@ -21,21 +21,6 @@ const AppProvider = ({children}) => {
     const [data, setData] = React.useState({});
     const [apiUri, setApiUri] = React.useState("http://localhost:3080/api/v1");
 
-    React.useEffect(() => {
-
-        const fetchData = async () =>{
-            try{
-                const response = await fetch(apiUri);
-                const data = await response.json();
-                setData(data);
-            }
-            catch (err){
-                alert(err)
-            }
-        }
-        fetchData();
-    }, [apiUri]);
-
 
     const [options, setOptions] = React.useState({});
     React.useEffect(() => {
@@ -44,18 +29,14 @@ const AppProvider = ({children}) => {
                 const response = await fetch(`${apiUri}/fuentes`);
                 const data = await response.json();
                 setOptions(data);
-                console.log("OPTIONS: ")
-                console.log(options);
-
             }
             catch (err){
                 alert(err)
             }
         }
         fetchData();
-        console.log(options);
     }, []);
-    
+
     //Login
     const [ isLoged, setIsLoged ] = React.useState(false);
 
@@ -74,7 +55,7 @@ const AppProvider = ({children}) => {
 
                 isLoged,
                 setIsLoged
-                
+
             }}
         >
             { children }
