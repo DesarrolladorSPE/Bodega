@@ -15,7 +15,12 @@ let storage = multer.diskStorage({
         callback(null, "./uploads/");
     },
     filename:(request, file, callback) => {
-        callback(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
+		const selectedOption = request.get('selectedOption');
+		console.log(selectedOption);
+		const fileDate = moment().format("YYYY-MM-DD_HH-mm");
+		let formatName = file.fieldname + "-" + selectedOption + "_" + fileDate + path.extname(file.originalname);
+
+        callback(null, formatName);
     }
 })
 let upload = multer({
