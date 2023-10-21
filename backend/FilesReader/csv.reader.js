@@ -8,27 +8,27 @@ const columnNames = "id, punto_atencion_id, ano, mes, tipo, prestador, departame
 const wrongRecorsArray = [];
 
 const uploadCsv = async (path, fuente) => {
-    let stream = fs.createReadStream(path);
-    let csvDataColl = [];
+	let stream = fs.createReadStream(path);
+	let csvDataColl = [];
 
-    let fileStream = csv
-        .parse()
-        .on("data", (data) => {
-            csvDataColl.push(data)
-        })
-        .on("end", async () => {
-            csvDataColl.shift();
-            if (csvDataColl.length === 0) {
-                return response.status(400).json({ message: "El archivo CSV está vacío" });
-            }
+	let fileStream = csv
+		.parse()
+		.on("data", (data) => {
+			csvDataColl.push(data)
+		})
+		.on("end", async () => {
+			csvDataColl.shift();
+			if (csvDataColl.length === 0) {
+				return response.status(400).json({ message: "El archivo CSV está vacío" });
+			}
 
-			const existingIds = await getFileIdInDatabase();
-            const placeholders = Array(columnNames.split(', ').length).fill("?").join(", ");
+			let existingIds = await getFileIdInDatabase();
+			const placeholders = Array(columnNames.split(', ').length).fill("?").join(", ");
 
-            const values = csvDataColl.map((row) => {
-                const rowValues = row[0].split(';');
-                return [`${fuente}`, ...rowValues];
-            });
+			const values = csvDataColl.map((row) => {
+				const rowValues = row[0].split(';');
+				return [`${fuente}`, ...rowValues];
+			});
 
 			Promise.all(values.map( async (element) => {
 				const idValue = parseInt(element[1]);
@@ -43,7 +43,6 @@ const uploadCsv = async (path, fuente) => {
 							connection.query(query, flattenedValues, (err, result) => {
 								if (err) {
 									console.log("No se pudo insertar el registro de: ", idValue ? `ID: ${idValue}` : `Fila: ${values.indexOf(element)}`);
-									console.log(element)
 									wrongRecorsArray.push(element);
 								}
 								else {
@@ -52,7 +51,6 @@ const uploadCsv = async (path, fuente) => {
 								resolve();
 							})
 						})
-
 					} catch (queryError) {
 						console.log("Error en la consulta SQL: ", queryError);
 					}
@@ -61,14 +59,14 @@ const uploadCsv = async (path, fuente) => {
 					console.log("El registro con id " + idValue, ", ya esta en la base de datos");
 				}
 			}));
-			console.log(wrongRecorsArray);
-			console.log("Acabo")
-        })
+		})
 		.on("error", (err) => {
-            console.log("Error al analizar el archivo CSV:", err);
+			console.log("Error al analizar el archivo CSV:", err);
 			throw err;
-        });
-    stream.pipe(fileStream);
+		});
+	stream.pipe(fileStream);
+	resolve(wrongRecorsArray);
+
 }
 
 module.exports = {uploadCsv, columnNames, wrongRecorsArray};
