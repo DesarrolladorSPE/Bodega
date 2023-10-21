@@ -27,11 +27,12 @@ const uploadCsv = async (path, fuente) => {
 			let wrongRecordsArray = [];
 			for(const element of values) {
 				const idValue = parseInt(element[1]);
+				const mesValue = parseInt(element[4]);
 				const flattenedValues = element.flatMap(row => row);
 				const rowNumber = values.indexOf(element);
 
 				//Funcion de insercion en la base de datos
-				wrongRecordsArray = await insertDataFileToDatabase(element, idValue, flattenedValues, rowNumber);
+				wrongRecordsArray = await insertDataFileToDatabase(element, idValue, mesValue, flattenedValues, rowNumber);
 				if ((values.length) == rowNumber){
 					return wrongRecordsArray
 				}

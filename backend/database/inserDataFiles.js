@@ -1,21 +1,21 @@
 const { connection } = require("./")
 const { columnNames } = require("./");
-const getFileIdInDatabase = require("./getFilesIdInDatabase");
+const getFileIdAndMesInDatabase = require("./getFilesIdInDatabase");
 
 let wrongRecordsArray = [];
 
-const insertDataFileToDatabase = async (element, idValue, flattenedValues, rowNumber) => {
-	let existingIds = await getFileIdInDatabase();
+const insertDataFileToDatabase = async (element, idValue, mesValue, flattenedValues, rowNumber) => {
+	let existingIdsAndMes = await getFileIdAndMesInDatabase();
 	const placeholders = Array(columnNames.split(', ').length).fill("?").join(", ");
 
-	if(!existingIds.includes(idValue)) {
+	if(!existingIdsAndMes.some(entry => entry.id === idValue && entry.mes === mesValue)) {
 		let query = `INSERT INTO reportes (fuente, ${columnNames}) VALUES (?,${placeholders})`;
 
 		try {
 			await new Promise((resolve, reject) => {
 				connection.query(query, flattenedValues, (err, result) => {
 					if (err) {
-						console.log("No se pudo insertar el registro de: ", idValue ? `ID: ${idValue}, Fila: ${rowNumber}` : `Fila: ${rowNumber}`);
+						console.log("No se pudo insertar el registro", idValue ? `ID: ${idValue}, Fila: ${rowNumber}` : `Fila: ${rowNumber}, debido a datos erroneos`);
 						wrongRecordsArray.push({
 							ID: idValue,
 							FILA: `Dato incorrecto en la fila ${rowNumber} del archivo subido`,
@@ -23,7 +23,7 @@ const insertDataFileToDatabase = async (element, idValue, flattenedValues, rowNu
 						});
 					}
 					else {
-						console.log("Se inserto: " + idValue);
+						console.log(`Se inserto el registro con id: ${idValue} y mes: ${mesValue}`);
 					}
 
 					resolve();
@@ -34,7 +34,7 @@ const insertDataFileToDatabase = async (element, idValue, flattenedValues, rowNu
 		}
 
 	} else {
-		console.log("El registro con id " + idValue, ", ya esta en la base de datos");
+		console.log(`El registro con id: ${idValue} y mes: ${mesValue} ya esta en la base de datos`);
 	}
 	return wrongRecordsArray;
 }

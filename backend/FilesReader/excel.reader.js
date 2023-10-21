@@ -14,10 +14,11 @@ const uploadExcel = async (path, fuente) => {
         const rowValues =row.values;
 		rowValues.splice(0,1);
         const idValue = parseInt(rowValues[0]);
+        const mesValue = parseInt(rowValues[3]);
 		const flattenedValues = [fuente, ...rowValues];
 
 		//Funcion de insercion en la base de datos
-		wrongRecordsArray = await insertDataFileToDatabase(rowValues, idValue, flattenedValues, rowNumber);
+		wrongRecordsArray = await insertDataFileToDatabase(rowValues, idValue, mesValue, flattenedValues, rowNumber);
 		console.log(worksheetData.rowCount);
 		if (rowNumber == worksheetData.rowCount) {
 			return wrongRecordsArray;

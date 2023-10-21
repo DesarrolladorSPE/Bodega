@@ -57,13 +57,13 @@ router.post("/upload", upload.single("file"), async (request, response) => {
 			}
 		})
 
-		console.log(wrongRecordsArray);
-		if(wrongRecordsArray) {
-			console.log(wrongRecordsArray);
-			// response.status(200).json({ message: wrongRecordsArray.response, data: wrongRecordsArray.wrongRecordsArray });
-			response.status(200).json({ message: wrongRecordsArray.response });
-		}
-		// response.status(200).json({ message: "Guardado Correctamente" });
+		// console.log(wrongRecordsArray);
+		// if(wrongRecordsArray) {
+		// 	console.log(wrongRecordsArray);
+		// 	// response.status(200).json({ message: wrongRecordsArray.response, data: wrongRecordsArray.wrongRecordsArray });
+		// 	response.status(200).json({ message: wrongRecordsArray.response });
+		// }
+		response.status(200).json({ message: "Guardado Correctamente" });
 	} catch (err) {
 		response.status(500).json({ message: 'Ocurrio un error borrando el archivo' });
 		console.error(err);

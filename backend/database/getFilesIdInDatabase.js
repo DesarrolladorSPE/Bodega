@@ -1,17 +1,20 @@
 const { connection } = require("./index");
 
-const getFileIdInDatabase = async () => {
-    const query = "SELECT id FROM reportes";
+const getFileIdAndMesInDatabase = async () => {
+    const query = "SELECT id, mes FROM reportes";
     return new Promise((resolve, reject) => {
         connection.query(query, (err, results) => {
             if (err) {
                 reject(err);
             } else {
-                const existingIds = results.map(result => result.id);
-                resolve(existingIds);
+                const existingIdsAndMes = results.map(result => ({
+					id: result.id,
+					mes: result.mes
+				}));
+                resolve(existingIdsAndMes);
             }
         });
     });
 }
 
-module.exports = getFileIdInDatabase;
+module.exports = getFileIdAndMesInDatabase;
