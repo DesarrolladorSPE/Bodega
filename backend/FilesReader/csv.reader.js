@@ -23,34 +23,43 @@ const uploadCsv = async (path, fuente) => {
             }
 
 			const existingIds = await getFileIdInDatabase();
-
             const placeholders = Array(columnNames.split(', ').length).fill("?").join(", ");
+
             const values = csvDataColl.map((row) => {
                 const rowValues = row[0].split(';');
                 return [`${fuente}`, ...rowValues];
             });
+			console.log(values.length);
 
+			values.forEach(element => {
+				try {
+					const idValue = parseInt(element[1]);
 
+					if(!existingIds.includes(idValue)) {
+						const flattenedValues = element.flatMap(row => row);
 
-			const flattenedValues = values.flatMap(row => row);
-			console.log(values);
-			console.log(flattenedValues);
+						let query = `INSERT INTO reportes (fuente, ${columnNames}) VALUES (?,${placeholders})`;
 
-
-			console.log(flattenedValues[1]);
-
-			let query = `INSERT INTO reportes (fuente, ${columnNames}) VALUES (?,${placeholders})`;
-
-			connection.query(query, flattenedValues, (err, result) => {
-				if (err) {
-					console.log(err)
+						connection.query(query, flattenedValues, (err, result) => {
+							if (err) {
+								console.log(err)
+								throw err;
+							}
+						})
+					} else {
+						console.log("El registro con id " + idValue, ", ya esta en la base de datos");
+					}
+				} catch (err) {
+					console.log("Error al procesar el archivo CSV:", err);
 					throw err;
 				}
-			})
-
+			});
         })
+		.on("error", (error) => {
+            console.log("Error al analizar el archivo CSV:", error);
+			throw err;
+        });
     stream.pipe(fileStream);
-    return true;
 }
 
 module.exports = {uploadCsv, columnNames};

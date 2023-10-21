@@ -35,26 +35,21 @@ router.post("/upload", upload.single("file"), async (request, response) => {
 
 	let route = __dirname + "/../uploads/" + uploadedFile.filename;
 
-    if ( await uploadCsv(route, selectedOption)) {
-        response.status(200).json({ message: 'Archivo guardado con exito' });
+	try {
+		await uploadCsv(route, selectedOption);
+		await readCsvName(fileName, fileDate);
 
-		try {
-			readCsvName(fileName, fileDate);
+		await fs.unlink(route, (err) => {
+			if(err) {
+				console.log(err);
+				throw err;
+			}})
+		response.status(200).json({ message: 'Archivo guardado con exito' });
 
-			fs.unlink(route, (err) => {
-				if(err) {
-					console.log(err);
-					throw err;
-				}
-			})
-		} catch (err) {
-			response.status(500).json({ message: 'Ocurrio un error borrando el archivo' });
-		}
-
-    } else {
-        response.status(500).json({ message: 'Ocurrio un error' });
-    }
-
+	} catch (err) {
+		response.status(500).json({ message: 'Ocurrio un error borrando el archivo' });
+		console.log(err)
+	}
 });
 
 
