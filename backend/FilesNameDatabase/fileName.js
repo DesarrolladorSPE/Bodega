@@ -7,11 +7,9 @@ const readFileName = (fileName, fileDate) => {
 			if (err) {
 				throw err;
 			}
-			console.log("Datos del archivo insertado en la base de datos con éxito");
 			return true;
 		})
 	} catch (err) {
-		console.log(err);
 		throw err;
 	}
 }

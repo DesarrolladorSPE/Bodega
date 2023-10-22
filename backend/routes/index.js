@@ -1,6 +1,5 @@
 const express = require("express");
 
-const usersRouter = require("./users.router");
 const loginRouter = require("./login.router");
 const fuentesRouter = require("./fuentes.router");
 const filesRouter = require("./files.router");
@@ -14,8 +13,7 @@ const routerApi = (app) => {
 	router.get("/", (request, response) => {
 		response.send({});
 	});
-	
-	router.use("/users", usersRouter);
+
 	router.use("/login", loginRouter);
 	router.use("/fuentes", fuentesRouter);
 	router.use("/files", filesRouter);
