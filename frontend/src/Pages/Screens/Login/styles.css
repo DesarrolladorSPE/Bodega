@@ -70,3 +70,10 @@
 .login-form-container button:hover {
     background-color: var(--buttons-color-hover);
 }
+
+
+@media (max-width: 800px ) {
+	.login-container {
+		width: 90%;
+	}
+}

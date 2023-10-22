@@ -1,10 +1,16 @@
+import React from "react";
+
 import { BsFillTelephoneFill } from "react-icons/bs";
 
 import { NavIcons } from "../NavIcons";
 import { SubTitle } from "../SubTitle";
 import "./styles.css";
 
+import { AppContext } from "../../../Context";
+
 const Footer = () => {
+	const context = React.useContext(AppContext);
+
     const altTitleImg1 = "Visitar la Página del Gobierno en Colombia";
     const altTitleImg2 = "Visitar la Página de la marca de Colombia CO";
 
@@ -21,7 +27,8 @@ const Footer = () => {
             <div className="footer-info-container">
                 <SubTitle
                     color="#FFF"
-                    textAlign="start"
+
+                    textAlign={context.windowWidth < 870 ? "center" : "start"}
                 >
                     Unidad Administrativa Especial del Servicio Público de Empleo
                 </SubTitle>
@@ -36,7 +43,7 @@ const Footer = () => {
                 <div className="sub-title-container">
                     <BsFillTelephoneFill color="#FFF" />
                     <SubTitle
-                        textAlign="start"
+                        textAlign={context.windowWidth < 870 ? "center" : "start"}
                     >
                         Contacto
                     </SubTitle>

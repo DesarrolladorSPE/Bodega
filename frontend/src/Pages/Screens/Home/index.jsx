@@ -10,10 +10,6 @@ const Home = () => {
 				<UploadFile/>
 				<div>
 					<MessageCard/>
-					<p>TEst</p>
-					<p>TEst</p>
-					<p>TEst</p>
-					<p>TEst</p>
 				</div>
 			</div>
 
