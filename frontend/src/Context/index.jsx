@@ -55,10 +55,9 @@ const AppProvider = ({children}) => {
 
 
 
-
-
     const [options, setOptions] = React.useState({});
     React.useEffect(() => {
+		setLoading(true)
         const fetchData = async () =>{
             try{
                 const response = await fetch(`${apiUri}/fuentes`);
@@ -70,6 +69,7 @@ const AppProvider = ({children}) => {
             }
         }
         fetchData();
+		setLoading(false);
     }, []);
 
     //Login

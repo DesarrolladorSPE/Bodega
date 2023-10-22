@@ -18,7 +18,6 @@ const uploadExcel = async (path, fuente) => {
 
 		//Funcion de insercion en la base de datos
 		await insertDataFileToDatabase(rowValues, idValue, mesValue, flattenedValues, rowNumber);
-		console.log("lol");
     });
 };
 

@@ -11,6 +11,7 @@ import { Navbar } from "../components/NavBar";
 import { NavBarResponsive } from "../components/NavBarResponsive";
 import { Footer } from "../components/Footer";
 import { MainContainer } from "../components/MainContainer";
+import { LoadingCard } from "../components/LoadingCard";
 
 const Wrapper = ({children}) => {
 const location = useLocation();
@@ -48,6 +49,7 @@ return (
 				<MainContainer>
 					<AppRoutes/>
 				</MainContainer>
+				<LoadingCard/>
 				<Footer/>
 			</Wrapper>
 		</BrowserRouter>

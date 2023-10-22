@@ -16,6 +16,7 @@ const UploadFile = () => {
 	const [selectedFileName, setSelectedFileName] = React.useState(null);
 
     const handleFileChange = (event) => {
+		context.setLoading(true);
         const file = event.target.files[0];
 
         if (file) {
@@ -29,10 +30,12 @@ const UploadFile = () => {
 				context.errorMessageHandler("Por favor, seleccione un archivo .xlsx o .csv válido.")
             }
         }
+		context.setLoading(false);
     };
 
     const handleFileUpload = async (event) => {
         event.preventDefault();
+		context.setLoading(true);
         if (selectedFile && selectedOption) {
             const formData = new FormData();
             formData.append('file', selectedFile);
@@ -59,6 +62,7 @@ const UploadFile = () => {
         } else {
 			context.messageHandler("error", "Por favor, seleccione un archivo o fuente válido antes de cargar.")
         }
+		context.setLoading(false);
     };
 
 

@@ -16,6 +16,7 @@ const Login = () => {
 
     const handleLogin = async (event) => {
         event.preventDefault();
+		context.setLoading(true);
         try {
             const response = await fetch( `${context.apiUri}/login`, {
                 method: 'POST',
@@ -35,13 +36,16 @@ const Login = () => {
 				setTimeout(() => {
 					context.setIsLoged(true);
 					navigate("/home");
-				}, 1000);
+					context.setLoading(false);
+				}, 2000);
             } else {
 				context.messageHandler("error", data.message)
+				context.setLoading(false);
 			}
         }
         catch (err) {
 			context.errorMessageHandler(err.message)
+			context.setLoading(false);
         }
     };
 

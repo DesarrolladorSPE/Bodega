@@ -12,7 +12,7 @@ const uploadCsv = async (path, fuente) => {
 		.on("data", (data) => {
 			csvDataColl.push(data)
 		})
-		.on("end", async () => {
+		.on("end", () => {
 			csvDataColl.shift();
 			if (csvDataColl.length === 0) {
 				return response.status(400).json({ message: "El archivo CSV está vacío" });
@@ -23,7 +23,7 @@ const uploadCsv = async (path, fuente) => {
 				return [`${fuente}`, ...rowValues];
 			});
 
-			for(const element of values) {
+			values.map(async (element) => {
 				const idValue = parseInt(element[1]);
 				const mesValue = parseInt(element[4]);
 				const flattenedValues = element.flatMap(row => row);
@@ -31,8 +31,7 @@ const uploadCsv = async (path, fuente) => {
 
 				//Funcion de insercion en la base de datos
 				await insertDataFileToDatabase(element, idValue, mesValue, flattenedValues, rowNumber);
-				console.log("lol");
-			}
+			})
 
 		})
 		.on("error", (err) => {
