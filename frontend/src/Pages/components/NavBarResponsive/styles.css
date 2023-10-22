@@ -38,8 +38,7 @@
     cursor: pointer;
     font-size: 16px;
 }
-.navbar-responsive-text-container a,
-.navbar-responsive-text-container button {
+.navbar-responsive-text-container a {
     color: white;
     font-weight: bold;
 }

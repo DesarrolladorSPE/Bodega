@@ -31,9 +31,6 @@ const NavBarResponsive = () => {
                         <a href="https://www.youtube.com/playlist?list=PLR3vDr9Xh9bHEXggcO-0Bz1_UiaCCwqdh" title="Vídeos para la inclusión laboral de personas con discapacidad" target="__blank" rel="noopener noreferrer">
                             Lenguaje de Señas
                         </a>
-                        <button title="Aplicar y quitar alto contraste para esta pagina">
-                            Aplicar alto contraste
-                        </button>
                     </div>
                 </div>
                 );
@@ -44,7 +41,7 @@ const NavBarResponsive = () => {
         <>
             {renderNabvarResponsive()}
         </>
-        
+
     );
 }
 
