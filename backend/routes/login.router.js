@@ -19,7 +19,7 @@ router.post('/', (request, response) => {
             }
             else {
                 // Usuario no encontrado en la base de datos
-                response.status(401).json({ message: "Credenciales incorrectas" });
+                response.status(401).json({ message: "Correo o contraseña invalidos, intetelo de nuevo." });
             }
         }
     );

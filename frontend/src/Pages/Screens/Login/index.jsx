@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { Title } from "../../components/Title";
 import "./styles.css";
 import { AppContext } from "../../../Context";
+import { MessageCard } from "../../components/MessageCard";
 
 const Login = () => {
     const context = React.useContext(AppContext);
+
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
@@ -20,61 +22,78 @@ const Login = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ 
-                    email, 
-                    password 
+                body: JSON.stringify({
+                    email,
+                    password
                 }),
             });
             const data = await response.json();
-            alert(data.message)
+
             if(response.status === 200) {
-                context.setIsLoged(true);
-                navigate("/home");
-            }
-        } 
-        catch (error) {
-            console.error(error);
+				context.messageHandler("all-ok", data.message)
+				console.log(data.message);
+				setTimeout(() => {
+					context.setIsLoged(true);
+					navigate("/home");
+				}, 1000);
+            } else {
+				context.messageHandler("error", data.message)
+			}
+        }
+        catch (err) {
+			context.errorMessageHandler(err.message)
         }
     };
 
 
     return(
-        <div className="login-container">
-            <Title
-                color="#FFF"
-                borderColor="#FFF"
-            >
-                Iniciar Sesión
-            </Title>
+		<>
+			<Title
+				color="#FFF"
+				borderColor="#FFF"
+			>
+				Bienvenido a Bodega de Archivos del SPE
+			</Title>
+			<div className="login-container">
+				<Title
+					color="#FFF"
+					borderColor="#FFF"
+				>
+					Iniciar Sesión
+				</Title>
 
-            <form className="login-form-container" onSubmit={handleLogin}>
-                <div className="form-input-container">
-                    <label htmlFor="login-email">Correo:</label>
-                    <input 
-                        type="email" 
-                        name="login-email" 
-                        placeholder="Correo"
-                        value={email}
-                        onChange={(event) => {
-                            setEmail(event.target.value)
-                        }}
-                    />
-                </div>
-                <div className="form-input-container">
-                    <label htmlFor="login-password">Contraseña:</label>
-                    <input 
-                        type="password" 
-                        name="login-password" 
-                        placeholder="Contraseña"
-                        value={password}
-                        onChange={(event) => {
-                            setPassword(event.target.value)
-                        }}
-                    />
-                </div>
-                <button type="submit">Iniciar sesion</button>
-            </form>
-        </div>
+				<form className="login-form-container" onSubmit={handleLogin}>
+					<MessageCard/>
+					<div className="form-input-container">
+						<label htmlFor="login-email">Correo:</label>
+						<input
+							type="email"
+							name="login-email"
+							placeholder="Correo"
+							value={email}
+							onChange={(event) => {
+								setEmail(event.target.value)
+							}}
+						/>
+					</div>
+					<div className="form-input-container">
+						<label htmlFor="login-password">Contraseña:</label>
+						<input
+							type="password"
+							name="login-password"
+							placeholder="Contraseña"
+							value={password}
+							onChange={(event) => {
+								setPassword(event.target.value)
+							}}
+						/>
+					</div>
+					<button type="submit">Iniciar sesion</button>
+				</form>
+			</div>
+		</>
+
+
     );
 }
 

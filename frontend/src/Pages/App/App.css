@@ -1,4 +1,8 @@
 :root{
+	--error-container-color: rgba(220, 37, 73, 0.75);
+	--allok-container-color: rgba(37, 220, 73, 0.75);
+
+
     /* --navbar-color: #4172FF; */
     --navbar-color: #00589c;
     /* --navbar-color: #6ABFE1; */
@@ -8,9 +12,12 @@
     --icon-colors: #FFF;
     --navbar-height: 100px;
 
-
+	--login-image: "../../../public/portada.jpg";
 
     --white: #FFF;
+
+	--buttons-color: rgba(65, 114, 255, 0.75);
+	--buttons-color-hover: rgba(65, 114, 255, 1);
 
     --footer-color: #3366cc;
 

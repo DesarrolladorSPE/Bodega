@@ -25,7 +25,6 @@ const insertDataFileToDatabase = async (element, idValue, mesValue, flattenedVal
 					else {
 						console.log(`Se inserto el registro con id: ${idValue} y mes: ${mesValue}`);
 					}
-
 					resolve();
 				})
 			})

@@ -13,31 +13,22 @@ const { uploadExcel } = require("../FilesReader/excel.reader");
 //Routing
 const router = express.Router();
 
-router.get("/", (request, response) => {
-    connection.query("SELECT * FROM archivos", (err, result) => {
-        if (err) {
-            throw err;
-        }
-        return response.json(result);
-    })
-})
-
 router.post("/upload", upload.single("file"), async (request, response) => {
 	// Informacion enviada desde el Front
     const uploadedFile = request.file;
     const selectedOption = request.get('selectedOption');
 
-	// Nombre y fecha del archivo enviado
-	let fileName = uploadedFile.filename;
-	let fileDate = moment(uploadedFile.uploadDate).format("YYYY-MM-DD HH:mm:ss");
-
-
-    if (!uploadedFile || !selectedOption) {
+	if (!uploadedFile || !selectedOption) {
         return response.status(400).json({ message: 'No se ha subido ningún archivo o no se ha seleccionado ninguna fuente.' });
     }
 
-	const fileExtension = uploadedFile.filename.split('.').pop();
-	let route = __dirname + "/../uploads/" + uploadedFile.filename;
+	// Nombre y fecha del archivo enviado
+	let fileName = uploadedFile.filename; //Nombre
+	let fileDate = moment(uploadedFile.uploadDate).format("YYYY-MM-DD HH:mm:ss"); //Fecha
+
+
+	const fileExtension = uploadedFile.filename.split('.').pop(); //Verifica la extension del archivo
+	let route = __dirname + "/../uploads/" + uploadedFile.filename; //Carpeta donde se guarda el archivo temporalmente
 	let wrongRecordsArray = {};
 
 	try {
@@ -51,11 +42,17 @@ router.post("/upload", upload.single("file"), async (request, response) => {
 
 		readFileName(fileName, fileDate);
 
-		fs.unlink(route, (err) => {
-			if(err) {
-				throw err;
-			}
-		})
+		try {
+			fs.unlink(route, (err) => {
+				if(err) {
+					throw err;
+				}
+			})
+		} catch (err) {
+			console.error("Error borrando el archivo")
+			console.error(err)
+		}
+
 
 		// console.log(wrongRecordsArray);
 		// if(wrongRecordsArray) {
@@ -65,7 +62,7 @@ router.post("/upload", upload.single("file"), async (request, response) => {
 		// }
 		response.status(200).json({ message: "Guardado Correctamente" });
 	} catch (err) {
-		response.status(500).json({ message: 'Ocurrio un error borrando el archivo' });
+		response.status(500).json({ message: 'Ocurrio un error procesando el archivo' });
 		console.error(err);
 	}
 });

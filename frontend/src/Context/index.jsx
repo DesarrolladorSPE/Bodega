@@ -3,6 +3,43 @@ import React from "react";
 export const AppContext = React.createContext();
 
 const AppProvider = ({children}) => {
+	//API -- Cambiar el valor de la variable api segun la infraestructura de produccion
+	const api = "http://localhost:3080/api/v1";
+
+	//-------------------------------------
+    const [apiUri, setApiUri] = React.useState(api);
+
+	//Data, loading, Error
+    const [data, setData] = React.useState({});
+    const [loading, setLoading] = React.useState(false);
+
+    const [error, setError] = React.useState(false);
+	const [allOk, setAllOk] = React.useState(false);
+
+    const [statusMessage, setStatusMessage] = React.useState("");
+
+
+	const messageHandler = (type, message) => {
+		if(type === "error") {
+			let errorMessage = `Ocurrio un error: ${message}`;
+			setStatusMessage(errorMessage);
+			setError(true);
+			setTimeout(() => {
+				setError(false);
+				setStatusMessage("");
+			}, 6000)
+		} else if (type === "all-ok") {
+			setStatusMessage(message);
+			setAllOk(true);
+			setTimeout(() => {
+				setAllOk(false);
+				setStatusMessage("");
+			}, 4000)
+		}
+
+	}
+
+	// Screen width manager
     const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
     React.useEffect(() => {
         function handleResize() {
@@ -17,9 +54,7 @@ const AppProvider = ({children}) => {
     const [toggleNavBarResponsive, setToggleNavBarResponsive] = React.useState(false);
 
 
-    //API
-    const [data, setData] = React.useState({});
-    const [apiUri, setApiUri] = React.useState("http://localhost:3080/api/v1");
+
 
 
     const [options, setOptions] = React.useState({});
@@ -43,13 +78,30 @@ const AppProvider = ({children}) => {
     return(
         <AppContext.Provider
             value={{
+				//Managers Principales
+				apiUri,
+                data,
+                setData,
+				loading,
+				setLoading,
+				error,
+				setError,
+				allOk,
+				setAllOk,
+				statusMessage,
+				setStatusMessage,
+
+				messageHandler,
+
+
                 windowWidth,
                 setWindowWidth,
                 toggleNavBarResponsive,
                 setToggleNavBarResponsive,
-                apiUri,
-                data,
-                setData,
+
+
+
+
                 options,
                 setOptions,
 

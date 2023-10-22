@@ -1,11 +1,22 @@
 var mysql = require('mysql');
 
+// DEV
 var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : '',
+    host     : "localhost",
+    user     : "root",
+    password : "",
     database: "bodega"
 });
+
+// PROD
+// var connection = mysql.createConnection({
+//     host     : "",
+//     user     : "",
+//     password : "",
+//     database: "",
+// });
+
+
 
 connection.connect(function(err) {
   if (err) {

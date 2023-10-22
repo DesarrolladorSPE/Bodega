@@ -1,12 +1,19 @@
 import React from "react";
-import "./styles.css";
 import { AppContext } from "../../../Context";
+
+import { SubTitle } from "../SubTitle";
+
+import { AiOutlineCloudUpload } from "react-icons/ai";
+
+import "./styles.css";
 
 const UploadFile = () => {
     const context = React.useContext(AppContext);
+
     const [selectedFile, setSelectedFile] = React.useState(null);
     const [selectedOption, setSelectedOption] = React.useState(null);
 
+	const [selectedFileName, setSelectedFileName] = React.useState(null);
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -17,8 +24,9 @@ const UploadFile = () => {
 
             if (allowedExtensions.includes(`.${fileExtension}`)) {
                 setSelectedFile(file);
+				setSelectedFileName(file.name)
             } else {
-                alert('Por favor, seleccione un archivo .xlsx o .csv válido.');
+				context.errorMessageHandler("Por favor, seleccione un archivo .xlsx o .csv válido.")
             }
         }
     };
@@ -38,53 +46,83 @@ const UploadFile = () => {
                     }
                 });
                 const data = await response.json();
+				switch (response.status) {
+					case 400: context.messageHandler("error", data.message); break;
+					case 500: context.messageHandler("error", data.message); break;
+					case 200: context.messageHandler("all-ok", data.message); break;
+				}
                 alert(data.message)
-				// console.log(data.wrongRecordsArray)
             }
-            catch (error) {
-                console.error(error);
+            catch (err) {
+				context.messageHandler("error", err.message)
             }
         } else {
-            alert('Por favor, seleccione un archivo o fuente válido antes de cargar.');
+			context.messageHandler("error", "Por favor, seleccione un archivo o fuente válido antes de cargar.")
         }
     };
 
 
 
     return(
-        <form encType="multipart/form-data" onSubmit={handleFileUpload}>
-            <div>
-                <input
-                    type="file"
-                    accept=".xlsx, .csv"
-                    onChange={handleFileChange}
-                    name="file"
-                />
+        <form encType="multipart/form-data" onSubmit={handleFileUpload} className="form-container">
+			<div className="inputs-container">
+				<SubTitle
+					color="#FFF"
+					textAlign="start"
+				>
+					Porfavor seleccione un archivo
+				</SubTitle>
+				<label htmlFor="file" className="upload-file-container">
+					<input
+						id="file"
+						type="file"
+						accept=".xlsx, .csv"
+						onChange={handleFileChange}
+						name="file"
+					/>
+					<span>
+						<AiOutlineCloudUpload/>
+					</span>
+					<div className="upload-file-info-container">
+						<p>Subir Archivo</p>
+						<p>{selectedFileName ?? "Archivos Excel (.xlsx) o CSV (.csx)"}</p>
+					</div>
+
+				</label>
+			</div>
 
 
-                <select
-                    name="fuente"
-                    id="fuente"
-                    type="select"
-                    onChange={(event) => {
-                        setSelectedOption(event.target.value)
-                    }}
-                >
-                    <option value="">Seleccione una opción</option>
-                    {context.options?.map((item) => (
-                        <option
-                            key={item.id_fuente}
-                            value={item.id_fuente}
-                        >
-                            {item.id_fuente}
-                            {item.nombre}
-                        </option>
-                    ))}
-                </select>
+			<div className="inputs-container">
+				<SubTitle
+					color="#FFF"
+					textAlign="start"
+				>
+					Porfavor seleccione una fuente
+				</SubTitle>
 
-                <button onClick={handleFileUpload}>Cargar Archivo</button>
+				<select
+					className="select-fuente-container"
+					name="fuente"
+					id="fuente"
+					type="select"
+					onChange={(event) => {
+						setSelectedOption(event.target.value)
+					}}
+				>
+					<option value={null}>Seleccione una fuente</option>
+					{context.options?.map((item) => (
+						<option
+							key={item.id_fuente}
+							value={item.id_fuente}
+						>
+							{item.nombre}
+						</option>
+					))}
+				</select>
+			</div>
 
-            </div>
+
+			<button onClick={handleFileUpload}>Cargar Archivo</button>
         </form>
 
     );

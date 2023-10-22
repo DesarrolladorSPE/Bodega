@@ -4,7 +4,7 @@
 
     padding: 30px 10px;
 
-    background-color: var(--login-color);
+    background-color: rgba(255, 255, 255, 0.15);
 
     display: flex;
     flex-direction: column;
@@ -13,7 +13,6 @@
     box-sizing: border-box;
 
     padding: 50px;
-    border-radius: 20px;
 }
 
 .login-form-container {
@@ -36,25 +35,38 @@
     padding-left: 5px;
 }
 .form-input-container input{
-    color: black;
+	background-color: rgba(255, 255, 255, 0.40);
+    color: white;
     padding: 15px;
-    border-radius: 10px;
-    border: 2px solid var(--white)
+    border-radius: 20px;
+    outline: none;
+	border: none;
+}
+.form-input-container input::placeholder{
+	color: white;
+
 }
 .form-input-container input:focus{
-    border: 2px solid var(--footer-color);
+    outline: none;
 }
 
 .login-form-container button {
+	margin-top: 30px;
     width: 100%;
-    background-color: var(--button-color);
+    background-color: var(--buttons-color);
 
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 20px;
     border: none;
     cursor: pointer;
-    
-    color: black;
+
+    color: white;
     font-weight: bold;
     font-size: 16px;
+	opacity: 0.9;
+	transition: background-color 0.20s ease;
+}
+
+.login-form-container button:hover {
+    background-color: var(--buttons-color-hover);
 }

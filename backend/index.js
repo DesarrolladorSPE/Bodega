@@ -1,17 +1,22 @@
 const express = require("express");
 const cors = require("cors");
+require('dotenv').config();
 
-const connection = require("./database")
+
 const routerApi = require("./routes");
 
 //APP and Port
-const app = express(); 
+const app = express();
 const port = 3080;
 
 app.use(express.json());
 
 // Cors Configuration
-const whiteList = ["http://localhost:3000", "http://127.0.0.1:5500", "http://localhost:5173"];
+const whiteList = [
+	"http://localhost:3000",
+	"http://127.0.0.1:5500",
+	"http://localhost:5173"
+];
 const options = {
     origin: (origin, callback) => {
         if(whiteList.includes(origin) || !origin) {
@@ -22,13 +27,6 @@ const options = {
     }
 }
 app.use(cors(options));
-
-
-
-app.get("/", (request, response) => {
-    response.send("Servidor iniciado correctamente");
-})
-
 
 routerApi(app);
 

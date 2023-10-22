@@ -3,7 +3,9 @@ import "./styles.css"
 const MainContainer = ({children}) => {
     return(
         <div className="main-container">
-            {children}
+			<div className="color-container">
+				{children}
+			</div>
         </div>
     );
 }
