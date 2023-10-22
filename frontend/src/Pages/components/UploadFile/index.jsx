@@ -51,7 +51,7 @@ const UploadFile = () => {
 					case 500: context.messageHandler("error", data.message); break;
 					case 200: context.messageHandler("all-ok", data.message); break;
 				}
-                alert(data.message)
+				console.log(data);
             }
             catch (err) {
 				context.messageHandler("error", err.message)
