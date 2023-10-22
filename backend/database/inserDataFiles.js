@@ -35,7 +35,6 @@ const insertDataFileToDatabase = async (element, idValue, mesValue, flattenedVal
 	} else {
 		console.log(`El registro con id: ${idValue} y mes: ${mesValue} ya esta en la base de datos`);
 	}
-	return wrongRecordsArray;
 }
 
 

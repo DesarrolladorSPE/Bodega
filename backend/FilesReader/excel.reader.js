@@ -7,8 +7,7 @@ const uploadExcel = async (path, fuente) => {
     const worksheet = await workbook.xlsx.readFile(path);
     const worksheetData = worksheet.getWorksheet(1);
 
-    const wrongRecordsArray = worksheetData.eachRow(async (row, rowNumber) => {
-		let wrongRecordsArray = []
+    worksheetData.eachRow(async (row, rowNumber) => {
         if (rowNumber === 1) return;
 
         const rowValues =row.values;
@@ -18,13 +17,9 @@ const uploadExcel = async (path, fuente) => {
 		const flattenedValues = [fuente, ...rowValues];
 
 		//Funcion de insercion en la base de datos
-		wrongRecordsArray = await insertDataFileToDatabase(rowValues, idValue, mesValue, flattenedValues, rowNumber);
-		console.log(worksheetData.rowCount);
-		if (rowNumber == worksheetData.rowCount) {
-			return wrongRecordsArray;
-		}
+		await insertDataFileToDatabase(rowValues, idValue, mesValue, flattenedValues, rowNumber);
+		console.log("lol");
     });
-	return({response: "Registros erroreos",wrongRecordsArray});
 };
 
 module.exports = { uploadExcel };

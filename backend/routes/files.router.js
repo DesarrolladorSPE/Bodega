@@ -33,10 +33,8 @@ router.post("/upload", upload.single("file"), async (request, response) => {
 
 	try {
 		switch(fileExtension) {
-			case "csv":
-				wrongRecordsArray = await uploadCsv(route, selectedOption);break;
-			case "xlsx":
-				wrongRecordsArray = await uploadExcel(route, selectedOption);break;
+			case "csv": await uploadCsv(route, selectedOption); break;
+			case "xlsx": await uploadExcel(route, selectedOption); break;
 			default: response.status(500).json({ message: 'El archivo subido no es valido' });
 		}
 
@@ -53,7 +51,6 @@ router.post("/upload", upload.single("file"), async (request, response) => {
 			console.error(err)
 		}
 
-		console.log(wrongRecordsArray);
 		response.status(200).json({ message: "Guardado Correctamente"});
 	} catch (err) {
 		response.status(500).json({ message: 'Ocurrio un error procesando el archivo' });
