@@ -4,6 +4,9 @@ const fs = require("fs");
 const { insertDataFileToDatabase } = require("../database/inserDataFiles");
 
 const uploadCsv = async (path, fuente) => {
+	let rowCount = 0;
+	let recordsEnteredCount = {};
+
 	let stream = fs.createReadStream(path);
 	let csvDataColl = [];
 
@@ -24,15 +27,17 @@ const uploadCsv = async (path, fuente) => {
 			});
 
 			values.map(async (element) => {
+				rowCount = values.length;
+				console.log(`Numero de registros ${rowCount}`);
 				const idValue = parseInt(element[1]);
 				const mesValue = parseInt(element[4]);
 				const flattenedValues = element.flatMap(row => row);
 				const rowNumber = values.indexOf(element);
 
 				//Funcion de insercion en la base de datos
-				await insertDataFileToDatabase(element, idValue, mesValue, flattenedValues, rowNumber);
+				recordsEnteredCount = await insertDataFileToDatabase(element, idValue, mesValue, flattenedValues, rowNumber);
+				console.log(rowCount, recordsEnteredCount)
 			})
-
 		})
 		.on("error", (err) => {
 			console.log("Error al analizar el archivo CSV:", err);

@@ -32,7 +32,6 @@ const Login = () => {
 
             if(response.status === 200) {
 				context.messageHandler("all-ok", data.message)
-				console.log(data.message);
 				setTimeout(() => {
 					context.setIsLoged(true);
 					navigate("/home");
