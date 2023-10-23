@@ -1,0 +1,60 @@
+.users-card-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 15px 25px;
+    background-color: var(--cards-container-color);
+
+    justify-content: space-between;
+    align-items: center;
+
+    box-sizing: border-box;
+}
+.users-all-info-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+.users-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: start;
+    justify-content: center;
+}
+
+.users-info-container p:nth-child(1){
+    color: var(--white);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.users-edit-button {
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+
+    border-radius: 8px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+
+    border: none;
+    cursor: pointer;
+
+    transition: background 0.25s ease;
+}
+.users-edit-button:hover {
+    background: var(--cards-container-color);
+}
+
+.users-edit-button svg{
+    width: 100%;
+    height: 100%;
+    color: white;
+}

@@ -9,6 +9,8 @@ const AppProvider = ({children}) => {
 	//-------------------------------------
     const [apiUri, setApiUri] = React.useState(api);
 
+    //ADMIN
+    const [admin, setAdmin] = React.useState(false);
 	//Data, loading, Error
     const [data, setData] = React.useState({});
     const [loading, setLoading] = React.useState(false);
@@ -75,11 +77,35 @@ const AppProvider = ({children}) => {
     //Login
     const [ isLoged, setIsLoged ] = React.useState(false);
 
+    //USERS
+    const [users, setUsers] = React.useState();
+
+    React.useEffect(() => {
+        setLoading(true)
+        const fetchData = async () =>{
+            try{
+                const response = await fetch(`${apiUri}/users`);
+                const data = await response.json();
+                setUsers(data);
+            }
+            catch (err){
+                alert(err)
+            }
+        }
+        fetchData();
+        setLoading(false);
+    }, []);
+
     return(
         <AppContext.Provider
             value={{
 				//Managers Principales
 				apiUri,
+
+                //ADMIN
+                admin,
+                setAdmin,
+                
                 data,
                 setData,
 				loading,
@@ -106,7 +132,9 @@ const AppProvider = ({children}) => {
                 setOptions,
 
                 isLoged,
-                setIsLoged
+                setIsLoged,
+                users,
+                setUsers,
 
             }}
         >

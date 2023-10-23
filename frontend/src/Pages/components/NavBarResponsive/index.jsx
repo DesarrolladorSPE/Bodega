@@ -13,6 +13,7 @@ const NavBarResponsive = () => {
             return(
                 <div className="navbar-responsive-container">
                     <NavIcons
+                        NavBar={true}
                         flexDirection={"column"}
                     />
                     <div className="navbar-responsive-text-container">

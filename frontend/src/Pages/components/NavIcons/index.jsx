@@ -3,15 +3,30 @@ import { AiOutlineInstagram } from "react-icons/ai";
 import { BsTwitter } from "react-icons/bs";
 import { BsFacebook } from "react-icons/bs";
 import { FaHandsAslInterpreting } from "react-icons/fa6";
-import { ImBrightnessContrast } from "react-icons/im";
 
 import "./styles.css";
+import { AppContext } from "../../../Context";
+import { NavLink } from "react-router-dom";
+import React from "react";
 
-const NavIcons = ({flexDirection}) => {
+const NavIcons = ({NavBar=false,flexDirection}) => {
+    const context = React.useContext(AppContext);
+
+    const showUsersButton = () => {
+        if(context.admin && NavBar) {
+            return(
+                <NavLink to={"/users"}>
+                    <button>Usuarios</button>
+                </NavLink>
+            );
+        } 
+    }
+
     return (
         <div className="nav-icons-container" style={{
             flexDirection: flexDirection,
         }}>
+            {showUsersButton()}
             <a href="https://www.youtube.com/user/ServiciodEmpleo" title="YouTube - Servicio Publico de Empleo" target="__blank" rel="noopener noreferrer">
                 <ImYoutube />
             </a>

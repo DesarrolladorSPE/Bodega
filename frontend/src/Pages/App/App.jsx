@@ -12,6 +12,7 @@ import { NavBarResponsive } from "../components/NavBarResponsive";
 import { Footer } from "../components/Footer";
 import { MainContainer } from "../components/MainContainer";
 import { LoadingCard } from "../components/LoadingCard";
+import { Users } from "../Screens/Users";
 
 const Wrapper = ({children}) => {
 const location = useLocation();
@@ -31,6 +32,7 @@ const AppRoutes = () => {
 		{path: "/*", element: context.isLoged ? <Home/> : <Navigate replace to={"/login"}/>},
 
 		{path: "/login", element: context.isLoged ? <Home/> : <Login/>},
+		{path: "/users", element: context.isLoged && context.admin ? <Users/> : <Navigate replace to={"home"}/>},
 
 	]);
 

@@ -32,6 +32,8 @@ const Login = () => {
 
             if(response.status === 200) {
 				context.messageHandler("all-ok", data.message)
+				handleUserRol(data.type);
+
 				setTimeout(() => {
 					context.setIsLoged(true);
 					navigate("/home");
@@ -43,11 +45,21 @@ const Login = () => {
 			}
         }
         catch (err) {
-			context.errorMessageHandler(err.message)
+			context.errorMessageHandler("error", err.message)
 			context.setLoading(false);
         }
     };
 
+	const handleUserRol = async (type) => {
+		if (type === 1) {
+			context.setAdmin(true)
+		} else if (type === 0) {
+			context.setAdmin(false);
+		} else {
+			context.setAdmin(false);
+			context.errorMessageHandler("error", "Usuario invalido")
+		}
+	}
 
     return(
 		<>

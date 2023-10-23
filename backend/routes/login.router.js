@@ -15,7 +15,7 @@ router.post('/', (request, response) => {
 
             if (results.length > 0) {
                 // Usuario autenticado
-                response.status(200).json({ message: "Inicio de sesión exitoso" });
+                response.status(200).json({ message: "Inicio de sesión exitoso", type: results[0].tipo });
             }
             else {
                 // Usuario no encontrado en la base de datos
