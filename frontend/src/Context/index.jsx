@@ -77,6 +77,13 @@ const AppProvider = ({children}) => {
     //Login
     const [ isLoged, setIsLoged ] = React.useState(false);
 
+	const closeSession = () => {
+		setAdmin(false);
+		setIsLoged(false);
+
+		messageHandler("all-ok", "Sesión cerrada correctamente")
+	}
+
     //USERS
     const [users, setUsers] = React.useState();
 
@@ -96,6 +103,13 @@ const AppProvider = ({children}) => {
         setLoading(false);
     }, []);
 
+	//EDICION DE USUARIOS
+	const [editingUser, setEditingUser] = React.useState(null);
+
+	const handleCloseEditForm = () => {
+		setEditingUser(null);
+	};
+
     return(
         <AppContext.Provider
             value={{
@@ -105,7 +119,7 @@ const AppProvider = ({children}) => {
                 //ADMIN
                 admin,
                 setAdmin,
-                
+
                 data,
                 setData,
 				loading,
@@ -133,8 +147,13 @@ const AppProvider = ({children}) => {
 
                 isLoged,
                 setIsLoged,
+				closeSession,
+
                 users,
                 setUsers,
+				editingUser,
+				setEditingUser,
+				handleCloseEditForm
 
             }}
         >

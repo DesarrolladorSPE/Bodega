@@ -34,11 +34,10 @@ const Login = () => {
 				context.messageHandler("all-ok", data.message)
 				handleUserRol(data.type);
 
-				setTimeout(() => {
-					context.setIsLoged(true);
-					navigate("/home");
-					context.setLoading(false);
-				}, 2000);
+				navigate("/home");
+				context.setIsLoged(true);
+				context.setLoading(false);
+
             } else {
 				context.messageHandler("error", data.message)
 				context.setLoading(false);
@@ -51,9 +50,9 @@ const Login = () => {
     };
 
 	const handleUserRol = async (type) => {
-		if (type === 1) {
+		if (type == 1) {
 			context.setAdmin(true)
-		} else if (type === 0) {
+		} else if (type == 0) {
 			context.setAdmin(false);
 		} else {
 			context.setAdmin(false);

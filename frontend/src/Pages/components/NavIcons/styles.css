@@ -5,22 +5,14 @@
     gap: 20px;
 }
 
-.nav-icons-container a{
+.nav-icons-container .nav-icon{
     text-decoration: none;
     padding: 0;
     margin: 0;
 
     transition: transform .25s ease;
 }
-.nav-icons-container button {
-    padding: 0;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: transform .25s ease;
-}
-.nav-icons-container a:hover,
-.nav-icons-container button:hover {
+.nav-icons-container .nav-icon:hover  {
     transform: scale(1.25);
     padding: 0;
 }
@@ -30,4 +22,31 @@
     width: 25px;
     height: 25px;
     fill: var(--icon-colors);
+}
+
+.nav-button {
+	font-weight: bold;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+
+	transition: background 0.25s ease;
+}
+.users-button {
+	color: var(--footer-color);
+	background-color: var(--white);
+}
+.users-button:hover {
+	color: var(--white);
+	background: var(--footer-color);
+}
+
+.close-session-button {
+	color: var(--error-container-color);
+	background-color: var(--white);
+}
+.close-session-button:hover {
+	color: var(--white);
+	background: var(--error-container-color);
 }
