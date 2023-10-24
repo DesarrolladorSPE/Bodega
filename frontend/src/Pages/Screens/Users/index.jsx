@@ -46,15 +46,16 @@ const Users = () => {
                         ))
                     }
                 </div>
-                <div>
+				<div>
+					<MessageCard/>
 					{context.editingUser &&
 						<EditionForm
 							user={context.editingUser}
 							onClose={context.handleCloseEditForm}
 						/>
 					}
-					<MessageCard/>
 				</div>
+
             </div>
         </div>
     );

@@ -1,0 +1,120 @@
+.edit-user-form-container {
+	width: 100%;
+    box-sizing: border-box;
+	max-height: 500px;
+
+    display: flex;
+    flex-direction: column;
+	justify-content: center;
+	align-items: center;
+    gap: 20px;
+
+	background-color: var(--containers-color);
+	padding: 30px 25px;
+	border-radius: 20px;
+}
+.edit-user-form {
+	width: 100%;
+	height: 100%;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+	background-color: var(--cards-container-color);
+	padding: 25px;
+	border-radius: 20px;
+}
+.edit-user-form form {
+	width: 100%;
+
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+
+}
+
+.edit-user-input-container {
+	width: 100%;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 10px;
+}
+.edit-user-input-container p {
+	padding-left: 5px;
+}
+
+
+.edit-user-input-container input {
+	padding: 10px 15px;
+	border: none;
+	border-radius: 10px;
+	outline: none;
+	border-left: 5px solid var(--white);
+	transition: all 0.2s ease;
+}
+
+.edit-user-input-container select {
+	box-sizing: border-box;
+	width: 100%;
+	border-radius: 10px;
+	padding: 10px 15px;
+	background-color: var(--white);
+
+	color: black;
+	font-weight: bold;
+
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	border: none;
+	border-left: 5px solid var(--white);
+	outline: var(--footer-color);
+
+	transition: all 0.2s ease;
+}
+.edit-user-input-container input:hover,
+.edit-user-input-container select:hover {
+	border-left: 5px solid var(--footer-color);
+
+}
+
+.buttons-container {
+	width: 100%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+}
+
+.form-button {
+	width: 160px;
+	padding: 15px 20px;
+	border-radius: 10px;
+	border: none;
+	cursor: pointer;
+	font-weight: bold;
+	color: var(--white);
+
+	transition: background-color 0.2s ease;
+}
+
+.save {
+	background-color: rgba(25, 218, 151, 0.75);
+}
+.save:hover {
+	background-color: rgba(25, 218, 151, 1);
+}
+
+.cancel {
+	background-color: rgba(218, 25, 66, 0.75);
+}
+.cancel:hover {
+	background-color: rgba(218, 25, 66, 1);
+}
