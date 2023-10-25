@@ -5,9 +5,13 @@ const { insertDataFileToDatabase } = require("../database/inserDataFiles");
 
 
 const uploadExcel = async (path, fuente) => {
-	let recordsEnteredCount = 0;
+	let databaseInfo = {};
 	let rowCount = 0;
 	let rowsLog = {}
+
+	let wrongRecordsArray = [];
+	let recordsEnteredCount = 0;
+	let recordsAlreadyInDatabase = 0;
 
     const workbook = new ExcelJS.Workbook();
     const worksheet = await workbook.xlsx.readFile(path);
@@ -28,7 +32,16 @@ const uploadExcel = async (path, fuente) => {
 			const flattenedValues = [fuente, ...rowValues];
 
 			//Funcion de insercion en la base de datos
-			recordsEnteredCount = await insertDataFileToDatabase(rowValues, idValue, mesValue, flattenedValues, rowNumber);
+			databaseInfo = await insertDataFileToDatabase(
+				rowValues,
+				idValue,
+				mesValue,
+				flattenedValues,
+				rowNumber,
+			);
+			wrongRecordsArray = [...wrongRecordsArray, ...databaseInfo.wrongRecordsArray];;
+			recordsEnteredCount = recordsEnteredCount +  databaseInfo.recordsEnteredCount;
+			recordsAlreadyInDatabase = recordsAlreadyInDatabase +  databaseInfo.recordsAlreadyInDatabase;
         })());
 
     });
@@ -36,7 +49,9 @@ const uploadExcel = async (path, fuente) => {
 
 	return rowsLog = {
 		rowCount: rowCount,
+		wrongRecordsArray: wrongRecordsArray,
 		recordsEnteredCount: recordsEnteredCount,
+		recordsAlreadyInDatabase: recordsAlreadyInDatabase,
 	}
 
 };

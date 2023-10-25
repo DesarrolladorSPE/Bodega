@@ -1,27 +1,89 @@
 .row-log-card-container {
+	box-sizing: border-box;
 	width: 100%;
-	padding: 20px;
+	padding: 25px;
 
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
 	align-items: center;
+	gap: 20px;
 
 	border-radius: 10px;
 
 	box-sizing: border-box;
 
-	background-color: var(--footer-color);
+	background-color: var(--buttons-color);
 }
 
-.row-log-card-container p {
+.all-info-main-container {
 	width: 100%;
-	text-align: center;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	justify-content: center;
+}
+
+.already-and-total-data-container {
+	width: 100%;
+
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+}
+
+.already-and-total-data-container p {
+	width: 100%;
+
+	text-align: start;
 	color: var(--white);
+	background-color: rgba(255, 255, 255, 0.25);
+	padding: 10px 15px;
+	border-radius: 10px;
+
+	box-sizing: border-box;
 }
 
 .row-log-card-container p span {
 	font-weight: bold;
+}
+
+.error-rows-container {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 3px;
+	background-color: rgba(255, 255, 255, 0.20);
+
+}
+.error-rows-container {
+	width: 100%;
+
+	text-align: start;
+	color: var(--white);
+	background-color: rgba(255, 255, 255, 0.20);
+	padding: 10px 15px;
+	border-radius: 10px;
+
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	justify-content: center;
+
+	box-sizing: border-box;
+}
+.error-rows-title {
+	font-size: 16px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid var(--white);
+}
+.error-row {
+	font-size: 13px;
+	margin-left: 10px;
 }
 
 .row-log-card-container button {
@@ -50,4 +112,5 @@
 	height: 100%;
 	color: white;
 }
+
 

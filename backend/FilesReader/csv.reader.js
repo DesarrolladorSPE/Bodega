@@ -4,8 +4,12 @@ const fs = require("fs");
 const { insertDataFileToDatabase } = require("../database/inserDataFiles");
 
 const uploadCsv = async (path, fuente) => {
+	let wrongRecordsArray = [];
+	let recordsEnteredCount = 0;
+	let recordsAlreadyInDatabase = 0;
+
 	return new Promise(async (resolve, reject) => {
-		let recordsEnteredCount = 0;
+		let databaseInfo = {};
 		let rowCount = 0;
 		let rowsLog = {};
 
@@ -39,14 +43,27 @@ const uploadCsv = async (path, fuente) => {
 						const rowNumber = values.indexOf(element);
 
 						//Funcion de insercion en la base de datos
-						recordsEnteredCount = await insertDataFileToDatabase(element, idValue, mesValue, flattenedValues, rowNumber);
+
+						databaseInfo = await insertDataFileToDatabase(
+							element,
+							idValue,
+							mesValue,
+							flattenedValues,
+							rowNumber
+						);
+
+						wrongRecordsArray = [...wrongRecordsArray, ...databaseInfo.wrongRecordsArray];
+						recordsEnteredCount = recordsEnteredCount +  databaseInfo.recordsEnteredCount;
+						recordsAlreadyInDatabase = recordsAlreadyInDatabase +  databaseInfo.recordsAlreadyInDatabase;
 					})());
 				})
 
 				await Promise.all(promises);
 				rowsLog = {
 					rowCount: rowCount,
+					wrongRecordsArray: wrongRecordsArray,
 					recordsEnteredCount: recordsEnteredCount,
+					recordsAlreadyInDatabase: recordsAlreadyInDatabase,
 				}
 				resolve(rowsLog);
 			})

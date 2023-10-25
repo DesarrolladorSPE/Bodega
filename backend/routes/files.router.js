@@ -51,7 +51,7 @@ router.post("/upload", upload.single("file"), async (request, response) => {
 			response.status(500).json({message: "Error Borrando el archivo en el servidor. Vuelvalo a intentar"})
 		}
 
-		response.status(200).json({ message: "Guardado Correctamente", rowLog: rowLog});
+		response.status(200).json({ message: "Guardado Correctamente", rowLog});
 	} catch (err) {
 		response.status(500).json({ message: 'Ocurrio un error procesando el archivo' });
 	}

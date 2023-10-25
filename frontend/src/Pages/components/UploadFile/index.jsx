@@ -56,6 +56,7 @@ const UploadFile = () => {
 					case 200:
 						context.messageHandler("all-ok", data.message);
 						context.setData(data.rowLog);
+						console.log(data.rowLog);
 					break;
 				}
 
