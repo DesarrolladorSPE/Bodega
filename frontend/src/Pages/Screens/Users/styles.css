@@ -39,6 +39,39 @@
 
 	box-sizing: border-box;
 }
+.users-main-container > div {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.add-user-button {
+	width: 100%;
+	padding: 20px;
+	border: none;
+	outline: none;
+
+	background-color: rgba(25, 218, 151, 0.5);
+	border-radius: 10px;
+	color: var(--white);
+	font-weight: bold;
+	cursor: pointer;
+	gap: 10px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 14px;
+
+	transition: background 0.2s ease;
+}
+.add-user-button:hover {
+	background-color: rgba(25, 218, 151, .9);
+}
+.add-user-button svg {
+	width: 20px;
+	height: 20px;
+}
 
 .users-grid-container {
     width: 100%;

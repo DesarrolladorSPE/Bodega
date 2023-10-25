@@ -12,6 +12,25 @@ router.get("/", (request, response) => {
     })
 })
 
+router.post('/', (request, response) => {
+	try {
+		const newUserData = request.body;
+
+		connection.query('INSERT INTO login SET ?', newUserData, (err, results) => {
+			if (err) {
+				console.error(err);
+				return response.status(500).json({ message: 'Error al crear el usuario' });
+			}
+
+			const newUser = { id: results.insertId, ...newUserData };
+			return response.status(201).json({message: "Usuario creado Correctamente", newUser: newUser});
+	  });
+	} catch (err) {
+		console.error(error);
+		return response.status(500).json({ message: 'Error al crear el usuario' });
+	}
+});
+
 router.put('/:userId', (request, response) => {
 	const userId = request.params.userId;
 	const {nombre, correo, tipo} = request.body;
@@ -36,7 +55,7 @@ router.put('/:userId', (request, response) => {
 
 	} catch (err) {
 		console.error(err);
-		return res.status(500).json({ error: 'Error al actualizar el usuario' });
+		return response.status(500).json({ error: 'Error al actualizar el usuario' });
 	}
 });
 
@@ -57,9 +76,9 @@ router.delete('/:userId', (request, response) => {
 			// Envía una respuesta exitosa
 			return response.status(200).json({ message: 'Usuario eliminado correctamente' });
 		});
-	} catch (error) {
-		console.error(error);
-		return res.status(500).json({ error: 'Error al eliminar el usuario' });
+	} catch (err) {
+		console.error(err);
+		return response.status(500).json({ message: 'Error al eliminar el usuario' });
 	}
 });
 

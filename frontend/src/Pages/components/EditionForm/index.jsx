@@ -12,7 +12,6 @@ const EditionForm = ({ user, onClose }) => {
 	const handleInputChange = (event) => {
 		const { name, value } = event.target;
 		setEditedData({ ...editedData, [name]: value });
-		console.log(editedData);
 	};
 
 	const submitForm = (event) => {

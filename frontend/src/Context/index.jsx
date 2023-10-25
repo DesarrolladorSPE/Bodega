@@ -80,6 +80,7 @@ const AppProvider = ({children}) => {
 	const closeSession = () => {
 		setAdmin(false);
 		setIsLoged(false);
+		resetUsersInfo();
 
 		messageHandler("all-ok", "Sesión cerrada correctamente")
 	}
@@ -103,7 +104,13 @@ const AppProvider = ({children}) => {
         setLoading(false);
     }, []);
 
-	//EDICION DE USUARIOS y ELIMINACION DE USUARIOS
+	//CREACION, EDICION y ELIMINACION DE USUARIOS
+		//CREACION
+	const [creatingUser, setCreatingUser] = React.useState(null);
+	const handleCloseCreateForm = () => {
+		setCreatingUser(null);
+	};
+
 		//EDICION
 	const [editingUser, setEditingUser] = React.useState(null);
 
@@ -111,8 +118,11 @@ const AppProvider = ({children}) => {
 		setEditingUser(null);
 	};
 
-		//ELIMINAR
-	const [ deletingUser, setDeletingUser ] = React.useState(null);
+		// RESET USERS
+	const resetUsersInfo = () => {
+		setCreatingUser(null);
+		setEditingUser(null)
+	}
 
 
     return(
@@ -156,9 +166,17 @@ const AppProvider = ({children}) => {
 
                 users,
                 setUsers,
+
+				creatingUser,
+
+				setCreatingUser,
+				handleCloseCreateForm,
+
 				editingUser,
 				setEditingUser,
-				handleCloseEditForm
+				handleCloseEditForm,
+
+				resetUsersInfo
 
             }}
         >

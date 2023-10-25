@@ -1,7 +1,7 @@
 .edit-user-form-container {
 	width: 100%;
     box-sizing: border-box;
-	max-height: 500px;
+	max-height: 600px;
 
     display: flex;
     flex-direction: column;

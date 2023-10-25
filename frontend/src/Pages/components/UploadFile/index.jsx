@@ -54,7 +54,7 @@ const UploadFile = () => {
 					case 500: context.messageHandler("error", data.message); break;
 					case 200: context.messageHandler("all-ok", data.message); break;
 				}
-				console.log(data);
+
             }
             catch (err) {
 				context.messageHandler("error", err.message)
@@ -62,6 +62,7 @@ const UploadFile = () => {
         } else {
 			context.messageHandler("error", "Por favor, seleccione un archivo o fuente válido antes de cargar.")
         }
+		setSelectedOption(null);
 		context.setLoading(false);
     };
 
@@ -113,7 +114,8 @@ const UploadFile = () => {
 						setSelectedOption(event.target.value)
 					}}
 				>
-					<option value={null}>Seleccione una fuente</option>
+
+					<option selected={selectedOption === null ? true : false } value={null}>Seleccione una fuente</option>
 					{context.options?.map((item) => (
 						<option
 							key={item.id_fuente}
