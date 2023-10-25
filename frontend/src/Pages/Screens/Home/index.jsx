@@ -5,6 +5,7 @@ import { Title } from "../../components/Title";
 import { UploadFile } from "../../components/UploadFile";
 
 import "./styles.css";
+import { RowAffectedCard } from "../../components/RowAffectedCard";
 
 const Home = () => {
 	const context = React.useContext(AppContext)
@@ -21,8 +22,9 @@ const Home = () => {
 
 			<div className="upload-and-info-container">
 				<UploadFile/>
-				<div>
+				<div className="info-cards-container">
 					<MessageCard/>
+					<RowAffectedCard/>
 				</div>
 			</div>
 

@@ -1,0 +1,53 @@
+.row-log-card-container {
+	width: 100%;
+	padding: 20px;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+
+	border-radius: 10px;
+
+	box-sizing: border-box;
+
+	background-color: var(--footer-color);
+}
+
+.row-log-card-container p {
+	width: 100%;
+	text-align: center;
+	color: var(--white);
+}
+
+.row-log-card-container p span {
+	font-weight: bold;
+}
+
+.row-log-card-container button {
+	width: 30px;
+    height: 30px;
+    padding: 5px;
+
+    border-radius: 8px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(255, 255, 255, 0.25);
+    border: none;
+    cursor: pointer;
+
+    transition: background 0.25s ease;
+}
+.row-log-card-container button:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.row-log-card-container button svg{
+	width: 100%;
+	height: 100%;
+	color: white;
+}
+

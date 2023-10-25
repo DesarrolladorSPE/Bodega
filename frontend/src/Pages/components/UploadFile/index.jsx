@@ -36,6 +36,7 @@ const UploadFile = () => {
     const handleFileUpload = async (event) => {
         event.preventDefault();
 		context.setLoading(true);
+		context.setData(null);
         if (selectedFile && selectedOption) {
             const formData = new FormData();
             formData.append('file', selectedFile);
@@ -49,11 +50,13 @@ const UploadFile = () => {
                     }
                 });
                 const data = await response.json();
-				console.log(data.data);
 				switch (response.status) {
 					case 400: context.messageHandler("error", data.message); break;
 					case 500: context.messageHandler("error", data.message); break;
-					case 200: context.messageHandler("all-ok", data.message); break;
+					case 200:
+						context.messageHandler("all-ok", data.message);
+						context.setData(data.rowLog);
+					break;
 				}
 
             }

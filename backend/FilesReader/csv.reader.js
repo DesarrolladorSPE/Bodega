@@ -3,57 +3,58 @@ const fs = require("fs");
 
 const { insertDataFileToDatabase } = require("../database/inserDataFiles");
 
-let recordsEnteredCount = 0;
-let rowCount = 0;
-
-let rowsLog = {}
-
 const uploadCsv = async (path, fuente) => {
+	return new Promise(async (resolve, reject) => {
+		let recordsEnteredCount = 0;
+		let rowCount = 0;
+		let rowsLog = {};
 
-	let stream = fs.createReadStream(path);
-	let csvDataColl = [];
+		let promises = [];
 
-	let fileStream = csv
-		.parse()
-		.on("data", (data) => {
-			csvDataColl.push(data)
-		})
-		.on("end", () => {
-			csvDataColl.shift();
-			if (csvDataColl.length === 0) {
-				return response.status(400).json({ message: "El archivo CSV está vacío" });
-			}
+		let stream = fs.createReadStream(path);
+		let csvDataColl = [];
 
-			const values = csvDataColl.map((row) => {
-				const rowValues = row[0].split(';');
-				return [`${fuente}`, ...rowValues];
-			});
-
-			values.map(async (element) => {
-				rowCount = values.length;
-				const idValue = parseInt(element[1]);
-				const mesValue = parseInt(element[4]);
-				const flattenedValues = element.flatMap(row => row);
-				const rowNumber = values.indexOf(element);
-
-				//Funcion de insercion en la base de datos
-				recordsEnteredCount = await insertDataFileToDatabase(element, idValue, mesValue, flattenedValues, rowNumber);
-				console.log(rowCount, recordsEnteredCount)
-				rowsLog = {
-					recordsEnteredCount: recordsEnteredCount,
-					rowCount: rowCount,
-				}
+		let fileStream = csv
+			.parse()
+			.on("data", (data) => {
+				csvDataColl.push(data)
 			})
-		})
-		.on("error", (err) => {
-			console.log("Error al analizar el archivo CSV:", err);
-			throw err;
-		});
-	stream.pipe(fileStream);
-	setTimeout(() => {
-		console.log(rowsLog);
-		return rowsLog;
-	}, 2000)
+			.on("end", async () => {
+				csvDataColl.shift();
+				if (csvDataColl.length === 0) {
+					return response.status(400).json({ message: "El archivo CSV está vacío" });
+				}
+
+				const values = csvDataColl.map((row) => {
+					const rowValues = row[0].split(';');
+					return [`${fuente}`, ...rowValues];
+				});
+
+				values.map(async (element) => {
+					promises.push((async () => {
+						rowCount = values.length;
+						const idValue = parseInt(element[1]);
+						const mesValue = parseInt(element[4]);
+						const flattenedValues = element.flatMap(row => row);
+						const rowNumber = values.indexOf(element);
+
+						//Funcion de insercion en la base de datos
+						recordsEnteredCount = await insertDataFileToDatabase(element, idValue, mesValue, flattenedValues, rowNumber);
+					})());
+				})
+
+				await Promise.all(promises);
+				rowsLog = {
+					rowCount: rowCount,
+					recordsEnteredCount: recordsEnteredCount,
+				}
+				resolve(rowsLog);
+			})
+			.on("error", (err) => {
+				throw err;
+			});
+		stream.pipe(fileStream);
+	})
 }
 
-module.exports = {uploadCsv, rowsLog};
+module.exports = {uploadCsv};
