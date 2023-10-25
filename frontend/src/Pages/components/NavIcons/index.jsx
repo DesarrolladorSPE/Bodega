@@ -25,12 +25,22 @@ const NavIcons = ({NavBar=false,flexDirection}) => {
 	const showCloseSessionButton = () => {
         if(context.isLoged && NavBar) {
             return(
-				<button
-					className="nav-button close-session-button"
-					onClick={() => context.closeSession()}
-				>
-					Cerrar Sesión
-				</button>
+				<>
+					<button
+						className="nav-button users-button"
+						onClick={() => console.log("CONSOLIDAR: ")}
+					>
+						Consolidar
+					</button>
+
+					<button
+						className="nav-button close-session-button"
+						onClick={() => context.closeSession()}
+					>
+						Cerrar Sesión
+					</button>
+				</>
+
             );
         }
     }
