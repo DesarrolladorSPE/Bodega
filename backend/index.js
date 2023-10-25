@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-require('dotenv').config();
+
+const rowsLog = require("./FilesReader/csv.reader");
 
 
 const routerApi = require("./routes");
@@ -10,6 +11,10 @@ const app = express();
 const port = 3080;
 
 app.use(express.json());
+
+app.get("/", (request, response) => {
+	response.json({message: "Lol", rowsLog})
+})
 
 // Cors Configuration
 const whiteList = [

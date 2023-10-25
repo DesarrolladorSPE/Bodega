@@ -29,18 +29,17 @@ router.post("/upload", upload.single("file"), async (request, response) => {
 
 	const fileExtension = uploadedFile.filename.split('.').pop(); //Verifica la extension del archivo
 	let route = __dirname + "/../uploads/" + uploadedFile.filename; //Carpeta donde se guarda el archivo temporalmente
-	let wrongRecordsArray = {};
-	let data = 0;
+	let data = {};
 
 	try {
 		switch(fileExtension) {
-			case "csv": 
+			case "csv":
 				data = await uploadCsv(route, selectedOption); break;
-			case "xlsx": 
+			case "xlsx":
 				data = await uploadExcel(route, selectedOption); break;
 			default: response.status(500).json({ message: 'El archivo subido no es valido' });
 		}
-		
+
 		readFileName(fileName, fileDate);
 
 		try {
@@ -54,11 +53,10 @@ router.post("/upload", upload.single("file"), async (request, response) => {
 			console.error(err)
 		}
 
-		console.log("ENTRA AL RESPONSE HACIA EL FRONT", data);
-		response.status(200).json({ message: "Guardado Correctamente", data: data});
+		console.log("ENTRA AL RESPONSE HACIA EL FRONT ", data);
+		response.status(200).json({ message: "Guardado Correctamente", data});
 	} catch (err) {
 		response.status(500).json({ message: 'Ocurrio un error procesando el archivo' });
-		console.error(err);
 	}
 });
 

@@ -2,8 +2,13 @@ const ExcelJS = require("exceljs");
 
 const { insertDataFileToDatabase } = require("../database/inserDataFiles");
 
-let recordsEnteredCount = 0;  
+let recordsEnteredCount = 0;
 let rowCount = 0;
+
+let rowsLog = {
+	recordsEnteredCount: recordsEnteredCount,
+	rowCount: rowCount,
+}
 
 const uploadExcel = async (path, fuente) => {
     const workbook = new ExcelJS.Workbook();
@@ -22,8 +27,9 @@ const uploadExcel = async (path, fuente) => {
 
         //Funcion de insercion en la base de datos
         recordsEnteredCount = await insertDataFileToDatabase(rowValues, idValue, mesValue, flattenedValues, rowNumber);
-        console.log(rowCount, recordsEnteredCount);
+
+		console.log(rowCount, recordsEnteredCount);
     })
 };
 
-module.exports = { uploadExcel };
+module.exports = { uploadExcel, rowsLog };

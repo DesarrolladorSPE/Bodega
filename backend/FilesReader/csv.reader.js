@@ -3,9 +3,12 @@ const fs = require("fs");
 
 const { insertDataFileToDatabase } = require("../database/inserDataFiles");
 
+let recordsEnteredCount = 0;
+let rowCount = 0;
+
+let rowsLog = {}
+
 const uploadCsv = async (path, fuente) => {
-	let rowCount = 0;
-	let recordsEnteredCount = {};
 
 	let stream = fs.createReadStream(path);
 	let csvDataColl = [];
@@ -28,7 +31,6 @@ const uploadCsv = async (path, fuente) => {
 
 			values.map(async (element) => {
 				rowCount = values.length;
-				console.log(`Numero de registros ${rowCount}`);
 				const idValue = parseInt(element[1]);
 				const mesValue = parseInt(element[4]);
 				const flattenedValues = element.flatMap(row => row);
@@ -37,6 +39,10 @@ const uploadCsv = async (path, fuente) => {
 				//Funcion de insercion en la base de datos
 				recordsEnteredCount = await insertDataFileToDatabase(element, idValue, mesValue, flattenedValues, rowNumber);
 				console.log(rowCount, recordsEnteredCount)
+				rowsLog = {
+					recordsEnteredCount: recordsEnteredCount,
+					rowCount: rowCount,
+				}
 			})
 		})
 		.on("error", (err) => {
@@ -44,6 +50,10 @@ const uploadCsv = async (path, fuente) => {
 			throw err;
 		});
 	stream.pipe(fileStream);
+	setTimeout(() => {
+		console.log(rowsLog);
+		return rowsLog;
+	}, 2000)
 }
 
-module.exports = {uploadCsv};
+module.exports = {uploadCsv, rowsLog};
