@@ -103,12 +103,17 @@ const AppProvider = ({children}) => {
         setLoading(false);
     }, []);
 
-	//EDICION DE USUARIOS
+	//EDICION DE USUARIOS y ELIMINACION DE USUARIOS
+		//EDICION
 	const [editingUser, setEditingUser] = React.useState(null);
 
 	const handleCloseEditForm = () => {
 		setEditingUser(null);
 	};
+
+		//ELIMINAR
+	const [ deletingUser, setDeletingUser ] = React.useState(null);
+
 
     return(
         <AppContext.Provider

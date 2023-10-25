@@ -40,4 +40,27 @@ router.put('/:userId', (request, response) => {
 	}
 });
 
+router.delete('/:userId', (request, response) => {
+	try {
+		const userId = request.params.userId;
+
+		connection.query('DELETE FROM login WHERE id = ?', [userId], (err, results) => {
+			if (err) {
+				console.error(err);
+				return response.status(500).json({ message: 'Error al eliminar el usuario' });
+			}
+
+			if (results.affectedRows === 0) {
+				return response.status(404).json({ message: 'Usuario no encontrado' });
+			}
+
+			// Envía una respuesta exitosa
+			return response.status(200).json({ message: 'Usuario eliminado correctamente' });
+		});
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ error: 'Error al eliminar el usuario' });
+	}
+});
+
 module.exports = router;

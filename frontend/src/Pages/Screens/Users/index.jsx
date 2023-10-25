@@ -18,6 +18,30 @@ const Users = () => {
 		context.setEditingUser(user);
 	};
 
+	const handleDelelteClick = async (userId) => {
+		context.setLoading(true);
+		try {
+			// Realiza una solicitud al servidor para eliminar el usuario
+			const response = await fetch(`${context.apiUri}/users/${userId}`, {
+				method: 'DELETE',
+			});
+			const data = await response.json();
+
+			if (response.status === 200) {
+				const updatedUsers = context.users.filter((user) => user.id !== userId);
+				context.setUsers(updatedUsers);
+				context.messageHandler("all-ok", data.message);
+
+			} else {
+				context.messageHandler("error", data.message);
+			}
+		} catch (err) {
+			console.error('Error en la solicitud de eliminación:', err);
+		} finally {
+			context.setLoading(false);
+		}
+	};
+
     return(
         <div className="users-container">
 			<div className="back-button-and-title-container">
@@ -41,6 +65,7 @@ const Users = () => {
                                     key={item.id}
                                     data={item}
 									handleEditClick={() => handleEditClick(item)}
+									handleDeleteClick={() => handleDelelteClick(item.id)}
                                 />
                             </>
                         ))

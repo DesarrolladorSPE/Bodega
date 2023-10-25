@@ -1,9 +1,10 @@
 import { BiEdit } from "react-icons/bi";
+import { AiFillDelete } from "react-icons/ai";
 
 import { SubTitle } from "../SubTitle";
 import "./styles.css";
 
-const UserCard = ({data, handleEditClick}) => {
+const UserCard = ({data, handleEditClick, handleDeleteClick}) => {
     const RolUser = (type) => {
         if(type === 1) {
             return(
@@ -37,11 +38,19 @@ const UserCard = ({data, handleEditClick}) => {
                 </div>
             </div>
 
-            <button className="users-edit-button"
-				onClick={handleEditClick}
-			>
-                <BiEdit/>
-            </button>
+			<div>
+				<button className="users-edit-button"
+					onClick={handleEditClick}
+				>
+					<BiEdit/>
+				</button>
+				<button className="users-edit-button"
+					onClick={handleDeleteClick}
+				>
+					<AiFillDelete/>
+				</button>
+			</div>
+
 
         </div>
     );
