@@ -66,7 +66,7 @@ const Login = () => {
 				color="#FFF"
 				borderColor="#FFF"
 			>
-				Bienvenido a Bodega de Archivos del SPE
+				Bienvenido a  la Bodega de Archivos del SPE
 			</Title>
 			<div className="login-container">
 				<Title

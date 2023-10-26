@@ -17,7 +17,8 @@ const UploadFile = () => {
 
     const handleFileChange = (event) => {
 		context.setLoading(true);
-        const file = event.target.files[0];
+		let file = null;
+        file = event.target.files[0];
 
         if (file) {
             const allowedExtensions = ['.xlsx', '.csv'];
@@ -55,6 +56,7 @@ const UploadFile = () => {
 					case 500: context.messageHandler("error", data.message); break;
 					case 200:
 						context.messageHandler("all-ok", data.message);
+						console.log(data.message);
 						context.setData(data.rowLog);
 						console.log(data.rowLog);
 					break;
@@ -68,6 +70,8 @@ const UploadFile = () => {
 			context.messageHandler("error", "Por favor, seleccione un archivo o fuente válido antes de cargar.")
         }
 		setSelectedOption(null);
+		setSelectedFile(null);
+		setSelectedFileName(null);
 		context.setLoading(false);
     };
 
@@ -88,6 +92,7 @@ const UploadFile = () => {
 						type="file"
 						accept=".xlsx, .csv"
 						onChange={handleFileChange}
+						onClick={(event) => event.target.value = null}
 						name="file"
 					/>
 					<span>
