@@ -7,6 +7,7 @@ import "./styles.css";
 const ConsolidadoCard = () => {
     const context = React.useContext(AppContext);
 
+    console.log(context.consolidadoTotal)
 
     return(
         <div className="consolidado-container">
@@ -36,7 +37,7 @@ const ConsolidadoCard = () => {
                         <p>Total:</p>
                     </div>
                     <div>
-                        {context.consolidadoTotal?.map((item, index) => (
+                        {context.consolidadoTotal[0]?.map((item, index) => (
                             <p
                                 key={index}
                             >
@@ -46,7 +47,7 @@ const ConsolidadoCard = () => {
                         <p></p>
                     </div>
                     <div>
-                        {context.consolidadoTotal?.map((item, index) => (
+                        {context.consolidadoTotal[1]?.map((item, index) => (
                             <p
                                 key={index}
                             >

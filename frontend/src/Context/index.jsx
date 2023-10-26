@@ -131,18 +131,29 @@ const AppProvider = ({children}) => {
 		setLoading(true);
         const fetchData = async () =>{
             try{
-                const response1 = await fetch(`${apiUri}/consolidado/total/1`);
-                const response2 = await fetch(`${apiUri}/consolidado/total/2`);
-                const response3 = await fetch(`${apiUri}/consolidado/total/3`);
+                const totalF1 = await fetch(`${apiUri}/consolidado/total/1`);
+                const totalF2 = await fetch(`${apiUri}/consolidado/total/2`);
+                const totalF3 = await fetch(`${apiUri}/consolidado/total/3`);
 
-                const data1 = await response1.json();
-                const data2 = await response2.json();
-                const data3 = await response3.json();
+                const dataTotalF1 = await totalF1.json();
+                const dataTotalF2 = await totalF2.json();
+                const dataTotalF3 = await totalF3.json();
+
+                const totalJovenesF1 = await fetch(`${apiUri}/consolidado/total-jovenes/1`);
+                const totalJovenesF2 = await fetch(`${apiUri}/consolidado/total-jovenes/2`);
+                const totalJovenesF3 = await fetch(`${apiUri}/consolidado/total-jovenes/3`);
+
+                const dataTotalJovenesF1 = await totalJovenesF1.json();
+                const dataTotalJovenesF2 = await totalJovenesF2.json();
+                const dataTotalJovenesF3 = await totalJovenesF3.json();
 
                 let data = [];
-                data = [...data1, ...data2, ...data3];
+                data = [
+                    [...dataTotalF1, ...dataTotalF2, ...dataTotalF3],
+                    [...dataTotalJovenesF1, ...dataTotalJovenesF2, ...dataTotalJovenesF3],
+                ];
 
-                if (response1.status === 200 && response2.status === 200 && response3.status === 200) {
+                if (totalF1.status === 200 && totalF2.status === 200 && totalF3.status === 200) {
                     setConsolidadoTotal(data);
                 } else {
                     messageHandler("error", "Datos no cargados correctamente");
