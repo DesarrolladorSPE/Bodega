@@ -4,6 +4,8 @@ import { MessageCard } from "../../components/MessageCard";
 import { Title } from "../../components/Title";
 import { UploadFile } from "../../components/UploadFile";
 
+import { ConsolidadoCard } from "../../components/ConsolidadoCard";
+
 import "./styles.css";
 import { RowAffectedCard } from "../../components/RowAffectedCard";
 
@@ -25,6 +27,7 @@ const Home = () => {
 				<div className="info-cards-container">
 					<MessageCard/>
 					<RowAffectedCard/>
+					<ConsolidadoCard/>
 				</div>
 			</div>
 

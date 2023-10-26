@@ -56,7 +56,7 @@ const AppProvider = ({children}) => {
     const [toggleNavBarResponsive, setToggleNavBarResponsive] = React.useState(false);
 
 
-
+      //Opciones de FUente
     const [options, setOptions] = React.useState({});
     React.useEffect(() => {
 		setLoading(true)
@@ -125,6 +125,37 @@ const AppProvider = ({children}) => {
 	}
 
 
+    //CONSOLIDADO
+    const [consolidadoTotal, setConsolidadoTotal] = React.useState(null);
+    React.useEffect(() => {
+		setLoading(true);
+        const fetchData = async () =>{
+            try{
+                const response1 = await fetch(`${apiUri}/consolidado/total/1`);
+                const response2 = await fetch(`${apiUri}/consolidado/total/2`);
+                const response3 = await fetch(`${apiUri}/consolidado/total/3`);
+
+                const data1 = await response1.json();
+                const data2 = await response2.json();
+                const data3 = await response3.json();
+
+                let data = [];
+                data = [...data1, ...data2, ...data3];
+
+                if (response1.status === 200 && response2.status === 200 && response3.status === 200) {
+                    setConsolidadoTotal(data);
+                } else {
+                    messageHandler("error", "Datos no cargados correctamente");
+                }
+            }
+            catch (err){
+                alert(err)
+            }
+        }
+        fetchData();
+		setLoading(false);
+    }, []);
+
     return(
         <AppContext.Provider
             value={{
@@ -176,7 +207,10 @@ const AppProvider = ({children}) => {
 				setEditingUser,
 				handleCloseEditForm,
 
-				resetUsersInfo
+				resetUsersInfo,
+
+                consolidadoTotal,
+                setConsolidadoTotal
 
             }}
         >
