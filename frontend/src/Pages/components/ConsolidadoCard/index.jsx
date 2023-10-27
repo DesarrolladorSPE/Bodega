@@ -9,8 +9,6 @@ import "./styles.css";
 const ConsolidadoCard = () => {
     const context = React.useContext(AppContext);
 
-    console.log(context.consolidadoTotal)
-
     return(
         <div className="consolidado-container">
 			<div className="back-button-and-title-container">

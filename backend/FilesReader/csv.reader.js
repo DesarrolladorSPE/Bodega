@@ -43,18 +43,23 @@ const uploadCsv = async (path, fuente) => {
 						const rowNumber = values.indexOf(element);
 
 						//Funcion de insercion en la base de datos
+						try {
+							databaseInfo = await insertDataFileToDatabase(
+								element,
+								idValue,
+								mesValue,
+								flattenedValues,
+								rowNumber
+							);
 
-						databaseInfo = await insertDataFileToDatabase(
-							element,
-							idValue,
-							mesValue,
-							flattenedValues,
-							rowNumber
-						);
+							wrongRecordsArray = [...wrongRecordsArray, ...databaseInfo.wrongRecordsArray];
+							recordsEnteredCount = recordsEnteredCount +  databaseInfo.recordsEnteredCount;
+							recordsAlreadyInDatabase = recordsAlreadyInDatabase +  databaseInfo.recordsAlreadyInDatabase;
+						} catch (err) {
+							console.error(`Error en el registro ${rowNumber}: ${err.message}`)
+							wrongRecordsArray.push(element);
+						}
 
-						wrongRecordsArray = [...wrongRecordsArray, ...databaseInfo.wrongRecordsArray];
-						recordsEnteredCount = recordsEnteredCount +  databaseInfo.recordsEnteredCount;
-						recordsAlreadyInDatabase = recordsAlreadyInDatabase +  databaseInfo.recordsAlreadyInDatabase;
 					})());
 				})
 
@@ -68,7 +73,7 @@ const uploadCsv = async (path, fuente) => {
 				resolve(rowsLog);
 			})
 			.on("error", (err) => {
-				throw err;
+				reject(err)
 			});
 		stream.pipe(fileStream);
 	})
