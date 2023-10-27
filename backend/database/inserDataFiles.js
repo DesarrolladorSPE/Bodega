@@ -46,7 +46,7 @@ const insertDataFileToDatabase = async (
 		}
 
 	} else {
-		console.log(`El registro con id: ${idValue} y mes: ${mesValue} ya esta en la base de datos`);
+		// console.log(`El registro con id: ${idValue} y mes: ${mesValue} ya esta en la base de datos`);
 		recordsAlreadyInDatabase++;
 	}
 	// return(recordsEnteredCount);

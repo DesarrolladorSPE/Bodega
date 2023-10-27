@@ -56,9 +56,7 @@ const UploadFile = () => {
 					case 500: context.messageHandler("error", data.message); break;
 					case 200:
 						context.messageHandler("all-ok", data.message);
-						console.log(data.message);
 						context.setData(data.rowLog);
-						console.log(data.rowLog);
 					break;
 				}
 
@@ -125,7 +123,12 @@ const UploadFile = () => {
 					}}
 				>
 
-					<option selected={selectedOption === null ? true : false } value={null}>Seleccione una fuente</option>
+					<option
+						selected={selectedOption === null ? true : false }
+						value={null}
+					>
+						Seleccione una fuente
+					</option>
 					{context.options?.map((item) => (
 						<option
 							key={item.id_fuente}

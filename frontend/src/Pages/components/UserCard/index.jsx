@@ -38,7 +38,7 @@ const UserCard = ({data, handleEditClick, handleDeleteClick}) => {
                 </div>
             </div>
 
-			<div>
+			<div className="user-card-buttons-container">
 				<button className="users-edit-button"
 					onClick={handleEditClick}
 				>

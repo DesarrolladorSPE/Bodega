@@ -95,7 +95,7 @@ const CreationUserForm = ({ onClose, handleCreateUser }) => {
 							<option value={1}>Administrador</option>
 						</select>
 					</div>
-					<div>
+					<div className="buttons-container">
 						<button
 							type="submit"
 							className="form-button save"

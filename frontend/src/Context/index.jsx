@@ -76,7 +76,7 @@ const AppProvider = ({children}) => {
 
     //Login
     const [ isLoged, setIsLoged ] = React.useState(false);
-
+		//CERRAR SESION
 	const closeSession = () => {
 		setAdmin(false);
 		setIsLoged(false);
@@ -121,7 +121,10 @@ const AppProvider = ({children}) => {
 		// RESET USERS
 	const resetUsersInfo = () => {
 		setCreatingUser(null);
-		setEditingUser(null)
+		setEditingUser(null);
+		setShowConsolidado(null);
+		setConsolidadoTotal(null);
+		setToggleNavBarResponsive(false);
 	}
 
 

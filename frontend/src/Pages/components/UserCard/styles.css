@@ -13,9 +13,10 @@
     box-sizing: border-box;
 }
 .users-all-info-container {
+	width: 100%;
     display: flex;
 	flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     gap: 25px;
 }
@@ -43,6 +44,12 @@
     font-weight: bold;
 }
 
+.user-card-buttons-container {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
 .users-edit-button {
     width: 40px;
     height: 40px;
@@ -68,4 +75,22 @@
     width: 100%;
     height: 100%;
     color: white;
+}
+
+
+@media (max-width: 700px) {
+	.users-all-info-container {
+		flex-direction: column;
+		gap: 15px;
+	}
+}
+
+@media (max-width: 550px) {
+	.users-card-container {
+		flex-direction: column;
+		gap: 15px;
+	}
+	.user-card-buttons-container {
+		flex-direction: row;
+	}
 }
