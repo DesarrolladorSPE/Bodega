@@ -20,7 +20,7 @@ const ConsolidadoCard = () => {
 
             <div className="table-container">
                 <div className="headers-container">
-                    <p>FUentes:</p>
+                    <p>Fuentes:</p>
                     <p>Total Personas Inscritas:</p>
                     <p>Total Personas Inscritas Jovenes:</p>
                     <p>Total Personas Inscritas PcD:</p>
@@ -44,30 +44,30 @@ const ConsolidadoCard = () => {
                                 {item.total}
                             </p>
                         ))}
-                        <p></p>
+                        <p>{context.consolidadoTotal[0]?.reduce((total, item) => total + item.total, 0)}</p>
                     </div>
                     <div>
                         {context.consolidadoTotal[1]?.map((item, index) => (
                             <p
                                 key={index}
                             >
-                                {item.total}
+                                {item.totalJovenes}
                             </p>
                         ))}
-                        <p></p>
+                        <p>{context.consolidadoTotal[1]?.reduce((total, item) => total + item.totalJovenes, 0)}</p>
                     </div>
                     <div>
-                        {context.consolidadoTotal?.map((item, index) => (
+                        {context.consolidadoTotal[2]?.map((item, index) => (
                             <p
                                 key={index}
                             >
-                                {item.total}
+                                {item.totalPcd}
                             </p>
                         ))}
-                        <p></p>
+                        <p>{context.consolidadoTotal[2]?.reduce((total, item) => total + item.totalPcd, 0)}</p>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     );

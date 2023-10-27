@@ -31,4 +31,18 @@ router.get("/total-jovenes/:fuente", async (request, response) => {
     );
 });
 
+router.get("/total-pcd/:fuente", async (request, response) => {
+    const fuente = request.params.fuente;
+    connection.query(
+        "SELECT SUM(total_personas_inscritas_PcD) as totalPcd FROM reportes WHERE fuente = ?",
+        [fuente],
+        (err, results) => {
+            if (err) {
+                throw err;
+            }
+            return response.status(200).json(results);
+        }
+    );
+});
+
 module.exports = router;

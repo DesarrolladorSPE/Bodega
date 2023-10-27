@@ -147,10 +147,19 @@ const AppProvider = ({children}) => {
                 const dataTotalJovenesF2 = await totalJovenesF2.json();
                 const dataTotalJovenesF3 = await totalJovenesF3.json();
 
+				const totalPcdF1 = await fetch(`${apiUri}/consolidado/total-pcd/1`);
+                const totalPcdF2 = await fetch(`${apiUri}/consolidado/total-pcd/2`);
+                const totalPcdF3 = await fetch(`${apiUri}/consolidado/total-pcd/3`);
+
+                const dataTotalPcdF1 = await totalPcdF1.json();
+                const dataTotalPcdF2 = await totalPcdF2.json();
+                const dataTotalPcdF3 = await totalPcdF3.json();
+
                 let data = [];
                 data = [
                     [...dataTotalF1, ...dataTotalF2, ...dataTotalF3],
                     [...dataTotalJovenesF1, ...dataTotalJovenesF2, ...dataTotalJovenesF3],
+                    [...dataTotalPcdF1, ...dataTotalPcdF2, ...dataTotalPcdF3],
                 ];
 
                 if (totalF1.status === 200 && totalF2.status === 200 && totalF3.status === 200) {
