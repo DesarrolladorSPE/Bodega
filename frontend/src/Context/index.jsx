@@ -126,6 +126,7 @@ const AppProvider = ({children}) => {
 
 
     //CONSOLIDADO
+    const [showConsolidado, setShowConsolidado] = React.useState(null);
     const [consolidadoTotal, setConsolidadoTotal] = React.useState(null);
     React.useEffect(() => {
 		setLoading(true);
@@ -162,19 +163,22 @@ const AppProvider = ({children}) => {
                     [...dataTotalPcdF1, ...dataTotalPcdF2, ...dataTotalPcdF3],
                 ];
 
-                if (totalF1.status === 200 && totalF2.status === 200 && totalF3.status === 200) {
+                if (totalF1.status === 200 && totalF2.status === 200 && totalF3.status === 200 &&
+					totalJovenesF1.status === 200 && totalJovenesF2.status === 200 && totalJovenesF3.status === 200 &&
+					totalPcdF1.status === 200 && totalPcdF2.status === 200 && totalPcdF3.status === 200
+					) {
                     setConsolidadoTotal(data);
                 } else {
                     messageHandler("error", "Datos no cargados correctamente");
                 }
             }
             catch (err){
-                alert(err)
+				messageHandler("error", err.message);
             }
         }
         fetchData();
 		setLoading(false);
-    }, []);
+    }, [showConsolidado]);
 
     return(
         <AppContext.Provider
@@ -230,7 +234,9 @@ const AppProvider = ({children}) => {
 				resetUsersInfo,
 
                 consolidadoTotal,
-                setConsolidadoTotal
+                setConsolidadoTotal,
+				showConsolidado,
+				setShowConsolidado
 
             }}
         >

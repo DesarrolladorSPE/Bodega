@@ -28,7 +28,7 @@ const NavIcons = ({NavBar=false,flexDirection}) => {
 				<>
 					<button
 						className="nav-button users-button"
-						onClick={() => console.log("CONSOLIDAR: ")}
+						onClick={() => context.setShowConsolidado(!context.showConsolidado)}
 					>
 						Consolidar
 					</button>

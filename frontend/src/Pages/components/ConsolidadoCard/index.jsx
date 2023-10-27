@@ -2,6 +2,8 @@ import React from "react";
 import { AppContext } from "../../../Context";
 import { Title } from "../Title";
 
+import { AiOutlineClose } from "react-icons/ai";
+
 import "./styles.css";
 
 const ConsolidadoCard = () => {
@@ -11,12 +13,17 @@ const ConsolidadoCard = () => {
 
     return(
         <div className="consolidado-container">
-            <Title
-                color={"#000"}
-                borderColor={"#000"}
-            >
-                Consolidado
-            </Title>
+			<div className="back-button-and-title-container">
+				<Title
+					color={"#FFF"}
+					borderColor={"#FFF"}
+				>
+					Consolidado
+				</Title>
+				<button onClick={() => context.setShowConsolidado(false)}>
+					<AiOutlineClose/>
+				</button>
+			</div>
 
             <div className="table-container">
                 <div className="headers-container">
@@ -26,17 +33,18 @@ const ConsolidadoCard = () => {
                     <p>Total Personas Inscritas PcD:</p>
                 </div>
                 <div className="all-info-container">
-                    <div>
+                    <div className="table-row-container">
                         {context.options?.map((item, index) => (
                             <p
                                 key={index}
+								className="row-title"
                             >
-                                {item.nombre}
+                                {item.nombre}:
                             </p>
                         ))}
-                        <p>Total:</p>
+                        <p className="row-title total">Total:</p>
                     </div>
-                    <div>
+                    <div className="table-row-container">
                         {context.consolidadoTotal[0]?.map((item, index) => (
                             <p
                                 key={index}
@@ -44,9 +52,9 @@ const ConsolidadoCard = () => {
                                 {item.total}
                             </p>
                         ))}
-                        <p>{context.consolidadoTotal[0]?.reduce((total, item) => total + item.total, 0)}</p>
+                        <p className="total">{context.consolidadoTotal[0]?.reduce((total, item) => total + item.total, 0)}</p>
                     </div>
-                    <div>
+                    <div className="table-row-container">
                         {context.consolidadoTotal[1]?.map((item, index) => (
                             <p
                                 key={index}
@@ -54,9 +62,9 @@ const ConsolidadoCard = () => {
                                 {item.totalJovenes}
                             </p>
                         ))}
-                        <p>{context.consolidadoTotal[1]?.reduce((total, item) => total + item.totalJovenes, 0)}</p>
+                        <p className="total">{context.consolidadoTotal[1]?.reduce((total, item) => total + item.totalJovenes, 0)}</p>
                     </div>
-                    <div>
+                    <div className="table-row-container">
                         {context.consolidadoTotal[2]?.map((item, index) => (
                             <p
                                 key={index}
@@ -64,7 +72,7 @@ const ConsolidadoCard = () => {
                                 {item.totalPcd}
                             </p>
                         ))}
-                        <p>{context.consolidadoTotal[2]?.reduce((total, item) => total + item.totalPcd, 0)}</p>
+                        <p className="total">{context.consolidadoTotal[2]?.reduce((total, item) => total + item.totalPcd, 0)}</p>
                     </div>
                 </div>
 
