@@ -1,0 +1,38 @@
+BASE DE DATOS:
+
+    Paso 1: Crear una base de datos de MySQL llamada "bodega" con la version mas reciente de MySQL y phpmyadmin
+
+    Paso 2: Buscar el archivo llamado "bodega-db.sql" en la carpeta "files" e insertarla en la base de datos recien creada
+
+PROYECTO BODEGA
+    NOTA: Si no funciona el proyecto, porfavor revisar la NOTA del paso 6:
+
+    Paso 1: En la carpeta raiz del proyecto ejecutar el comando:
+        git pull origin main
+
+    Paso 2: En la carpeta Backend y Frontend ejecutar el siguiente comando:
+        npm i
+
+    Paso 3: En la carpeta backend ejecutar el siguiente comando y verificar la conexion a base de datos correctamente:
+        npm run prod
+
+    Paso 4: Una vez el servidor backend este funcionando correctamente, es necesario cambiar el valor del dominio en el Frontend:
+        Acceder a la archivo index.jsx en la carpeta:
+            frontend/src/Context/index.jsx
+
+            Y cambiar el valor de la variable "domain" en la linea de codigo 7 por el nombre del dominio del servidor backend:
+                Ejemplo: "http://localhost:3080"
+
+    Paso 5: En la carpeta Frontend ejecutar el siguiente comando y verificar que se creo la carpeta dist:
+        npm run build
+
+        NOTA: La version compilada del Proyecto se escuentra en la carpeta "dist", por lo que esta carpeta se debe subir junto a la carpeta backend al servidor de produccion
+
+    Paso 6: Verificar el dominio en el cual se va a montar el proyecto:
+        Ejemplo: "http://domainexample.com"
+
+        Siguiente a esto, se debe agregar este dominion al array "whiteList" ubicado en el archivo index.js en la carpeta backend
+        
+        NOTA IMPORTANTE: "Verificar conexion con el backend desde el frontend para mantener la integridad del proyecto", y "Verificar que el dominio del frontend se encuentra dentro de la whitelist para satisfacer la autenticacion de CORS" , y "Verificar que la variable "domain" en la linea 7 en la carpeta "frontend/src/Context/index.jsx", tenga el nombre del dominio del servidor backend"
+
+    Paso 7: Verificar que el proyecto funciona correctamente.
