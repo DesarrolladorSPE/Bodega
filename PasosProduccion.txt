@@ -13,7 +13,9 @@ PROYECTO BODEGA
     Paso 2: En la carpeta Backend y Frontend ejecutar el siguiente comando:
         npm i
 
-    Paso 3: En la carpeta backend ejecutar el siguiente comando y verificar la conexion a base de datos correctamente:
+    Paso 3: En la carpeta "backend/database/index.js" cambiar las credenciales de la base de datos por la base de datos de produccion.
+    
+    En la carpeta backend ejecutar el siguiente comando y verificar la conexion a base de datos correctamente:
         npm run prod
 
     Paso 4: Una vez el servidor backend este funcionando correctamente, es necesario cambiar el valor del dominio en el Frontend:
