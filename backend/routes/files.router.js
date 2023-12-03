@@ -53,6 +53,7 @@ router.post("/upload", upload.single("file"), async (request, response) => {
 
 		response.status(200).json({ message: "Guardado Correctamente", rowLog});
 	} catch (err) {
+		console.error(err);
 		response.status(500).json({ message: 'Error procesando el archivo, o el archivo esta corrupto' });
 	}
 });
