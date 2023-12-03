@@ -27,11 +27,13 @@ const Home = () => {
 				<div className="info-cards-container">
 					<MessageCard/>
 					<RowAffectedCard/>
-					{context.showConsolidado &&
-						<ConsolidadoCard/>
-					}
+
 				</div>
 			</div>
+
+			{context.showConsolidado &&
+				<ConsolidadoCard/>
+			}
 
 		</div>
     );

@@ -32,7 +32,7 @@ const ConsolidadoCard = () => {
                 </div>
                 <div className="all-info-container">
                     <div className="table-row-container">
-                        {context.options?.map((item, index) => (
+                        {context.responseData?.fuentes?.map((item, index) => (
                             <p
                                 key={index}
 								className="row-title"
