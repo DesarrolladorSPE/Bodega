@@ -24,10 +24,8 @@ const getFileIdInBaseTable = async () => {
             if (err) {
                 reject(err);
             } else {
-                const existingIdsAndMes = results.map(result => ({
-					id: result.id,
-				}));
-                resolve(existingIdsAndMes);
+				const ids = results.map(row => row.id_punto);
+                resolve(ids);
             }
         });
     });
