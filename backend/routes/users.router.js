@@ -3,15 +3,6 @@ const { connection } = require("../database")
 
 const router = express.Router();
 
-router.get("/", (request, response) => {
-    connection.query("SELECT * FROM login", (err, result) => {
-        if (err) {
-            throw err;
-        }
-        return response.json(result);
-    })
-})
-
 router.post('/', (request, response) => {
 	try {
 		const newUserData = request.body;

@@ -129,7 +129,7 @@ const UploadFile = () => {
 					>
 						Seleccione una fuente
 					</option>
-					{context.options?.map((item) => (
+					{context.responseData.fuentes?.map((item) => (
 						<option
 							key={item.id_fuente}
 							value={item.id_fuente}

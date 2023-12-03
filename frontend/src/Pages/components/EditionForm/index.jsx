@@ -33,7 +33,7 @@ const EditionForm = ({ user, onClose }) => {
 			const data = await response.json();
 
 			if (response.status === 200) {
-				const updatedUsers = context.users.map((user) =>
+				const updatedUsers = context.users?.map((user) =>
 					user.id === context.editingUser.id ? { ...user, ...updatedData } : user
 				);
 				context.setUsers(updatedUsers);

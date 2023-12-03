@@ -42,38 +42,65 @@ const AppProvider = ({children}) => {
 
 	}
 
-	// Screen width manager
-    const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
-    React.useEffect(() => {
-        function handleResize() {
-          setWindowWidth(window.innerWidth);
-        }
 
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-      }, []);
+	// FETCH DATA
+	const [responseData, setResponseData ] = React.useState(null);
+    const [users, setUsers] = React.useState();
+	const [filters, setFilters] = React.useState({
 
+    });
 
-    const [toggleNavBarResponsive, setToggleNavBarResponsive] = React.useState(false);
+	const fetchData = async (endpoint) => {
+        try {
+            const response = await fetch(`${apiUri}/${endpoint}`);
 
-
-      //Opciones de FUente
-    const [options, setOptions] = React.useState({});
-    React.useEffect(() => {
-		setLoading(true)
-        const fetchData = async () =>{
-            try{
-                const response = await fetch(`${apiUri}/fuentes`);
-                const data = await response.json();
-                setOptions(data);
+            if (!response.status === 200) {
+				messageHandler("error", `Error fetching ${endpoint}: ${response.statusText}`);
+                // throw new Error(`Error fetching ${endpoint}: ${response.statusText}`);
             }
-            catch (err){
-                alert(err)
-            }
+
+            return await response.json();
+
         }
-        fetchData();
-		setLoading(false);
-    }, []);
+        catch (err) {
+			messageHandler("error", `Error fetching ${endpoint}: ${err.message}`);
+            // throw new Error(`Error fetching ${endpoint}: ${err.message}`);
+        }
+    };
+
+    const fetchAllData = async () => {
+        try {
+            setLoading(true);
+            const filterParams = new URLSearchParams(filters);
+
+            const endpoints = [
+				// "fuentes",
+				// "users"
+				"info"
+            ];
+
+            // Realizar todas las solicitudes en paralelo
+            const resultsArray = await Promise.all(endpoints.map(fetchData));
+
+            const combinedResults = resultsArray.reduce((acc, result) => {
+                return { ...acc, ...result };
+            }, {});
+
+            setResponseData(combinedResults);
+			setUsers(combinedResults.users)
+			console.log(combinedResults);
+
+        } catch (err) {
+            alert(err.message);
+        }
+        finally {
+            setLoading(false);
+        }
+    };
+
+    React.useEffect(() => {
+        fetchAllData();
+    }, [filters]);
 
     //Login
     const [ isLoged, setIsLoged ] = React.useState(false);
@@ -85,25 +112,6 @@ const AppProvider = ({children}) => {
 
 		messageHandler("all-ok", "Sesión cerrada correctamente")
 	}
-
-    //USERS
-    const [users, setUsers] = React.useState();
-
-    React.useEffect(() => {
-        setLoading(true)
-        const fetchData = async () =>{
-            try{
-                const response = await fetch(`${apiUri}/users`);
-                const data = await response.json();
-                setUsers(data);
-            }
-            catch (err){
-                alert(err)
-            }
-        }
-        fetchData();
-        setLoading(false);
-    }, []);
 
 	//CREACION, EDICION y ELIMINACION DE USUARIOS
 		//CREACION
@@ -179,10 +187,27 @@ const AppProvider = ({children}) => {
             catch (err){
 				messageHandler("error", err.message);
             }
+			finally {
+				setLoading(false);
+			}
         }
         fetchData();
-		setLoading(false);
     }, [showConsolidado]);
+
+
+	// Screen width manager
+	const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
+	React.useEffect(() => {
+		function handleResize() {
+		setWindowWidth(window.innerWidth);
+		}
+
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
+
+
+	const [toggleNavBarResponsive, setToggleNavBarResponsive] = React.useState(false);
 
     return(
         <AppContext.Provider
@@ -215,9 +240,10 @@ const AppProvider = ({children}) => {
 
 
 
-
-                options,
-                setOptions,
+				responseData,
+				setResponseData,
+				filters,
+				setFilters,
 
                 isLoged,
                 setIsLoged,
