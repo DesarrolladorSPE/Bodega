@@ -28,16 +28,12 @@ const insertDataFileToDatabase = async (
 	}
 
 	const placeholders = Array(columnNames.split(',').length).fill("?").join(",");
-	console.log(placeholders);
-
 	let conditionalData = await getConditionalDataForInsertRecord(fuente);
-	console.log(conditionalData);
 
     const isRecordExisting = columnNames.split(', ').some(columnName =>
         conditionalData[columnName] && conditionalData[columnName].includes(idValue) &&
         conditionalData.mes && conditionalData.mes.includes(mesValue)
     );
-	console.log(isRecordExisting);
 
 	if(!isRecordExisting) {
 		let query = `INSERT INTO ${tableName} (fuente, ${columnNames}) VALUES (?,${placeholders})`;
