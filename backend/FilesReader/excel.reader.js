@@ -16,18 +16,19 @@ const uploadExcel = async (path, fuente) => {
 
     const workbook = new ExcelJS.Workbook();
     const worksheet = await workbook.xlsx.readFile(path);
-    const worksheetData = worksheet.getWorksheet(1);
+
+	const worksheetData = worksheet.worksheets[0];
+
 
 	let promises = [];
-
 	let baseColumnNames = await getColumnNamesInBaseTable();
 
-    worksheetData.eachRow(async (row, rowNumber) => {
-        rowCount = worksheetData.rowCount - 1;
-        if (rowNumber === 1) return;
+	worksheetData.eachRow(async (row, rowNumber) => {
+		rowCount = worksheetData.rowCount - 1;
+		if (rowNumber === 1) return;
 
 
-        promises.push((async () => {
+		promises.push((async () => {
 			const rowValues = row.values;
 			rowValues.splice(0,1);
 			const idValue = parseInt(rowValues[0]);
@@ -38,6 +39,8 @@ const uploadExcel = async (path, fuente) => {
 				return typeof value === 'object' && value.text ? value.text : value;
 			});
 			const flattenedValues = sanitizedValues.map(value => (value !== undefined ? value : null));
+
+			// console.log(flattenedValues);
 
 
 			//Funcion de insercion en la base de datos
@@ -66,9 +69,9 @@ const uploadExcel = async (path, fuente) => {
 				recordsAlreadyInDatabase = recordsAlreadyInDatabase +  databaseInfo.recordsAlreadyInDatabase;
 			}
 
-        })());
+		})());
 
-    });
+	});
 	await Promise.all(promises);
 
 	return rowsLog = {
@@ -77,7 +80,6 @@ const uploadExcel = async (path, fuente) => {
 		recordsEnteredCount: recordsEnteredCount,
 		recordsAlreadyInDatabase: recordsAlreadyInDatabase,
 	}
-
 };
 
 module.exports = { uploadExcel };

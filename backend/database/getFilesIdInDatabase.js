@@ -18,7 +18,7 @@ const getFileIdAndMesInDatabase = async () => {
 }
 
 const getFileIdInBaseTable = async () => {
-    const query = "SELECT id_punto FROM base";
+    const query = "SELECT id_punto FROM 4_base";
     return new Promise((resolve, reject) => {
         connection.query(query, (err, results) => {
             if (err) {
@@ -36,7 +36,7 @@ const getColumnNamesInBaseTable = async () => {
     const query = `
 		SELECT GROUP_CONCAT(COLUMN_NAME) AS baseColumnNames
 		FROM INFORMATION_SCHEMA.COLUMNS
-		WHERE TABLE_NAME = 'base' AND COLUMN_NAME NOT IN ('id', 'fuente');
+		WHERE TABLE_NAME = '4_base' AND COLUMN_NAME NOT IN ('id', 'fuente');
 	`;
     return new Promise((resolve, reject) => {
         connection.query(query, (err, results) => {

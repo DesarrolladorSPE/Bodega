@@ -25,6 +25,7 @@ const insertDataFileToDatabase = async (
 			await new Promise((resolve, reject) => {
 				connection.query(query, flattenedValues, (err, result) => {
 					if (err) {
+						// console.error(err);
 						// console.log("No se pudo insertar el registro", idValue ? `ID: ${idValue}, Fila: ${rowNumber}` : `Fila: ${rowNumber}, debido a datos erroneos:`);
 						// console.log(`Error: \n ${err}`)
 						wrongRecordsArray = [{
@@ -80,7 +81,7 @@ const insertBaseDeCaracterizacionFileToDatabase = async (
 		const isRecordExisting = existingIds.includes(idValue);
 
 		if(!isRecordExisting) {
-			let query = `INSERT INTO base (fuente,${baseColumnNames}) VALUES (?,${placeholders})`;
+			let query = `INSERT INTO 4_base (fuente,${baseColumnNames}) VALUES (?,${placeholders})`;
 
 			try {
 				await new Promise((resolve, reject) => {
@@ -89,7 +90,7 @@ const insertBaseDeCaracterizacionFileToDatabase = async (
 						if (err) {
 							// console.log("No se pudo insertar el registro", idValue ? `ID: ${idValue}, Fila: ${rowNumber}` : `Fila: ${rowNumber}, debido a datos erroneos:`);
 							// console.log(`Error: \n ${err}`)
-							console.error(err);
+							// console.error(err);
 							wrongRecordsArray = [{
 								ID: idValue,
 								fila: rowNumber,
@@ -110,7 +111,7 @@ const insertBaseDeCaracterizacionFileToDatabase = async (
 
 		}
 		else {
-			let updateQuery = `UPDATE base SET fuente = ?, ${baseColumnNames.split(',').map(col => `${col.trim()} = ?`).join(', ')} WHERE id_punto = ?`;
+			let updateQuery = `UPDATE 4_base SET fuente = ?, ${baseColumnNames.split(',').map(col => `${col.trim()} = ?`).join(', ')} WHERE id_punto = ?`;
 
 			try {
 				await new Promise((resolve, reject) => {
