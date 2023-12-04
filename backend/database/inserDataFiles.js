@@ -1,31 +1,51 @@
 const { connection } = require("./")
-const { columnNames } = require("./");
-const { getFileIdAndMesInDatabase, getFileIdInBaseTable, getColumnNamesInBaseTable} = require("./getFilesIdInDatabase");
+// const { columnNames } = require("./");
+const { getFileIdAndMesInDatabase, getConditionalDataForInsertRecord } = require("./getFilesIdInDatabase");
 
 const insertDataFileToDatabase = async (
 		element,
 		idValue,
 		mesValue,
+		columnNames,
 		flattenedValues,
-		rowNumber
+		rowNumber,
+		fuente
 	) => {
+	const tableNames = {
+		1: '1_formularioweb',
+		2: '2_sise',
+		3: '3_sena',
+	};
+	const tableName = tableNames[fuente];
 
 	let wrongRecordsArray = [];
 	let recordsEnteredCount = 0;
 	let recordsAlreadyInDatabase = 0;
 
-	let existingIdsAndMes = await getFileIdAndMesInDatabase();
+	// let existingIdsAndMes = await getFileIdAndMesInDatabase();
+	while (flattenedValues.length <= columnNames.split(',').length) {
+		flattenedValues.push(null);
+	}
 
-	const placeholders = Array(columnNames.split(', ').length).fill("?").join(", ");
+	const placeholders = Array(columnNames.split(',').length).fill("?").join(",");
+	console.log(placeholders);
 
-	if(!existingIdsAndMes.some(entry => entry.id === idValue && entry.mes === mesValue)) {
-		let query = `INSERT INTO reportes (fuente, ${columnNames}) VALUES (?,${placeholders})`;
+	let conditionalData = await getConditionalDataForInsertRecord(fuente);
+	console.log(conditionalData);
 
+    const isRecordExisting = columnNames.split(', ').some(columnName =>
+        conditionalData[columnName] && conditionalData[columnName].includes(idValue) &&
+        conditionalData.mes && conditionalData.mes.includes(mesValue)
+    );
+	console.log(isRecordExisting);
+
+	if(!isRecordExisting) {
+		let query = `INSERT INTO ${tableName} (fuente, ${columnNames}) VALUES (?,${placeholders})`;
 		try {
 			await new Promise((resolve, reject) => {
 				connection.query(query, flattenedValues, (err, result) => {
 					if (err) {
-						// console.error(err);
+						console.error(err);
 						// console.log("No se pudo insertar el registro", idValue ? `ID: ${idValue}, Fila: ${rowNumber}` : `Fila: ${rowNumber}, debido a datos erroneos:`);
 						// console.log(`Error: \n ${err}`)
 						wrongRecordsArray = [{
@@ -62,26 +82,28 @@ const insertDataFileToDatabase = async (
 const insertBaseDeCaracterizacionFileToDatabase = async (
 	element,
 	idValue,
-	baseColumnNames,
+	columnNames,
 	flattenedValues,
-	rowNumber
+	rowNumber,
+	fuente
 ) => {
 	try {
 		let wrongRecordsArray = [];
 		let recordsEnteredCount = 0;
 		let recordsAlreadyInDatabase = 0;
 
-		const placeholders = Array(baseColumnNames.split(',').length).fill("?").join(",");
 
-		while (flattenedValues.length <= baseColumnNames.split(',').length) {
+		const placeholders = Array(columnNames.split(',').length).fill("?").join(",");
+
+		while (flattenedValues.length <= columnNames.split(',').length) {
 			flattenedValues.push(null);
 		}
 
-		let existingIds = await getFileIdInBaseTable();
-		const isRecordExisting = existingIds.includes(idValue);
+		let { id_punto } = await getConditionalDataForInsertRecord(fuente);
+		const isRecordExisting = id_punto.includes(idValue);
 
 		if(!isRecordExisting) {
-			let query = `INSERT INTO 4_base (fuente,${baseColumnNames}) VALUES (?,${placeholders})`;
+			let query = `INSERT INTO 4_base (fuente,${columnNames}) VALUES (?,${placeholders})`;
 
 			try {
 				await new Promise((resolve, reject) => {
@@ -111,7 +133,7 @@ const insertBaseDeCaracterizacionFileToDatabase = async (
 
 		}
 		else {
-			let updateQuery = `UPDATE 4_base SET fuente = ?, ${baseColumnNames.split(',').map(col => `${col.trim()} = ?`).join(', ')} WHERE id_punto = ?`;
+			let updateQuery = `UPDATE 4_base SET fuente = ?, ${columnNames.split(',').map(col => `${col.trim()} = ?`).join(', ')} WHERE id_punto = ?`;
 
 			try {
 				await new Promise((resolve, reject) => {

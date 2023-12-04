@@ -1,7 +1,8 @@
 const { connection } = require("./index");
 
 const getFileIdAndMesInDatabase = async () => {
-    const query = "SELECT id, mes FROM reportes";
+	const query = `SELECT id, mes FROM reportes`;
+
     return new Promise((resolve, reject) => {
         connection.query(query, (err, results) => {
             if (err) {
@@ -17,36 +18,64 @@ const getFileIdAndMesInDatabase = async () => {
     });
 }
 
-const getFileIdInBaseTable = async () => {
-    const query = "SELECT id_punto FROM 4_base";
+const getConditionalDataForInsertRecord = async (fuente) => {
+    const tableNames = {
+        1: { tableName: '1_formularioweb', idColumnName: ['codigo_prestador', "mes"] },
+        2: { tableName: '2_sise', idColumnName: ['ID_PRESTADOR', "MES"]},
+        3: { tableName: '3_sena', idColumnName: ['DPT_ID'] },
+        4: { tableName: '4_base', idColumnName: ['id_punto'] },
+    };
+    const { tableName, idColumnName } = tableNames[fuente];
+
+    const filterColumns = idColumnName.join(', ');
+
+	const query = `SELECT ${filterColumns} FROM ${tableName}`;
+
     return new Promise((resolve, reject) => {
         connection.query(query, (err, results) => {
             if (err) {
                 reject(err);
             } else {
-				const ids = results.map(row => row.id_punto);
-                resolve(ids);
+                const resultObject = {};
+
+                idColumnName.forEach(column => {
+                    resultObject[column] = results.map(result => result[column]);
+                });
+                resolve(resultObject);
             }
         });
     });
 }
 
+const getColumnNamesInDataBase = async (fuente) => {
+	const tableNames = {
+		1: '1_formularioweb',
+		2: '2_sise',
+		3: '3_sena',
+		4: '4_base',
+	};
+	const tableName = tableNames[fuente];
 
-const getColumnNamesInBaseTable = async () => {
-    const query = `
-		SELECT GROUP_CONCAT(COLUMN_NAME) AS baseColumnNames
-		FROM INFORMATION_SCHEMA.COLUMNS
-		WHERE TABLE_NAME = '4_base' AND COLUMN_NAME NOT IN ('id', 'fuente');
-	`;
-    return new Promise((resolve, reject) => {
-        connection.query(query, (err, results) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(results[0].baseColumnNames);
-            }
-        });
-    });
-}
+	if (!tableName) {
+		throw new Error(`No se encontró una tabla asociada para la fuente ${fuente}`);
+	}
 
-module.exports = {getFileIdAndMesInDatabase, getFileIdInBaseTable, getColumnNamesInBaseTable};
+	return new Promise((resolve, reject) => {
+		const query = `
+			SELECT GROUP_CONCAT(COLUMN_NAME) AS columnNames
+			FROM INFORMATION_SCHEMA.COLUMNS
+			WHERE TABLE_NAME = ? AND COLUMN_NAME NOT IN ('id', 'fuente');
+		`;
+
+		connection.query(query, [tableName], (err, results) => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(results[0].columnNames);
+			}
+		});
+	});
+};
+
+
+module.exports = {getFileIdAndMesInDatabase, getColumnNamesInDataBase, getConditionalDataForInsertRecord};

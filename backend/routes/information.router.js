@@ -1,6 +1,8 @@
 const express = require("express");
 const { connection } = require("../database")
 
+const { getColumnNamesInDataBase, getConditionalDataForInsertRecord, getFileIdAndMesInDatabase } = require("../database/getFilesIdInDatabase");
+
 const util = require("util");
 
 const router = express.Router();
@@ -8,14 +10,23 @@ const router = express.Router();
 
 const query = util.promisify(connection.query).bind(connection);
 
-const getUsersAndFuentes = async () => {
+const fetchData = async () => {
     try {
         const users = await query("SELECT * FROM login");
         const fuentes = await query("SELECT * FROM fuentes");
 
+		const columnNames = await getColumnNamesInDataBase(3);
+
+		const test1 = await getConditionalDataForInsertRecord(4);
+		const teest2 = await getFileIdAndMesInDatabase()
+
+
         return {
 			users,
-			fuentes
+			fuentes,
+			columnNames,
+			test1,
+			teest2
 		 };
 
     } catch (err) {
@@ -26,15 +37,9 @@ const getUsersAndFuentes = async () => {
 
 router.get("/", async (request, response) => {
 	try {
-        const {
-			users,
-			fuentes
-		} = await getUsersAndFuentes();
+        const results = await fetchData();
 
-        return response.status(200).json({
-            users,
-            fuentes,
-        });
+        return response.status(200).json(results);
 
     }
 	catch (err) {

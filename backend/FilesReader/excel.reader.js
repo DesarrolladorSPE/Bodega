@@ -1,7 +1,7 @@
 const ExcelJS = require("exceljs");
 
 const { insertDataFileToDatabase, insertBaseDeCaracterizacionFileToDatabase } = require("../database/inserDataFiles");
-const { getColumnNamesInBaseTable } = require("../database/getFilesIdInDatabase");
+const { getColumnNamesInDataBase } = require("../database/getFilesIdInDatabase");
 
 
 
@@ -21,7 +21,7 @@ const uploadExcel = async (path, fuente) => {
 
 
 	let promises = [];
-	let baseColumnNames = await getColumnNamesInBaseTable();
+	const columnNames = await getColumnNamesInDataBase(fuente);
 
 	worksheetData.eachRow(async (row, rowNumber) => {
 		rowCount = worksheetData.rowCount - 1;
@@ -49,8 +49,10 @@ const uploadExcel = async (path, fuente) => {
 					rowValues,
 					idValue,
 					mesValue,
+					columnNames,
 					flattenedValues,
 					rowNumber,
+					fuente,
 				);
 				wrongRecordsArray = [...wrongRecordsArray, ...databaseInfo.wrongRecordsArray];;
 				recordsEnteredCount = recordsEnteredCount +  databaseInfo.recordsEnteredCount;
@@ -60,9 +62,10 @@ const uploadExcel = async (path, fuente) => {
 				databaseInfo = await insertBaseDeCaracterizacionFileToDatabase(
 					rowValues,
 					idValue,
-					baseColumnNames,
+					columnNames,
 					flattenedValues,
 					rowNumber,
+					fuente,
 				);
 				wrongRecordsArray = [...wrongRecordsArray, ...databaseInfo.wrongRecordsArray];;
 				recordsEnteredCount = recordsEnteredCount +  databaseInfo.recordsEnteredCount;
@@ -70,7 +73,6 @@ const uploadExcel = async (path, fuente) => {
 			}
 
 		})());
-
 	});
 	await Promise.all(promises);
 
