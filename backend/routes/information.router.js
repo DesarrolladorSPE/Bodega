@@ -14,19 +14,11 @@ const fetchData = async () => {
     try {
         const users = await query("SELECT * FROM login");
         const fuentes = await query("SELECT * FROM fuentes");
-
-		const columnNames = await getColumnNamesInDataBase(3);
-
-		const test1 = await getConditionalDataForInsertRecord(3);
-		const teest2 = await getFileIdAndMesInDatabase()
-
-
+		const column1 = [await getColumnNamesInDataBase(1), await getColumnNamesInDataBase(2),await getColumnNamesInDataBase(3), await getColumnNamesInDataBase(4)]
         return {
 			users,
 			fuentes,
-			columnNames,
-			test1,
-			teest2
+			column1
 		 };
 
     } catch (err) {

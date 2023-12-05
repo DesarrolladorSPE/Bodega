@@ -50,7 +50,7 @@ const insertDataFileToDatabase = async (
 			}
 			return(isRecordExisting);
 		} catch (err) {
-			// console.error(err)
+
 		}
 	}
 
@@ -116,8 +116,8 @@ const insertBaseDeCaracterizacionFileToDatabase = async (
 			flattenedValues.push(null);
 		}
 
-		let { id_punto } = await getConditionalDataForInsertRecord(fuente);
-		const isRecordExisting = id_punto.includes(idValue);
+		let conditionalData  = await getConditionalDataForInsertRecord(fuente);
+		let isRecordExisting = conditionalData.some(entry => entry.id_punto == idValue);
 
 		if(!isRecordExisting) {
 			let query = `INSERT INTO 4_base (fuente,${columnNames}) VALUES (?,${placeholders})`;

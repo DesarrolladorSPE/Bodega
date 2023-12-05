@@ -46,9 +46,6 @@ const AppProvider = ({children}) => {
 	// FETCH DATA
 	const [responseData, setResponseData ] = React.useState(null);
     const [users, setUsers] = React.useState();
-	const [filters, setFilters] = React.useState({
-
-    });
 
 	const fetchData = async (endpoint) => {
         try {
@@ -71,11 +68,7 @@ const AppProvider = ({children}) => {
     const fetchAllData = async () => {
         try {
             setLoading(true);
-            const filterParams = new URLSearchParams(filters);
-
             const endpoints = [
-				// "fuentes",
-				// "users"
 				"info"
             ];
 
@@ -88,10 +81,9 @@ const AppProvider = ({children}) => {
 
             setResponseData(combinedResults);
 			setUsers(combinedResults.users)
-			console.log(combinedResults);
 
         } catch (err) {
-            alert(err.message);
+			messageHandler("error", `${err.message}`);
         }
         finally {
             setLoading(false);
@@ -100,7 +92,7 @@ const AppProvider = ({children}) => {
 
     React.useEffect(() => {
         fetchAllData();
-    }, [filters]);
+    }, []);
 
     //Login
     const [ isLoged, setIsLoged ] = React.useState(false);
@@ -138,8 +130,19 @@ const AppProvider = ({children}) => {
 
 
     //CONSOLIDADO
+	const [filters, setFilters] = React.useState({
+		"mes": "",
+		"ano": ""
+    });
+
+	const handleFilterChange = (filterName, value) => {
+        setFilters((prevFilters) => ({ ...prevFilters, [filterName]: value }));
+    };
+
     const [showConsolidado, setShowConsolidado] = React.useState(null);
     const [consolidadoTotal, setConsolidadoTotal] = React.useState(null);
+    const [consolidado, setConsolidado] = React.useState(null);
+
     React.useEffect(() => {
 		setLoading(true);
         const fetchData = async () =>{
@@ -193,6 +196,36 @@ const AppProvider = ({children}) => {
         }
         fetchData();
     }, [showConsolidado]);
+
+	const fetchConsolidadoData = async () => {
+        try {
+            setLoading(true);
+            const filterParams = new URLSearchParams(filters);
+            const endpoints = [
+				`consolidado?${filterParams.toString()}`
+            ];
+
+            const resultsArray = await Promise.all(endpoints.map(fetchData));
+            const combinedResults = resultsArray.reduce((acc, result) => {
+                return { ...acc, ...result };
+            }, {});
+
+			setConsolidado(combinedResults);
+			console.log(combinedResults);
+            // setResponseData(combinedResults);
+			// setUsers(combinedResults.users)
+
+        } catch (err) {
+			messageHandler("error", `${err.message}`);
+        }
+        finally {
+            setLoading(false);
+        }
+    };
+
+    React.useEffect(() => {
+        fetchConsolidadoData();
+    }, [filters, showConsolidado]);
 
 
 	// Screen width manager
@@ -263,8 +296,12 @@ const AppProvider = ({children}) => {
 
 				resetUsersInfo,
 
+				//Consolidado
+				handleFilterChange,
                 consolidadoTotal,
                 setConsolidadoTotal,
+				consolidado,
+				setConsolidado,
 				showConsolidado,
 				setShowConsolidado
 

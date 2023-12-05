@@ -6,6 +6,8 @@
 	justify-content: center;
 
 	gap: 20px;
+
+	transition: all 0.2s ease;
 }
 .upload-and-info-container {
 	width: 100%;
