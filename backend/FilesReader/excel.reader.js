@@ -31,7 +31,9 @@ const uploadExcel = async (path, fuente) => {
 		promises.push((async () => {
 			const rowValues = row.values;
 			rowValues.splice(0,1);
-			const idValue = parseInt(rowValues[0]);
+
+			const idValue = parseInt(fuente == 3 ? rowValues[3] : rowValues[0]);
+
 			const mesValue = parseInt(rowValues[3]);
 			const allValues = [fuente, ...rowValues];
 

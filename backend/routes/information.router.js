@@ -17,7 +17,7 @@ const fetchData = async () => {
 
 		const columnNames = await getColumnNamesInDataBase(3);
 
-		const test1 = await getConditionalDataForInsertRecord(4);
+		const test1 = await getConditionalDataForInsertRecord(3);
 		const teest2 = await getFileIdAndMesInDatabase()
 
 

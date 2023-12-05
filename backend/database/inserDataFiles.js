@@ -1,6 +1,5 @@
 const { connection } = require("./")
-// const { columnNames } = require("./");
-const { getFileIdAndMesInDatabase, getConditionalDataForInsertRecord } = require("./getFilesIdInDatabase");
+const { getConditionalDataForInsertRecord } = require("./getFilesIdInDatabase");
 
 const insertDataFileToDatabase = async (
 		element,
@@ -29,19 +28,43 @@ const insertDataFileToDatabase = async (
 
 	const placeholders = Array(columnNames.split(',').length).fill("?").join(",");
 	let conditionalData = await getConditionalDataForInsertRecord(fuente);
+	console.log(conditionalData);
 
-    const isRecordExisting = columnNames.split(', ').some(columnName =>
-        conditionalData[columnName] && conditionalData[columnName].includes(idValue) &&
-        conditionalData.mes && conditionalData.mes.includes(mesValue)
-    );
+	const conditionalValue = (fuente) => {
+		try {
+			let isRecordExisting = false;
+			if (fuente == 3) {
+				// Fuente 3
+				if (conditionalData && Array.isArray(conditionalData)) {
+					isRecordExisting = conditionalData.some(entry => entry.MPO_ID == idValue);
+				}
+			}
+			else if(fuente == 1 || fuente == 2) {
+				// Fuentes 1 y 2
+				if (conditionalData && Array.isArray(conditionalData)) {
+					isRecordExisting = conditionalData.some(entry =>{
+						const columns = columnNames.split(",");
 
-	if(!isRecordExisting) {
+						return entry[columns[0]] == idValue && entry[columns[3]] == mesValue;
+					});
+				}
+			}
+			return(isRecordExisting);
+		} catch (err) {
+			console.error(err)
+		}
+	}
+
+	const value = conditionalValue(fuente)
+	console.log(value)
+
+	if(!value) {
 		let query = `INSERT INTO ${tableName} (fuente, ${columnNames}) VALUES (?,${placeholders})`;
 		try {
 			await new Promise((resolve, reject) => {
 				connection.query(query, flattenedValues, (err, result) => {
 					if (err) {
-						console.error(err);
+						// console.error(err);
 						// console.log("No se pudo insertar el registro", idValue ? `ID: ${idValue}, Fila: ${rowNumber}` : `Fila: ${rowNumber}, debido a datos erroneos:`);
 						// console.log(`Error: \n ${err}`)
 						wrongRecordsArray = [{
@@ -63,7 +86,7 @@ const insertDataFileToDatabase = async (
 		}
 
 	} else {
-		// console.log(`El registro con id: ${idValue} y mes: ${mesValue} ya esta en la base de datos`);
+		// console.log(`El registro con id: ${idValue} y mes:  ya esta en la base de datos`);
 		recordsAlreadyInDatabase++;
 	}
 	// return(recordsEnteredCount);

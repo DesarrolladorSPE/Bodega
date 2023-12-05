@@ -22,7 +22,7 @@ const getConditionalDataForInsertRecord = async (fuente) => {
     const tableNames = {
         1: { tableName: '1_formularioweb', idColumnName: ['codigo_prestador', "mes"] },
         2: { tableName: '2_sise', idColumnName: ['ID_PRESTADOR', "MES"]},
-        3: { tableName: '3_sena', idColumnName: ['DPT_ID'] },
+        3: { tableName: '3_sena', idColumnName: ['MPO_ID'] },
         4: { tableName: '4_base', idColumnName: ['id_punto'] },
     };
     const { tableName, idColumnName } = tableNames[fuente];
@@ -36,12 +36,14 @@ const getConditionalDataForInsertRecord = async (fuente) => {
             if (err) {
                 reject(err);
             } else {
-                const resultObject = {};
-
-                idColumnName.forEach(column => {
-                    resultObject[column] = results.map(result => result[column]);
+                const resultArray = results.map(result => {
+                    const filterObject = {};
+                    idColumnName.forEach(column => {
+                        filterObject[column] = result[column];
+                    });
+                    return filterObject;
                 });
-                resolve(resultObject);
+                resolve(resultArray);
             }
         });
     });
