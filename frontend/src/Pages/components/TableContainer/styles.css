@@ -1,0 +1,73 @@
+.consolidado-table-container {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	padding: 30px 30px 20px ;
+
+	background-color: rgba(255,255,255,0.20);
+	border-radius: 20px;
+
+	box-sizing: border-box;
+
+	color: #FFF;
+
+	justify-content: center;
+	align-items: center;
+}
+.back-button-and-title-container {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.back-button-and-title-container button {
+	background: rgba(255,255,255,0.15);
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 10px;
+
+	transition: background 0.20s ease;
+
+	border: none;
+	cursor: pointer;
+}
+.back-button-and-title-container button:hover {
+	background: rgba(255,255,255,0.25);
+}
+.back-button-and-title-container button svg {
+	width: 25px;
+	height: 25px;
+	color: var(--white);
+}
+
+
+
+.scroll-wrapper {
+	max-width: 1100px;
+	overflow-x: auto;
+	padding-bottom: 5px;
+}
+.scroll-wrapper::-webkit-scrollbar {
+    height: 10px;
+}
+
+  /* Track */
+.scroll-wrapper::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.15);
+    border-radius: 50px;
+	margin-bottom: 5px;
+}
+
+  /* Handle */
+.scroll-wrapper::-webkit-scrollbar-thumb {
+    background: #FFF;
+    border-radius: 10px;
+}
+
+  /* Handle on hover */
+.scroll-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #738BFF;
+}

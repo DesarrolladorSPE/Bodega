@@ -35,10 +35,8 @@ const Home = () => {
 			</div>
 
 			{context.showConsolidado &&
-				<ConsolidadoCard/>
+				<TableContainer/>
 			}
-			<TableContainer/>
-
 		</div>
     );
 }
