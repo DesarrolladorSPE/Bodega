@@ -28,7 +28,6 @@ const insertDataFileToDatabase = async (
 
 	const placeholders = Array(columnNames.split(',').length).fill("?").join(",");
 	let conditionalData = await getConditionalDataForInsertRecord(fuente);
-	console.log(conditionalData);
 
 	const conditionalValue = (fuente) => {
 		try {
@@ -51,14 +50,13 @@ const insertDataFileToDatabase = async (
 			}
 			return(isRecordExisting);
 		} catch (err) {
-			console.error(err)
+			// console.error(err)
 		}
 	}
 
-	const value = conditionalValue(fuente)
-	console.log(value)
+	const conditional = conditionalValue(fuente)
 
-	if(!value) {
+	if(!conditional) {
 		let query = `INSERT INTO ${tableName} (fuente, ${columnNames}) VALUES (?,${placeholders})`;
 		try {
 			await new Promise((resolve, reject) => {
