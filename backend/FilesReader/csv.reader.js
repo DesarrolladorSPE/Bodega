@@ -2,11 +2,15 @@ const csv = require("fast-csv");
 const fs = require("fs");
 
 const { insertDataFileToDatabase } = require("../database/inserDataFiles");
+const { getColumnNamesInDataBase } = require("../database/getFilesIdInDatabase");
+
 
 const uploadCsv = async (path, fuente) => {
 	let wrongRecordsArray = [];
 	let recordsEnteredCount = 0;
 	let recordsAlreadyInDatabase = 0;
+
+	const columnNames = await getColumnNamesInDataBase(fuente);
 
 	return new Promise(async (resolve, reject) => {
 		let databaseInfo = {};
@@ -31,30 +35,49 @@ const uploadCsv = async (path, fuente) => {
 
 				const values = csvDataColl.map((row) => {
 					const rowValues = row[0].split(';');
-					return [`${fuente}`, ...rowValues];
+					const sanitizedRowValues = rowValues.map(value => (value.trim() === '' ? null : value.trim()));
+					return [`${fuente}`, ...sanitizedRowValues];
 				});
+
 
 				values.map(async (element) => {
 					promises.push((async () => {
+
 						rowCount = values.length;
-						const idValue = parseInt(element[1]);
+						const idValue = parseInt(fuente == 3 ? element[4] : element[1]);
 						const mesValue = parseInt(element[4]);
 						const flattenedValues = element.flatMap(row => row);
 						const rowNumber = values.indexOf(element);
 
 						//Funcion de insercion en la base de datos
 						try {
-							databaseInfo = await insertDataFileToDatabase(
-								element,
-								idValue,
-								mesValue,
-								flattenedValues,
-								rowNumber
-							);
-
-							wrongRecordsArray = [...wrongRecordsArray, ...databaseInfo.wrongRecordsArray];
-							recordsEnteredCount = recordsEnteredCount +  databaseInfo.recordsEnteredCount;
-							recordsAlreadyInDatabase = recordsAlreadyInDatabase +  databaseInfo.recordsAlreadyInDatabase;
+							if (fuente != 4) {
+								databaseInfo = await insertDataFileToDatabase(
+									element,
+									idValue,
+									mesValue,
+									columnNames,
+									flattenedValues,
+									rowNumber,
+									fuente,
+								);
+								wrongRecordsArray = [...wrongRecordsArray, ...databaseInfo.wrongRecordsArray];;
+								recordsEnteredCount = recordsEnteredCount +  databaseInfo.recordsEnteredCount;
+								recordsAlreadyInDatabase = recordsAlreadyInDatabase +  databaseInfo.recordsAlreadyInDatabase;
+							}
+							else if (fuente == 4) {
+								databaseInfo = await insertBaseDeCaracterizacionFileToDatabase(
+									element,
+									idValue,
+									columnNames,
+									flattenedValues,
+									rowNumber,
+									fuente,
+								);
+								wrongRecordsArray = [...wrongRecordsArray, ...databaseInfo.wrongRecordsArray];;
+								recordsEnteredCount = recordsEnteredCount +  databaseInfo.recordsEnteredCount;
+								recordsAlreadyInDatabase = recordsAlreadyInDatabase +  databaseInfo.recordsAlreadyInDatabase;
+							}
 						} catch (err) {
 							console.error(`Error en el registro ${rowNumber}: ${err.message}`)
 							wrongRecordsArray.push(element);
