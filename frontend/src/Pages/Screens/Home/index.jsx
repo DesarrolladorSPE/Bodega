@@ -4,8 +4,6 @@ import { MessageCard } from "../../components/MessageCard";
 import { Title } from "../../components/Title";
 import { UploadFile } from "../../components/UploadFile";
 
-import { ConsolidadoCard } from "../../components/ConsolidadoCard";
-
 import "./styles.css";
 import { RowAffectedCard } from "../../components/RowAffectedCard";
 import { TableContainer } from "../../components/TableContainer";
