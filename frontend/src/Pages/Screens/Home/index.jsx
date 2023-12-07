@@ -11,8 +11,6 @@ import { TableContainer } from "../../components/TableContainer";
 const Home = () => {
 	const context = React.useContext(AppContext)
 
-
-
     return(
 		<div className="home-container">
 			<Title

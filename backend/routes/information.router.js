@@ -1,7 +1,7 @@
 const express = require("express");
 const { connection } = require("../database")
 
-const { getColumnNamesInDataBase, getConditionalDataForInsertRecord, getFileIdAndMesInDatabase } = require("../database/getFilesIdInDatabase");
+const { getColumnNamesInDataBase } = require("../database/getFilesIdInDatabase");
 
 const util = require("util");
 
