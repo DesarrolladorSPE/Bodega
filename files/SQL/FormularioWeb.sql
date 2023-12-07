@@ -52,11 +52,6 @@ CREATE TABLE `1_formularioweb` (
   `tot_personas_inscritas_mujeres_PcD` int(11) NOT NULL DEFAULT 0,
   `tot_personas_inscritas_hombres_PcD` int(11) NOT NULL DEFAULT 0,
 
-  `personas_inscritas_mujeres_victimas` int(11) NOT NULL DEFAULT 0,
-
-  `personas_inscritas_hombres_jovenes` int(11) NOT NULL DEFAULT 0,
-  `personas_inscritas_mujeres_jovenes` int(11) NOT NULL DEFAULT 0,
-
   `tot_personas_inscritas_Victimas` int(11) NOT NULL DEFAULT 0,
   `tot_personas_inscritas_mujeres_victimas` int(11) NOT NULL DEFAULT 0,
   `tot_personas_inscritas_hombres_victimas` int(11) NOT NULL DEFAULT 0,
@@ -225,17 +220,17 @@ CREATE TABLE `1_formularioweb` (
   `tot_vacantes_registrados_exterior` int(11) NOT NULL DEFAULT 0,
 
 
-  `punto_atencion_correo` varchar(100) NOT NULL,
-  `punto_atencion_direcion` varchar(150) NOT NULL,
-  `punto_atencion_fechregistro` date NOT NULL,
+  `punto_atencion_correo` varchar(100) NULL,
+  `punto_atencion_direcion` varchar(150) NULL,
+  `punto_atencion_fechregistro` date NULL,
   `observaciones` longtext DEFAULT NULL,
 
-  `coordinador_nombre` varchar(100) NOT NULL,
+  `coordinador_nombre` varchar(100) NULL,
   `coordinador_correo` varchar(100) NULL,
   `coordinador_telefono` int(50) NULL,
   `coordinador_celular` int(50) NULL,
 
-  `responsable_nombre` varchar(100) NOT NULL,
+  `responsable_nombre` varchar(100) NULL,
   `responsable_correo` varchar(100) NULL,
   `responsable_telefono` int(50) NULL,
   `responsable_celular` int(50) NULL
