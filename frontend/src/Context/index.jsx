@@ -46,6 +46,7 @@ const AppProvider = ({children}) => {
 	// FETCH DATA
 	const [responseData, setResponseData ] = React.useState(null);
     const [users, setUsers] = React.useState();
+    const [ isLoged, setIsLoged ] = React.useState(false);
 
 	const fetchData = async (endpoint) => {
         try {
@@ -92,10 +93,9 @@ const AppProvider = ({children}) => {
 
     React.useEffect(() => {
         fetchAllData();
-    }, []);
+    }, [isLoged]);
 
     //Login
-    const [ isLoged, setIsLoged ] = React.useState(false);
 		//CERRAR SESION
 	const closeSession = () => {
 		setAdmin(false);
@@ -142,60 +142,6 @@ const AppProvider = ({children}) => {
     const [showConsolidado, setShowConsolidado] = React.useState(null);
     const [consolidadoTotal, setConsolidadoTotal] = React.useState(null);
     const [consolidado, setConsolidado] = React.useState(null);
-
-    React.useEffect(() => {
-		setLoading(true);
-        const fetchData = async () =>{
-            try{
-                const totalF1 = await fetch(`${apiUri}/consolidado/total/1`);
-                const totalF2 = await fetch(`${apiUri}/consolidado/total/2`);
-                const totalF3 = await fetch(`${apiUri}/consolidado/total/3`);
-
-                const dataTotalF1 = await totalF1.json();
-                const dataTotalF2 = await totalF2.json();
-                const dataTotalF3 = await totalF3.json();
-
-                const totalJovenesF1 = await fetch(`${apiUri}/consolidado/total-jovenes/1`);
-                const totalJovenesF2 = await fetch(`${apiUri}/consolidado/total-jovenes/2`);
-                const totalJovenesF3 = await fetch(`${apiUri}/consolidado/total-jovenes/3`);
-
-                const dataTotalJovenesF1 = await totalJovenesF1.json();
-                const dataTotalJovenesF2 = await totalJovenesF2.json();
-                const dataTotalJovenesF3 = await totalJovenesF3.json();
-
-				const totalPcdF1 = await fetch(`${apiUri}/consolidado/total-pcd/1`);
-                const totalPcdF2 = await fetch(`${apiUri}/consolidado/total-pcd/2`);
-                const totalPcdF3 = await fetch(`${apiUri}/consolidado/total-pcd/3`);
-
-                const dataTotalPcdF1 = await totalPcdF1.json();
-                const dataTotalPcdF2 = await totalPcdF2.json();
-                const dataTotalPcdF3 = await totalPcdF3.json();
-
-                let data = [];
-                data = [
-                    [...dataTotalF1, ...dataTotalF2, ...dataTotalF3],
-                    [...dataTotalJovenesF1, ...dataTotalJovenesF2, ...dataTotalJovenesF3],
-                    [...dataTotalPcdF1, ...dataTotalPcdF2, ...dataTotalPcdF3],
-                ];
-
-                if (totalF1.status === 200 && totalF2.status === 200 && totalF3.status === 200 &&
-					totalJovenesF1.status === 200 && totalJovenesF2.status === 200 && totalJovenesF3.status === 200 &&
-					totalPcdF1.status === 200 && totalPcdF2.status === 200 && totalPcdF3.status === 200
-					) {
-                    setConsolidadoTotal(data);
-                } else {
-                    messageHandler("error", "Datos no cargados correctamente");
-                }
-            }
-            catch (err){
-				messageHandler("error", err.message);
-            }
-			finally {
-				setLoading(false);
-			}
-        }
-        fetchData();
-    }, [showConsolidado]);
 
 	const fetchConsolidadoData = async () => {
         try {

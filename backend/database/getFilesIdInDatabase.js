@@ -1,23 +1,5 @@
 const { connection } = require("./index");
 
-const getFileIdAndMesInDatabase = async () => {
-	const query = `SELECT id, mes FROM reportes`;
-
-    return new Promise((resolve, reject) => {
-        connection.query(query, (err, results) => {
-            if (err) {
-                reject(err);
-            } else {
-                const existingIdsAndMes = results.map(result => ({
-					id: result.id,
-					mes: result.mes
-				}));
-                resolve(existingIdsAndMes);
-            }
-        });
-    });
-}
-
 const getConditionalDataForInsertRecord = async (fuente) => {
     const tableNames = {
         1: { tableName: '1_formularioweb', idColumnName: ['codigo_prestador', "mes"] },
@@ -80,4 +62,4 @@ const getColumnNamesInDataBase = async (fuente) => {
 };
 
 
-module.exports = {getFileIdAndMesInDatabase, getColumnNamesInDataBase, getConditionalDataForInsertRecord};
+module.exports = { getColumnNamesInDataBase, getConditionalDataForInsertRecord};
