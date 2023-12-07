@@ -10,9 +10,7 @@ const queries = [
 	{
 		tableName: "1_formularioweb",
 		columns: [
-			"SUM(tot_personas_inscritas) AS tot_personas_inscritas",
-			"SUM(tot_personas_inscritas_jovenes) AS tot_personas_inscritas_jovenes",
-			"SUM(tot_personas_inscritas_PcD) AS tot_personas_inscritas_PcD",
+			"*"
 		],
 	},
 	{
