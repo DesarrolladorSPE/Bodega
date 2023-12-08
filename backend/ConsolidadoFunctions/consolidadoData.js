@@ -3,11 +3,23 @@ const util = require("util");
 
 const query = util.promisify(connection.query).bind(connection);
 
-const fetchConsolidadoData = async () => {
+const fetchConsolidadoData = async (month = "", year = "") => {
     try {
-		// const tabla1Results = await query("SELECT * FROM 1_formularioweb");
-		const tabla1 = await query("SELECT * FROM 1_formularioweb")
-        const tabla2 = await query("SELECT * FROM 2_sise");
+		const getQuery = (monthTable, yearTable) => {
+			const conditions = [];
+
+			if (month !== "") {
+			 	conditions.push(`${monthTable} = '${month}'`);
+			}
+			if (year !== "") {
+			  	conditions.push(`${yearTable} = '${year}'`);
+			}
+
+			return conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
+		};
+
+		const tabla1 = await query(`SELECT * FROM 1_formularioweb ${getQuery("mes", "ano")}`)
+		const tabla2 = await query(`SELECT * FROM 2_sise ${getQuery("MES", "AÑO")}`);
         const tabla4 = await query("SELECT * FROM 4_base");
 
         // Convertir los resultados de las tablas en objetos indexados por el código del punto de atención

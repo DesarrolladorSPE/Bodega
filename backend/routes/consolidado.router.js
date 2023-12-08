@@ -106,13 +106,10 @@ const fetchData = async () => {
 
 router.get("/tablas", async (request, response) => {
 	try {
-		const filterConditions = Object.keys(request.query)
-		.filter((key) => request.query[key] !== "")
-		.map((key) => `${key} = '${request.query[key]}'`)
-		.join(" AND ");
+		const month = request.query.mes || "";
+		const year = request.query.ano || "";
 
-
-        const results = await fetchConsolidadoData();
+        const results = await fetchConsolidadoData(month, year);
 
         return response.status(200).json(results);
 

@@ -130,17 +130,22 @@ const AppProvider = ({children}) => {
 
 
     //CONSOLIDADO
+	const currentDate = new Date();
+	const currentMonth = (currentDate.getMonth() + 1).toString(); // Ajustar el índice del mes
+	const currentYear = currentDate.getFullYear().toString();
+
 	const [filters, setFilters] = React.useState({
+		// "mes": currentMonth,
+		// "ano": currentYear,
 		"mes": "",
-		"ano": ""
+		"ano": "",
     });
 
 	const handleFilterChange = (filterName, value) => {
         setFilters((prevFilters) => ({ ...prevFilters, [filterName]: value }));
     };
 
-    const [showConsolidado, setShowConsolidado] = React.useState(null);
-    const [consolidadoTotal, setConsolidadoTotal] = React.useState(null);
+    const [showConsolidado, setShowConsolidado] = React.useState([]);
     const [consolidado, setConsolidado] = React.useState(null);
 
 	const fetchConsolidadoData = async () => {
@@ -239,8 +244,6 @@ const AppProvider = ({children}) => {
 
 				//Consolidado
 				handleFilterChange,
-                consolidadoTotal,
-                setConsolidadoTotal,
 				consolidado,
 				setConsolidado,
 				showConsolidado,
