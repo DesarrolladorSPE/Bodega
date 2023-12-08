@@ -6,8 +6,10 @@ import { ReactTable } from "./ReactTable";
 import { AiOutlineClose } from "react-icons/ai";
 
 import { FiltersContainer } from "../FiltersContainer";
+import { MessageCard } from "../MessageCard";
 
 import "./styles.css";
+import { NotFoundCard } from "../NotFoundCard";
 
 const TableContainer = () => {
 	const context = React.useContext(AppContext)
@@ -28,19 +30,27 @@ const TableContainer = () => {
 					<AiOutlineClose/>
 				</button>
 			</div>
-			<div>
-				<button onClick={() => {context.exportToExcel(columns)}}>
-					Exportar a Excel
-				</button>
+			<div className="button-and-filters-container">
+				{context.consolidado.length > 0 &&
+					<button onClick={() => {context.exportToExcel(columns)}}>
+						Exportar a Excel
+					</button>
+				}
 				<FiltersContainer/>
 
 			</div>
+			<MessageCard/>
 
 			<div className="scroll-wrapper">
-				<ReactTable
-					data={data}
-					columns={columns}
-				/>
+				{context.consolidado.length > 0 ?
+					<ReactTable
+						data={data}
+						columns={columns}
+					/>
+					:
+					<NotFoundCard/>
+				}
+
 			</div>
 		</div>
 	);

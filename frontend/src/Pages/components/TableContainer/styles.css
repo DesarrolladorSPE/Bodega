@@ -44,6 +44,36 @@
 }
 
 
+.button-and-filters-container {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 10px;
+}
+.button-and-filters-container button{
+	width: 200px;
+	padding: 15px 0px;
+
+	background-color: var(--excel-button-color);
+
+	border: none;
+	outline: none;
+	border-radius: 5px;
+
+	color: var(--white)	;
+	font-weight: bold;
+
+	cursor: pointer;
+	opacity: 0.8;
+
+	transition: all 0.2s ease;
+}
+.button-and-filters-container button:hover{
+	opacity: 1;
+}
+
+
 
 .scroll-wrapper {
 	width: 100%;

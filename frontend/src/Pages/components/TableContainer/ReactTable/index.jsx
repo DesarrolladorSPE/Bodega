@@ -1,13 +1,6 @@
-import React from "react";
-import { AppContext } from "../../../../Context";
 import "./styles.css";
 
 const ReactTable = ({data, columns}) => {
-	// const context = React.useContext(AppContext)
-
-	// const data = context.consolidado;
-	// let columns = Array.from(new Set(data?.flatMap((row) => Object.keys(row))));
-
 	return (
 		<table className="table-container" id="dataTable">
 			<thead>

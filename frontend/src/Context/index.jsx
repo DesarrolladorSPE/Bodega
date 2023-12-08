@@ -125,16 +125,11 @@ const AppProvider = ({children}) => {
 		setCreatingUser(null);
 		setEditingUser(null);
 		setShowConsolidado(null);
-		setConsolidadoTotal(null);
 		setToggleNavBarResponsive(false);
 	}
 
 
     //CONSOLIDADO
-	const currentDate = new Date();
-	const currentMonth = (currentDate.getMonth() + 1).toString(); // Ajustar el índice del mes
-	const currentYear = currentDate.getFullYear().toString();
-
 	const [filters, setFilters] = React.useState({
 		// "mes": currentMonth,
 		// "ano": currentYear,
@@ -146,8 +141,8 @@ const AppProvider = ({children}) => {
         setFilters((prevFilters) => ({ ...prevFilters, [filterName]: value }));
     };
 
-    const [showConsolidado, setShowConsolidado] = React.useState([]);
-    const [consolidado, setConsolidado] = React.useState(null);
+    const [showConsolidado, setShowConsolidado] = React.useState(false);
+    const [consolidado, setConsolidado] = React.useState([]);
 
 	const fetchConsolidadoData = async () => {
         try {
@@ -176,25 +171,49 @@ const AppProvider = ({children}) => {
 
 
 	//Exportar Consolidado a Excel
+	const formatConsolidadoName = (mes, ano) => {
+		const formattedMes = mes.length === 1 ? `0${mes}` : mes;
+
+		if (formattedMes === "" && ano === "") {
+			return "Consolidado_Completo";
+		}
+
+		// Construir el nombre formateado
+		const name = `Consolidado-${formattedMes}-${ano}`;
+		return name;
+	};
+
 	const exportToExcel = (columns) => {
-		const table = document.getElementById("dataTable");
+		try {
+			setLoading(true);
+			const table = document.getElementById("dataTable");
 
-		// Obtener datos de la tabla
-		const rows = table.querySelectorAll("tbody tr");
-		const exportedData = Array.from(rows).map((row) => {
-			const cells = row.querySelectorAll("td");
-			return Array.from(cells).map((cell) => cell.textContent);
-		});
+			// Obtener datos de la tabla
+			const rows = table.querySelectorAll("tbody tr");
+			const exportedData = Array.from(rows).map((row) => {
+				const cells = row.querySelectorAll("td");
+				return Array.from(cells).map((cell) => cell.textContent);
+			});
 
-		// Crear una hoja de trabajo
-		const ws = XLSX.utils.aoa_to_sheet([columns, ...exportedData]);
+			// Crear una hoja de trabajo
+			const ws = XLSX.utils.aoa_to_sheet([columns, ...exportedData]);
 
-		// Crear un libro de trabajo
-		const wb = XLSX.utils.book_new();
-		XLSX.utils.book_append_sheet(wb, ws, "Consolidado");
+			let name = formatConsolidadoName(filters.mes, filters.ano);
 
-		// Guardar el archivo
-		XLSX.writeFile(wb, "Consolidado.xlsx");
+			// Crear un libro de trabajo
+			const wb = XLSX.utils.book_new();
+			XLSX.utils.book_append_sheet(wb, ws, name);
+
+			// Guardar el archivo
+			XLSX.writeFile(wb, `${name}.xlsx`);
+			messageHandler("all-ok", `Archivo ${name}.xlsx exportado correctamente.`);
+		}
+		catch (err) {
+			messageHandler("error", `${err.message}`);
+		}
+		finally {
+			setLoading(false)
+		}
 	};
 
 
