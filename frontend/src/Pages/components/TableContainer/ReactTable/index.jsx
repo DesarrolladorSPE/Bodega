@@ -6,10 +6,7 @@ const ReactTable = () => {
 	const context = React.useContext(AppContext)
 
 	const data = context.consolidado;
-	let columns = [];
-	if (Array.isArray(data)){
-		columns = Array.from(new Set(data?.flatMap((row) => Object.keys(row))));
-	}
+	let columns = Array.from(new Set(data?.flatMap((row) => Object.keys(row))));
 
 	return (
 		<table className="table-container" id="dataTable">

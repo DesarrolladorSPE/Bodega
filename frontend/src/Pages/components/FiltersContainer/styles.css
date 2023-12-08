@@ -1,0 +1,26 @@
+.month-and-year-filters-container {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 15px;
+}
+.month-and-year-filters-container label{
+	border-left: 2px solid var(--white);
+	padding: 2px 0px 2px 15px;
+}
+.month-and-year-filters-container select{
+	padding: 3px 10px;
+	border-radius: 5px;
+	border: none;
+	background-color: var(--white-08);
+	color: var(--black);
+
+	outline: var(--footer-color);
+}
+
+@media (max-width:900px) {
+	.month-and-year-filters-container {
+		justify-content: center;
+	}
+}
