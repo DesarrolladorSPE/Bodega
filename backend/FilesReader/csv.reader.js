@@ -4,6 +4,8 @@ const fs = require("fs");
 const { insertDataFileToDatabase } = require("../database/inserDataFiles");
 const { getColumnNamesInDataBase } = require("../database/getFilesIdInDatabase");
 
+const { puntosDeAtencionSena } = require("../FilesReader/puntosAtencionSena")
+
 
 const uploadCsv = async (path, fuente) => {
 	let wrongRecordsArray = [];
@@ -35,17 +37,30 @@ const uploadCsv = async (path, fuente) => {
 
 				const values = csvDataColl.map((row) => {
 					const rowValues = row[0].split(';');
+
+					const dptValue = parseInt(fuente == 3 ? rowValues[1] : null);
+					const puntoAtencion = puntosDeAtencionSena(dptValue);
+
 					const sanitizedRowValues = rowValues.map(value => (value.trim() === '' ? null : value.trim()));
-					return [`${fuente}`, ...sanitizedRowValues];
-				});
+
+					let allValues;
+					if (fuente == 3) {
+					  	allValues = [`${fuente}`, puntoAtencion, ...sanitizedRowValues];
+					} else {
+					 	allValues = [`${fuente}`, ...sanitizedRowValues];
+					}
+
+					return allValues;
+				  });
 
 
 				values.map(async (element) => {
 					promises.push((async () => {
 
 						rowCount = values.length;
-						const idValue = parseInt(fuente == 3 ? element[4] : element[1]);
-						const mesValue = parseInt(element[4]);
+						const idValue = parseInt(fuente == 3 ? element[5] : element[1]);
+						const mesValue = parseInt(fuente == 3 ? element[5]: element[4]);
+
 						const flattenedValues = element.flatMap(row => row);
 						const rowNumber = values.indexOf(element);
 
