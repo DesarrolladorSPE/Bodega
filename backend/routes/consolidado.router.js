@@ -55,7 +55,7 @@ router.get("/", async (request, response) => {
 
 		const results = await Promise.all(
 			queries.map(async (table) => {
-				const query = `SELECT ${table.columns.join(", ")} FROM ${table.tableName} ${filterConditions ? `WHERE ${filterConditions}` : ""}`;
+				const query = `SELECT ${table.columns.join(", ")} FROM ${table.tableName} ${filterConditions ? `WHERE codigo_punto_atencion=22125006 ${filterConditions}` : ""}`;
 				const result = await executeQuery(query);
 
 				// Transformar el resultado para que coincida con el formato deseado
@@ -92,14 +92,10 @@ const query = util.promisify(connection.query).bind(connection);
 
 const fetchData = async () => {
     try {
-        const tabla1 = await query("SELECT * FROM 1_formularioweb");
-        const tabla2 = await query("SELECT * FROM 2_sise");
-        const tabla4 = await query("SELECT * FROM 4_base");
+        const tabla1 = await query("SELECT * FROM 2_sise WHERE ID_PUNTO_ATENCIÓN=12019039");
 
         return {
 			tabla1,
-			tabla2,
-			tabla4
 		 };
 
     } catch (err) {
@@ -124,6 +120,21 @@ router.get("/tablas", async (request, response) => {
     }
 })
 
+router.get("/tablas2", async (request, response) => {
+	try {
+        // const results = await fetchData();
+        const results = await fetchData();
+
+        return response.status(200).json(results);
+
+    }
+	catch (err) {
+        console.error(err);
+        return response.status(500).json({
+            message: err.message || "Internal Server Error",
+        });
+    }
+})
 
 
 
