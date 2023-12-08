@@ -1,4 +1,5 @@
 import React from "react";
+import * as XLSX from "xlsx";
 
 export const AppContext = React.createContext();
 
@@ -174,6 +175,29 @@ const AppProvider = ({children}) => {
     }, [filters, showConsolidado]);
 
 
+	//Exportar Consolidado a Excel
+	const exportToExcel = (columns) => {
+		const table = document.getElementById("dataTable");
+
+		// Obtener datos de la tabla
+		const rows = table.querySelectorAll("tbody tr");
+		const exportedData = Array.from(rows).map((row) => {
+			const cells = row.querySelectorAll("td");
+			return Array.from(cells).map((cell) => cell.textContent);
+		});
+
+		// Crear una hoja de trabajo
+		const ws = XLSX.utils.aoa_to_sheet([columns, ...exportedData]);
+
+		// Crear un libro de trabajo
+		const wb = XLSX.utils.book_new();
+		XLSX.utils.book_append_sheet(wb, ws, "Consolidado");
+
+		// Guardar el archivo
+		XLSX.writeFile(wb, "Consolidado.xlsx");
+	};
+
+
 	// Screen width manager
 	const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
 	React.useEffect(() => {
@@ -247,8 +271,10 @@ const AppProvider = ({children}) => {
 				consolidado,
 				setConsolidado,
 				showConsolidado,
-				setShowConsolidado
+				setShowConsolidado,
 
+				//Exportar a excel
+				exportToExcel,
             }}
         >
             { children }

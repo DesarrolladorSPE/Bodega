@@ -12,6 +12,9 @@ import "./styles.css";
 const TableContainer = () => {
 	const context = React.useContext(AppContext)
 
+	const data = context.consolidado;
+	let columns = Array.from(new Set(data?.flatMap((row) => Object.keys(row))));
+
 	return(
 		<div className="consolidado-table-container">
 			<div className="back-button-and-title-container">
@@ -25,11 +28,19 @@ const TableContainer = () => {
 					<AiOutlineClose/>
 				</button>
 			</div>
+			<div>
+				<button onClick={() => {context.exportToExcel(columns)}}>
+					Exportar a Excel
+				</button>
+				<FiltersContainer/>
 
-			<FiltersContainer/>
+			</div>
 
 			<div className="scroll-wrapper">
-				<ReactTable/>
+				<ReactTable
+					data={data}
+					columns={columns}
+				/>
 			</div>
 		</div>
 	);
