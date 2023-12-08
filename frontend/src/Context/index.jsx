@@ -148,7 +148,8 @@ const AppProvider = ({children}) => {
             setLoading(true);
             const filterParams = new URLSearchParams(filters);
             const endpoints = [
-				`consolidado?${filterParams.toString()}`
+				// `consolidado?${filterParams.toString()}`
+				`consolidado/tablas?${filterParams.toString()}`
             ];
 
             const resultsArray = await Promise.all(endpoints.map(fetchData));
@@ -156,8 +157,7 @@ const AppProvider = ({children}) => {
                 return { ...acc, ...result };
             }, {});
 
-			setConsolidado(combinedResults);
-			console.log(combinedResults);
+			setConsolidado(resultsArray);
             // setResponseData(combinedResults);
 			// setUsers(combinedResults.users)
 

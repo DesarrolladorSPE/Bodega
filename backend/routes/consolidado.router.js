@@ -92,7 +92,7 @@ const query = util.promisify(connection.query).bind(connection);
 
 const fetchData = async () => {
     try {
-        const tabla1 = await query("SELECT * FROM 2_sise WHERE ID_PUNTO_ATENCIÓN=12019039");
+        const tabla1 = await query("SELECT * FROM 2_sise WHERE ID_PUNTO_ATENCIÓN=12018001");
 
         return {
 			tabla1,
@@ -106,7 +106,12 @@ const fetchData = async () => {
 
 router.get("/tablas", async (request, response) => {
 	try {
-        // const results = await fetchData();
+		const filterConditions = Object.keys(request.query)
+		.filter((key) => request.query[key] !== "")
+		.map((key) => `${key} = '${request.query[key]}'`)
+		.join(" AND ");
+
+
         const results = await fetchConsolidadoData();
 
         return response.status(200).json(results);

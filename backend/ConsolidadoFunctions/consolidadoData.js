@@ -6,8 +6,8 @@ const query = util.promisify(connection.query).bind(connection);
 const fetchConsolidadoData = async () => {
     try {
 		// const tabla1Results = await query("SELECT * FROM 1_formularioweb");
-		const tabla1 = await query("SELECT * FROM 1_formularioweb LIMIT 2")
-        const tabla2 = await query("SELECT * FROM 2_sise WHERE ID_PUNTO_ATENCIÓN=12019039");
+		const tabla1 = await query("SELECT * FROM 1_formularioweb")
+        const tabla2 = await query("SELECT * FROM 2_sise");
         const tabla4 = await query("SELECT * FROM 4_base");
 
         // Convertir los resultados de las tablas en objetos indexados por el código del punto de atención
@@ -42,7 +42,7 @@ const joinTables = (tabla1, tabla2, tabla4) => {
 	for (const codigoPuntoAtencion of Object.keys(tabla1)) {
 		const registroTabla1 = tabla1[codigoPuntoAtencion];
 
-		const tablaBase = tabla4[codigoPuntoAtencion]
+		const tablaBase = tabla4[codigoPuntoAtencion];
 
 		// Verificar si hay un registro correspondiente en la tabla 4
 		if (tablaBase) {
@@ -53,7 +53,7 @@ const joinTables = (tabla1, tabla2, tabla4) => {
 				AÑO: registroTabla1.ano,
 				MES: registroTabla1.mes,
 				Marcacion_Sistema: registroTabla1.fuente,
-				: tablaBase.id_prestador_cipres,
+				ID_PRESTADOR: tablaBase.id_prestador_cipres,
 				Divipola_Departamento: tablaBase.divipola_asociada_a_la_url,
 				Divipola_Municipio: tablaBase.divipola,
 				TIPO_PRESTADOR: tablaBase.tipo_de_prestador,
@@ -254,13 +254,12 @@ const joinTables = (tabla1, tabla2, tabla4) => {
     for (const idPuntoAtencion of Object.keys(tabla2)) {
 		const registroTabla2 = tabla2[idPuntoAtencion];
 
-		const tablaBase = tabla2[idPuntoAtencion]
+		const tablaBase = tabla4[idPuntoAtencion];
 
         // Verificar si hay un registro correspondiente en la tabla 4
         if (tablaBase) {
             // Unir datos de las tablas 2 y 4
             const registroFinal = {
-				// ID_PUNTO_AT: registroTabla2.IN_PUNTO_ATENCIÓN,
 				ID_PUNTO_AT: registroTabla2.ID_PUNTO_ATENCIÓN,
 				ID_PRESTAD: tablaBase.id_prestador_cipres,
 				AÑO: registroTabla2.AÑO,
@@ -404,56 +403,56 @@ const joinTables = (tabla1, tabla2, tabla4) => {
 				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_SISE_6_numero_de_personas_atendidas_en_actividades_grupales_de_orientacion_ocupacional: registroTabla2.Orientación_Laboral_Actividades_Grupales,
 				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_HOMBRES_SISE_6_1_numero_de_personas_atendidas_en_actividades_grupales_de_orientacion_ocupacional_hombres: registroTabla2.Orientación_Laboral_Actividades_Grupales_Hombres,
 				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_MUJERES_SISE_6_2_numero_de_personas_atendidas_en_actividades_grupales_de_orientacion_ocupacional_mujeres: registroTabla2.Orientación_Laboral_Actividades_Grupales_Mujeres,
-				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_PERSONAS_18_a_28_AÑOS: registroTabla2.,
-				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_PERSONAS_18_a_28_AÑOS_MUJERES: registroTabla2.,
-				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_PERSONAS_18_a_28_AÑOS_HOMBRES: registroTabla2.,
-				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_PcD: registroTabla2.,
-				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_PcD_MUJERES: registroTabla2.,
-				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_PcD_HOMBRES: registroTabla2.,
-				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_VICTIMAS: registroTabla2.,
-				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_VICTIMAS_MUJERES: registroTabla2.,
-				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_VICTIMAS_HOMBRES: registroTabla2.,
-				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_Migrantes_Venezolanos: registroTabla2.,
-				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_Migrantes_Venezolanos_MUJERES: registroTabla2.,
-				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_Migrantes_Venezolanos_HOMBRES: registroTabla2.,
-				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_ETNICOS: registroTabla2.,
-				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_ETNICOS_MUJERES: registroTabla2.,
-				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_ETNICOS_HOMBRES: registroTabla2.,
-				DIRECCIONAMIENTOS_A_FORMACIoN_PARA_EL_TRABAJO_SISE_7_numero_de_personas_direccionadas_a_programas_de_formacion_y_capacitacion_para_el_trabajo: registroTabla2.,
-				_7_1_numero_de_personas_direccionadas_a_programas_de_formacion_y_capacitacion_para_el_trabajo_hombres: registroTabla2.,
-				_7_1_1_numero_de_personas_direccionadas_a_programas_de_formacion_en_competencias_claves_y_transversales_hombres: registroTabla2.,
-				_7_1_2_numero_de_personas_direccionadas_a_programas_de_formacion_en_tecnologias_de_la_informacion_y_las_comunicaciones_tic_hombres: registroTabla2.,
-				_7_1_3_numero_de_personas_direccionadas_a_programas_de_alfabetizacion_o_bachillerato_hombres: registroTabla2.,
-				_7_1_4_numero_de_personas_direccionadas_a_programas_de_entrenamiento_o_reentrenamiento_tecnico_hombres: registroTabla2.,
-				_7_1_5_numero_de_personas_direccionadas_a_programas_de_tecnico_laboral_hombres: registroTabla2.,
-				_7_2_numero_de_personas_direccionadas_a_programas_de_formacion_y_capacitacion_para_el_trabajo_mujeres: registroTabla2.,
-				_7_2_1_numero_de_personas_direccionadas_a_programas_de_formacion_en_competencias_claves_y_transversales_mujeres: registroTabla2.,
-				_7_2_2_numero_de_personas_direccionadas_a_programas_de_formacion_en_tecnologias_de_la_informacion_y_las_comunicaciones_tic_mujeres: registroTabla2.,
-				_7_2_3_numero_de_personas_direccionadas_a_programas_de_alfabetizacion_o_bachillerato_mujeres: registroTabla2.,
-				_7_2_4_numero_de_personas_direccionadas_a_programas_de_entrenamiento_o_reentrenamiento_tecnico_mujeres: registroTabla2.,
-				_7_2_5_numero_de_personas_direccionadas_a_programas_de_tecnico_laboral_mujeres: registroTabla2.,
-				DIRECCIONAMIENTOS_A_FORMACIoN_PARA_EL_TRABAJO_REALIZADOS_SISE_8_numero_de_personas_que_culminaron_programas_de_formacion_y_capacitacion_para_el_trabajo: registroTabla2.,
-				_8_1_numero_de_personas_que_culminaron_programas_de_formacion_y_capacitacion_para_el_trabajo_hombres: registroTabla2.,
-				_8_1_1_numero_de_personas_que_culminaron_programas_de_formacion_en_competencias_claves_y_transversales_hombres: registroTabla2.,
-				_8_1_2_numero_de_personas_que_culminaron_programas_de_formacion_en_tecnologias_de_la_informacion_y_las_comunicaciones_tic_hombres: registroTabla2.,
-				_8_1_3_numero_de_personas_que_culminaron_programas_de_alfabetizacion_o_bachillerato_hombres: registroTabla2.,
-				_8_1_4_numero_de_personas_que_culminaron_programas_de_entrenamiento_o_reentrenamiento_tecnico_hombres: registroTabla2.,
-				_8_1_5_numero_de_personas_que_culminaron_programas_de_tecnico_laboral_hombres: registroTabla2.,
-				_8_2_numero_de_personas_que_culminaron_programas_de_formacion_y_capacitacion_para_el_trabajo_mujeres: registroTabla2.,
-				_8_2_1_numero_de_personas_que_culminaron_programas_de_formacion_en_competencias_claves_y_transversales_mujeres: registroTabla2.,
-				_8_2_2_numero_de_personas_que_culminaron_programas_de_formacion_en_tecnologias_de_la_informacion_y_las_comunicaciones_tic_mujeres: registroTabla2.,
-				_8_2_3_numero_de_personas_que_culminaron_programas_de_alfabetizacion_o_bachillerato_mujeres: registroTabla2.,
-				_8_2_4_numero_de_personas_que_culminaron_programas_de_entrenamiento_o_reentrenamiento_tecnico_mujeres: registroTabla2.,
-				_8_2_5_numero_de_personas_que_culminaron_programas_de_tecnico_laboral_mujeres: registroTabla2.,
-				DIRECCIONAMIENTOS_A_EMPRENDIMIENTO_SISE_9_numero_de_personas_direccionadas_a_programas_de_emprendimiento: registroTabla2.,
-				_9_1_numero_de_personas_direccionadas_a_programas_de_emprendimiento_hombres: registroTabla2.,
-				_9_2_numero_de_personas_direccionadas_a_programas_de_emprendimiento_mujeres: registroTabla2.,
-				_10_numero_de_pqrs_radicados_en_el_punto_de_atencion: registroTabla2.,
-				VACANTES_REGISTRADAS_TOTAL_SISE_Datos_hasta_abril_de_2017_por_CV_: null,
-				PUESTOS_DE_TRABAJO_SISE_Datos_hasta_abril_de_2017_por_CV_: null,
-				PUESTOS_DE_TRABAJO_CON_GESTIoN_SISE_Datos_desde_junio_de_2017_: null,
-				PUESTOS_DE_TRABAJO_SIN_GESTIoN_SISE_Datos_desde_junio_de_2017_: null,
-				TIPO_CAJA: null,
+				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_PERSONAS_18_a_28_AÑOS: registroTabla2.Orientación_Laboral_Actividades_Grupales_18_a_28_años,
+				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_PERSONAS_18_a_28_AÑOS_MUJERES: registroTabla2.Orientación_Laboral_Actividades_Grupales_18_a_28_años_Mujeres,
+				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_PERSONAS_18_a_28_AÑOS_HOMBRES: registroTabla2.Orientación_Laboral_Actividades_Grupales_18_a_28_años_Hombres,
+				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_PcD: registroTabla2.Orientación_Laboral_Actividades_Grupales_Discapacidad,
+				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_PcD_MUJERES: registroTabla2.Orientación_Laboral_Actividades_Grupales_Discapacidad_Hombres,
+				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_PcD_HOMBRES: registroTabla2.Orientación_Laboral_Actividades_Grupales_Discapacidad_Mujeres,
+				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_VICTIMAS: registroTabla2.Orientación_Laboral_Actividades_Grupales_Victimas,
+				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_VICTIMAS_MUJERES: registroTabla2.Orientación_Laboral_Actividades_Grupales_Victimas_Mujeres,
+				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_VICTIMAS_HOMBRES: registroTabla2.Orientación_Laboral_Actividades_Grupales_Víctimas_Hombres,
+				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_Migrantes_Venezolanos: registroTabla2.Orientación_Laboral_Entrevistas_Migrantes_Venezolanos,
+				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_Migrantes_Venezolanos_MUJERES: registroTabla2.Orientación_Laboral_Entrevistas_Migrantes_Venezolanos_Hombres,
+				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_Migrantes_Venezolanos_HOMBRES: registroTabla2.Orientación_Laboral_Entrevistas_Migrantes_Venezolanos_Mujeres,
+				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_ETNICOS: null,
+				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_ETNICOS_MUJERES: null,
+				DIRECCIONAMIENTOS_GRUPALES_DE_ORIENTACIoN_LABORAL_REALIZADOS_A_ETNICOS_HOMBRES: null,
+				DIRECCIONAMIENTOS_A_FORMACIoN_PARA_EL_TRABAJO_SISE_7_numero_de_personas_direccionadas_a_programas_de_formacion_y_capacitacion_para_el_trabajo: registroTabla2.Capacitación_Registrados,
+				_7_1_numero_de_personas_direccionadas_a_programas_de_formacion_y_capacitacion_para_el_trabajo_hombres: registroTabla2.Capacitación_Registrados_Hombres,
+				_7_1_1_numero_de_personas_direccionadas_a_programas_de_formacion_en_competencias_claves_y_transversales_hombres: registroTabla2.Capacitación_Registrados_Competen_claves_trasversales_Hombres,
+				_7_1_2_numero_de_personas_direccionadas_a_programas_de_formacion_en_tecnologias_de_la_informacion_y_las_comunicaciones_tic_hombres: registroTabla2.Capacitación_Registrados_TICS_Hombres,
+				_7_1_3_numero_de_personas_direccionadas_a_programas_de_alfabetizacion_o_bachillerato_hombres: registroTabla2.Capacitación_Registrados_alfabetización_bachillerato_Hombres,
+				_7_1_4_numero_de_personas_direccionadas_a_programas_de_entrenamiento_o_reentrenamiento_tecnico_hombres: registroTabla2.Capacitación_Registrados_Curso_Seminario_Diplomado_Hombres,
+				_7_1_5_numero_de_personas_direccionadas_a_programas_de_tecnico_laboral_hombres: registroTabla2.Capacitación_Registrados_Técnico_Laboral_Hombres,
+				_7_2_numero_de_personas_direccionadas_a_programas_de_formacion_y_capacitacion_para_el_trabajo_mujeres: registroTabla2.Capacitación_Registrados_Mujeres,
+				_7_2_1_numero_de_personas_direccionadas_a_programas_de_formacion_en_competencias_claves_y_transversales_mujeres: registroTabla2.Capacitación_Registrados_Competen_claves_trasversales_Mujeres,
+				_7_2_2_numero_de_personas_direccionadas_a_programas_de_formacion_en_tecnologias_de_la_informacion_y_las_comunicaciones_tic_mujeres: registroTabla2.Capacitación_Registrados_TICS_Mujeres,
+				_7_2_3_numero_de_personas_direccionadas_a_programas_de_alfabetizacion_o_bachillerato_mujeres: registroTabla2.Capacitación_Registrados_alfabetización_bachillerato_Mujeres,
+				_7_2_4_numero_de_personas_direccionadas_a_programas_de_entrenamiento_o_reentrenamiento_tecnico_mujeres: registroTabla2.Capacitación_Registrados_Curso_Seminario_Diplomado_Mujeres,
+				_7_2_5_numero_de_personas_direccionadas_a_programas_de_tecnico_laboral_mujeres: registroTabla2.Capacitación_Registrados_Técnico_Laboral_Mujeres,
+				DIRECCIONAMIENTOS_A_FORMACIoN_PARA_EL_TRABAJO_REALIZADOS_SISE_8_numero_de_personas_que_culminaron_programas_de_formacion_y_capacitacion_para_el_trabajo: registroTabla2.Capacitación_Finalizados,
+				_8_1_numero_de_personas_que_culminaron_programas_de_formacion_y_capacitacion_para_el_trabajo_hombres: registroTabla2.Capacitación_Finalizados_Hombres,
+				_8_1_1_numero_de_personas_que_culminaron_programas_de_formacion_en_competencias_claves_y_transversales_hombres: registroTabla2.Capacitación_Finalizados_Competen_claves_trasversales_Hombres,
+				_8_1_2_numero_de_personas_que_culminaron_programas_de_formacion_en_tecnologias_de_la_informacion_y_las_comunicaciones_tic_hombres: registroTabla2.Capacitación_Finalizados_TICS_Hombres,
+				_8_1_3_numero_de_personas_que_culminaron_programas_de_alfabetizacion_o_bachillerato_hombres: registroTabla2.Capacitación_Finalizados_alfabetización_bachillerato_Hombres,
+				_8_1_4_numero_de_personas_que_culminaron_programas_de_entrenamiento_o_reentrenamiento_tecnico_hombres: registroTabla2.Capacitación_Finalizados_Curso_Seminario_Diplomado_Hombres,
+				_8_1_5_numero_de_personas_que_culminaron_programas_de_tecnico_laboral_hombres: registroTabla2.Capacitación_Finalizados_Técnico_Laboral_Hombres,
+				_8_2_numero_de_personas_que_culminaron_programas_de_formacion_y_capacitacion_para_el_trabajo_mujeres: registroTabla2.Capacitación_Finalizados_Mujeres,
+				_8_2_1_numero_de_personas_que_culminaron_programas_de_formacion_en_competencias_claves_y_transversales_mujeres: registroTabla2.Capacitación_Finalizados_Competen_claves_trasversales_Mujeres,
+				_8_2_2_numero_de_personas_que_culminaron_programas_de_formacion_en_tecnologias_de_la_informacion_y_las_comunicaciones_tic_mujeres: registroTabla2.Capacitación_Finalizados_TICS_Mujeres,
+				_8_2_3_numero_de_personas_que_culminaron_programas_de_alfabetizacion_o_bachillerato_mujeres: registroTabla2.Capacitación_Finalizados_alfabetización_bachillerato_Mujeres,
+				_8_2_4_numero_de_personas_que_culminaron_programas_de_entrenamiento_o_reentrenamiento_tecnico_mujeres: registroTabla2.Capacitación_Finalizados_Curso_Seminario_Diplomado_Mujeres,
+				_8_2_5_numero_de_personas_que_culminaron_programas_de_tecnico_laboral_mujeres: registroTabla2.Capacitación_Finalizados_Técnico_Laboral_Mujeres,
+				DIRECCIONAMIENTOS_A_EMPRENDIMIENTO_SISE_9_numero_de_personas_direccionadas_a_programas_de_emprendimiento: registroTabla2.Emprendimiento_Registrados,
+				_9_1_numero_de_personas_direccionadas_a_programas_de_emprendimiento_hombres: registroTabla2.Emprendimiento_Registrados_Curso_Diplomado_Otro_Hombres,
+				_9_2_numero_de_personas_direccionadas_a_programas_de_emprendimiento_mujeres: registroTabla2.Emprendimiento_Registrados_Curso_Diplomado_Otro_Mujeres,
+				_10_numero_de_pqrs_radicados_en_el_punto_de_atencion: null,
+				VACANTES_REGISTRADAS_TOTAL_SISE_Datos_hasta_abril_de_2017_por_CV_: registroTabla2.VACANTES_REGISTRADAS_TOTAL,
+				PUESTOS_DE_TRABAJO_SISE_Datos_hasta_abril_de_2017_por_CV_: registroTabla2.PUESTOS_DE_TRABAJO,
+				PUESTOS_DE_TRABAJO_CON_GESTIoN_SISE_Datos_desde_junio_de_2017_: registroTabla2.PUESTOS_DE_TRABAJO_CON_GESTION,
+				PUESTOS_DE_TRABAJO_SIN_GESTIoN_SISE_Datos_desde_junio_de_2017_: registroTabla2.PUESTOS_DE_TRABAJO_SIN_GESTION,
+				TIPO_CAJA: null, // Preguntar
 				TIPO_PUNTO_ATEN: tablaBase.tipo_de_punto_de_atencion,
 				TERCERO_DE_UN_ENTE: null,
 			};
