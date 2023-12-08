@@ -107,18 +107,16 @@ const Users = () => {
 					</button>
 
 					<div className="users-grid-container">
-						{
-							context.users?.map((item) => (
-								<>
-									<UserCard
-										key={item.id}
-										data={item}
-										handleEditClick={() => {handleEditClick(item)}}
-										handleDeleteClick={() => handleDelelteClick(item.id)}
-									/>
-								</>
-							))
-						}
+						{context.users?.map((item, index) => (
+							<>
+								<UserCard
+									key={index}
+									data={item}
+									handleEditClick={() => {handleEditClick(item)}}
+									handleDeleteClick={() => handleDelelteClick(item.id)}
+								/>
+							</>
+						))}
 					</div>
 				</div>
 
