@@ -5,8 +5,7 @@ import "./styles.css";
 const ReactTable = () => {
 	const context = React.useContext(AppContext)
 
-
-	const data = context.consolidado[0];
+	const data = context.consolidado;
 	const columns = Array.from(new Set(data.flatMap((row) => Object.keys(row))));
 
 	return (
@@ -18,6 +17,7 @@ const ReactTable = () => {
 					))}
 				</tr>
 			</thead>
+
 			<tbody>
 				{data?.map((row, rowIndex) => (
 					<tr key={rowIndex}>

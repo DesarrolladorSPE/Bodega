@@ -153,13 +153,8 @@ const AppProvider = ({children}) => {
             ];
 
             const resultsArray = await Promise.all(endpoints.map(fetchData));
-            const combinedResults = resultsArray.reduce((acc, result) => {
-                return { ...acc, ...result };
-            }, {});
 
-			setConsolidado(resultsArray);
-            // setResponseData(combinedResults);
-			// setUsers(combinedResults.users)
+			setConsolidado(resultsArray[0]);
 
         } catch (err) {
 			messageHandler("error", `${err.message}`);
