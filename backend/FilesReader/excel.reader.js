@@ -3,6 +3,8 @@ const ExcelJS = require("exceljs");
 const { insertDataFileToDatabase, insertBaseDeCaracterizacionFileToDatabase } = require("../database/inserDataFiles");
 const { getColumnNamesInDataBase } = require("../database/getFilesIdInDatabase");
 
+const { puntosDeAtencionSena } = require("../FilesReader/puntosAtencionSena")
+
 
 
 const uploadExcel = async (path, fuente) => {
@@ -34,15 +36,22 @@ const uploadExcel = async (path, fuente) => {
 
 			const idValue = parseInt(fuente == 3 ? rowValues[3] : rowValues[0]);
 
+			const dptValue = parseInt(fuente == 3 ? rowValues[1] : null)
+			const puntoAtencion = puntosDeAtencionSena(dptValue);
+
 			const mesValue = parseInt(rowValues[3]);
-			const allValues = [fuente, ...rowValues];
+
+			let allValues;
+			if (fuente == 3) {
+				allValues = [fuente, puntoAtencion, ...rowValues];
+			} else {
+				allValues = [fuente, ...rowValues];
+			}
 
 			const sanitizedValues = allValues.map(value => {
 				return typeof value === 'object' && value.text ? value.text : value;
 			});
 			const flattenedValues = sanitizedValues.map(value => (value !== undefined ? value : null));
-
-			// console.log(flattenedValues);
 
 
 			//Funcion de insercion en la base de datos
