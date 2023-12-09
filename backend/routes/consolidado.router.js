@@ -92,7 +92,7 @@ const query = util.promisify(connection.query).bind(connection);
 
 const fetchData = async () => {
     try {
-        const tabla1 = await query("SELECT * FROM 2_sise WHERE ID_PUNTO_ATENCIÓN=12018001");
+        const tabla1 = await query("SELECT * FROM 3_sena WHERE MPO_ID=57005001");
 
         return {
 			tabla1,
