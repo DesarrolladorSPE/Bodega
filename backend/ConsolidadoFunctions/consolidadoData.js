@@ -27,7 +27,7 @@ const fetchConsolidadoData = async (month = "", year = "") => {
         const indexedTabla1 = indexBy(tabla1, 'codigo_punto_atencion');
         const indexedTabla2 = indexBy(tabla2, 'ID_PUNTO_ATENCIÓN');
         const indexedTabla3 = indexBy(tabla3, 'ID_PUNTO_AT');
-        const indexedTabla4 = indexBy(tabla4, 'id_punto');
+        const indexedTabla4 = indexTable4By(tabla4, 'id_punto');
 
         // Unir los datos de las tablas 1 y 2 con la tabla 4
         // const registrosFinales = joinTables(indexedTabla1, indexedTabla2, indexedTabla3, indexedTabla4);
@@ -42,6 +42,12 @@ const fetchConsolidadoData = async (month = "", year = "") => {
 };
 
 // Función para indexar un array de objetos por una propiedad específica
+const indexTable4By = (array, property) => {
+    return array.reduce((acc, obj) => {
+        acc[obj[property]] = obj;
+        return acc;
+    }, {});
+};
 const indexBy = (array, property) => {
     return array.reduce((acc, obj) => {
         const key = obj[property];
