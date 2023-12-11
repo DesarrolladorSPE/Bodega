@@ -82,7 +82,7 @@ const UploadFile = () => {
 					color="#FFF"
 					textAlign="start"
 				>
-					Porfavor seleccione un archivo
+					Por favor seleccione un archivo
 				</SubTitle>
 				<label htmlFor="file" className="upload-file-container">
 					<input
@@ -110,7 +110,7 @@ const UploadFile = () => {
 					color="#FFF"
 					textAlign="start"
 				>
-					Porfavor seleccione una fuente
+					Por favor seleccione una fuente
 				</SubTitle>
 
 				<select
