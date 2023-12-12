@@ -15,7 +15,8 @@ const whiteList = [
 	"http://127.0.0.1:5500",
 	"http://localhost:5173",
     "http://127.0.0.1:5173",
-	"http://10.140.0.16:15106/consolidainfo"
+	"http://10.140.0.16:15106/consolidainfo",
+	"http://10.140.0.16:15106",
 ];
 const options = {
     origin: (origin, callback) => {

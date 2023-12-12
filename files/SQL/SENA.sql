@@ -32,6 +32,8 @@ CREATE TABLE `3_sena` (
   `fuente` varchar(12) NOT NULL,
 
   `ID_PUNTO_AT` int(20) NOT NULL,
+  `MES` int(2) NOT NULL,
+  `AÑO` int(5) NOT NULL,
   `pais` int(11) NOT NULL,
   `DPT_ID` int(11) NOT NULL,
   `DEPARTAMENTO` varchar(255) NOT NULL,

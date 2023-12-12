@@ -20,7 +20,7 @@ const fetchConsolidadoData = async (month = "", year = "") => {
 
 		const tabla1 = await query(`SELECT * FROM 1_formularioweb ${getQuery("mes", "ano")}`)
 		const tabla2 = await query(`SELECT * FROM 2_sise ${getQuery("MES", "AÑO")}`);
-		const tabla3 = await query(`SELECT * FROM 3_sena`);
+		const tabla3 = await query(`SELECT * FROM 3_sena ${getQuery("MES", "AÑO")}`);
         const tabla4 = await query("SELECT * FROM 4_base");
 
         // Convertir los resultados de las tablas en objetos indexados por el código del punto de atención
@@ -30,7 +30,6 @@ const fetchConsolidadoData = async (month = "", year = "") => {
         const indexedTabla4 = indexTable4By(tabla4, 'id_punto');
 
         // Unir los datos de las tablas 1 y 2 con la tabla 4
-        // const registrosFinales = joinTables(indexedTabla1, indexedTabla2, indexedTabla3, indexedTabla4);
         const registrosFinales = joinTables(indexedTabla1, indexedTabla2, indexedTabla3, indexedTabla4);
 
         return registrosFinales;
@@ -492,8 +491,8 @@ const joinTables = (tabla1, tabla2, tabla3, tabla4) => {
 			const registroFinal = {
 				ID_PUNTO_AT: registroTabla3.ID_PUNTO_AT,
 				ID_PRESTAD: tablaBase.id_prestador_cipres || null,
-				AÑO: null,
-				MES: null,
+				AÑO: registroTabla3.AÑO,
+				MES: registroTabla3.MES,
 				Marcacion_Sistema: registroTabla3.fuente,
 				ID_PRESTADOR: tablaBase.id_prestador_cipres || null,
 				Divipola_Departamento: tablaBase.divipola_asociada_a_la_url || null,

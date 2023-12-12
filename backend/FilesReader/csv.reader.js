@@ -45,7 +45,11 @@ const uploadCsv = async (path, fuente) => {
 
 					let allValues;
 					if (fuente == 3) {
-					  	allValues = [`${fuente}`, puntoAtencion, ...sanitizedRowValues];
+						const currentDate = new Date();
+						const currentMonth = currentDate.getMonth() + 1; // Sumamos 1 porque los meses van de 0 a 11
+						const currentYear = currentDate.getFullYear();
+
+					  	allValues = [`${fuente}`, puntoAtencion, currentMonth, currentYear, ...sanitizedRowValues];
 					} else {
 					 	allValues = [`${fuente}`, ...sanitizedRowValues];
 					}

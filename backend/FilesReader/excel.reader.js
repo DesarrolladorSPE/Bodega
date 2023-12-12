@@ -43,7 +43,11 @@ const uploadExcel = async (path, fuente) => {
 
 			let allValues;
 			if (fuente == 3) {
-				allValues = [fuente, puntoAtencion, ...rowValues];
+				const currentDate = new Date();
+				const currentMonth = currentDate.getMonth() + 1; // Sumamos 1 porque los meses van de 0 a 11
+				const currentYear = currentDate.getFullYear();
+
+				allValues = [fuente, puntoAtencion, currentMonth, currentYear, ...rowValues];
 			} else {
 				allValues = [fuente, ...rowValues];
 			}
