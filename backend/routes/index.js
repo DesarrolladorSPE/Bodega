@@ -11,11 +11,11 @@ const informationRouter = require("./information.router");
 
 const routerApi = (app) => {
 	const router = express.Router();
-	app.use("consolidainfo/api/v1", router);
+	app.use("/api/v1", router);
 
 	// Routes
 	router.get("/", (request, response) => {
-		response.send({});
+		response.send({message: "Servidor backend para el proyecto Bodega"});
 	});
 
 	router.use("/login", loginRouter);
