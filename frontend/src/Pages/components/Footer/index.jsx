@@ -1,5 +1,7 @@
 import React from "react";
 
+import { logoCoFooter, logoFooter } from "../../../assets";
+
 import { BsFillTelephoneFill } from "react-icons/bs";
 
 import { NavIcons } from "../NavIcons";
@@ -18,10 +20,10 @@ const Footer = () => {
         <footer className="footer-container">
             <div className="footer-image-container">
                 <a href="https://www.gov.co/" title={altTitleImg1}>
-                    <img src="/logo_footer.png" title={altTitleImg1} alt={altTitleImg1} />
+                    <img src={logoCoFooter} title={altTitleImg1} alt={altTitleImg1} />
                 </a>
                 <a href="https://www.colombia.co/" title={altTitleImg2}>
-                    <img src="/logo_co_footer.png" title={altTitleImg2} alt={altTitleImg2} />
+                    <img src={logoFooter} title={altTitleImg2} alt={altTitleImg2} />
                 </a>
             </div>
             <div className="footer-info-container">

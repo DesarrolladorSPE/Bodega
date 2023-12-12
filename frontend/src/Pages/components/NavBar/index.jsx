@@ -1,5 +1,7 @@
 import React from "react";
 
+import { banner } from "../../../assets";
+
 import { NavIcons } from "../NavIcons";
 import { AiOutlineClose } from "react-icons/ai";
 import { AiOutlineBars } from "react-icons/ai";
@@ -15,8 +17,8 @@ const Navbar = () => {
     return (
         <div className="navbar-container">
             <a className="banner-image" href="https://www.serviciodeempleo.gov.co/portada" title="Ir a Servicio Publico de Empleo" rel="noopener noreferrer">
-                <img src="/banner.png" alt="Ir a Servicio Publico de Empleo" />
-            </a>    
+                <img src={banner} alt="Ir a Servicio Publico de Empleo" />
+            </a>
 
             {context.windowWidth <= 800 ?
                 <button className="close-open-button" onClick={() => { context.setToggleNavBarResponsive(!context.toggleNavBarResponsive) }}>
