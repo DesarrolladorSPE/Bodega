@@ -11,7 +11,7 @@ const informationRouter = require("./information.router");
 
 const routerApi = (app) => {
 	const router = express.Router();
-	app.use("/api/v1", router);
+	app.use("/consolidainfo/api/v1", router);
 
 	// Routes
 	router.get("/", (request, response) => {
