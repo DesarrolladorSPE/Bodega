@@ -5,7 +5,7 @@ const routerApi = require("./routes");
 
 //APP and Port
 const app = express();
-const port = 15107;
+const port = 15108;
 
 app.use(express.json());
 
@@ -21,8 +21,8 @@ const whiteList = [
 	"http://127.0.0.1:5500",
 
 	//PROD
-	"http://10.140.0.16:15106",
 	"http://10.140.0.16:15105",
+	"http://10.140.0.16:15106",
 	"http://10.140.0.16:15107",
 ];
 const options = {
