@@ -2,7 +2,7 @@
 FROM node:latest
 
 # Establece el directorio de trabajo dentro del contenedor
-WORKDIR /backend
+WORKDIR /_data/consolidainfo/backend
 
 # Copia los archivos de la aplicación al contenedor
 COPY package*.json ./
