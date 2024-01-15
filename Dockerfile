@@ -2,7 +2,12 @@
 FROM node:latest
 
 # Establece el directorio de trabajo dentro del contenedor
-WORKDIR /_data/consolidainfo/backend
+WORKDIR /
+# Copia los archivos de frontend al contenedor
+COPY . .
+
+# Establece el directorio de trabajo dentro del backend
+WORKDIR /backend
 
 # Copia los archivos de la aplicación al contenedor
 COPY package*.json ./
@@ -16,11 +21,10 @@ COPY . .
 # Expone el puerto en el que la aplicación se ejecutará
 EXPOSE 3080
 
-# Comando para ejecutar la aplicación
+# Comando para iniciar el servidor Node.js
 CMD ["npm", "run", "prod"]
 
-
-WORKDIR /_data/consolidainfo/frontend
+WORKDIR /frontend
 
 # Copia los archivos de la aplicación al contenedor
 COPY package*.json ./
