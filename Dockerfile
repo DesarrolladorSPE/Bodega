@@ -3,6 +3,7 @@ FROM node:latest
 
 # Establece el directorio de trabajo dentro del contenedor
 WORKDIR /
+
 # Copia los archivos de frontend al contenedor
 COPY . .
 
@@ -10,27 +11,31 @@ COPY . .
 WORKDIR /backend
 
 # Copia los archivos de la aplicación al contenedor
-COPY package*.json ./
+COPY backend/package*.json ./
 
 # Instala las dependencias
 RUN npm install
 
 # Copia el resto de la aplicación al contenedor
-COPY . .
+COPY backend .
 
 # Expone el puerto en el que la aplicación se ejecutará
 EXPOSE 3080
 
-# Comando para iniciar el servidor Node.js
-CMD ["npm", "run", "prod"]
 
+# Cambia al directorio de frontend
 WORKDIR /frontend
 
 # Copia los archivos de la aplicación al contenedor
-COPY package*.json ./
+COPY frontend/package*.json ./
 
 # Instala las dependencias
 RUN npm install
 
 # Copia el resto de la aplicación al contenedor
-COPY . .
+COPY frontend .
+
+
+# Comando para iniciar el servidor Node.js
+WORKDIR /backend
+CMD ["npm", "run", "prod"]
