@@ -44,7 +44,7 @@ const App = () =>  {
 
 return (
 	<AppProvider>
-		<BrowserRouter>
+		<BrowserRouter basename="/consolidainfo">
 			<Wrapper>
 				<Navbar/>
 				<NavBarResponsive/>
