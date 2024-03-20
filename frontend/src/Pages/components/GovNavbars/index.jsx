@@ -12,7 +12,7 @@ const GovNavbar = () => {
                 <a className="logo-header-govco" rel="noopener noreferrer" target="_blank" href="https://www.serviciodeempleo.gov.co/portada">
                     <span className="">
                         <img src={iconComplete} alt="" />
-                        <img src={banner} alt="" />
+                        {/* <img src={banner} alt="" /> */}
                     </span>
                 </a>
             </div>
