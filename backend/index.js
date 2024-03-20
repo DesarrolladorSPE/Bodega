@@ -16,17 +16,11 @@ const whiteList = [
 	//DEV
 	"http://localhost:3000",
 	"http://localhost:5173",
-	"http://localhost:15106",
-	"http://localhost:15105",
 
     "http://127.0.0.1:5173",
-	"http://127.0.0.1:5500",
-	"http://127.0.0.1:15106",
 
 	//PROD
-	"http://10.140.0.16:15105",
-	"http://10.140.0.16:15106",
-	"http://10.140.0.16:15107",
+	"http://10.140.0.16:15203",
 ];
 const options = {
     origin: (origin, callback) => {
