@@ -1,0 +1,35 @@
+.nav-buttons-container {
+    padding: 20px;
+    box-sizing: border-box;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.nav-button {
+	font-weight: bold;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+
+	transition: background 0.25s ease;
+}
+.users-button {
+	color: var(--footer-color);
+	background-color: var(--white);
+}
+.users-button:hover {
+	color: var(--white);
+	background: var(--footer-color);
+}
+
+.close-session-button {
+	color: var(--error-container-color);
+	background-color: var(--white);
+}
+.close-session-button:hover {
+	color: var(--white);
+	background: var(--error-container-color);
+}

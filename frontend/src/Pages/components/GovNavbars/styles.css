@@ -1,0 +1,126 @@
+.barra-superior-govco {
+	background-color: var(--navbar-color);
+	height: 48px;
+	padding: 0 86px;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.barra-superior-govco a {
+	content: url(https://cdn.www.gov.co/assets/images/logo.svg);
+	height: 1.875rem;
+	width: 8.5rem;
+}
+
+.barra-superior-govco a:focus-visible {
+	outline: max(0.125rem, 0.15em) solid #FFFFFF;
+	border-radius: 0.313rem;
+}
+
+.barra-superior-govco .idioma-icon-barra-superior-govco {
+	height: 1.5rem;
+	width: 1.5rem;
+	border-radius: 0.313rem;
+	background-color: #FFFFFF;
+	cursor: pointer;
+	padding: 0;
+	border: 0.125rem solid #FFFFFF;
+	font-size: 10px;
+	position: absolute;
+	right: 5.375rem;
+}
+
+.barra-superior-govco .idioma-icon-barra-superior-govco:hover {
+  	background-color: var(--navbar-color);
+}
+
+.barra-superior-govco .idioma-icon-barra-superior-govco:focus {
+	outline: max(0.125rem, 0.15em) solid #FFFFFF;
+	outline-offset: max(0.188rem, 0.15em);
+}
+
+.barra-superior-govco .idioma-icon-barra-superior-govco::before {
+	font-family: "govco-font";
+	content: "EN";
+	color: var(--navbar-color);
+	font-size: 11px;
+}
+
+.barra-superior-govco .idioma-icon-barra-superior-govco:hover::before {
+    color: #FFFFFF;
+}
+  
+
+  
+.logo-aut-header-govco {
+	position: relative;
+	margin-bottom: 2rem;
+}
+  
+.logo-aut-header-govco .link-login-header-govco {
+	color: var(--navbar-color);
+	font-family: WorkSans-Regular;
+	font-size: 14px;
+	display: block;
+	right: 5.375rem;
+	position: absolute;
+	margin-top: 2rem;
+}
+
+.logo-aut-header-govco .link-login-header-govco:hover {
+	color: var(--navbar-color);
+}
+  
+.container-logo-header-govco {
+	padding: 3.563rem 5.375rem 0 5.375rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+  
+.container-logo-header-govco .logo-header-govco {
+	height: 3rem;
+	padding: 5px 15px;
+}
+.container-logo-header-govco .logo-header-govco img {
+	height: 100%;
+	object-fit: contain;
+}
+.container-logo-header-govco .logo-header-govco img:nth-child(1) {
+	padding-right: 24px;
+	border-right: 2px solid black;
+}
+.container-logo-header-govco .logo-header-govco img:nth-child(2) {
+	padding-left: 24px;
+}
+
+
+  
+.container-logo-header-govco .container-search-header-govco {
+	max-width: 21.875rem;
+}
+  
+@media (max-width: 991px) {
+	.logo-aut-header-govco {
+		display: none;
+	}
+
+	.container-logo-header-govco {
+		padding: 0.781rem 0 0.781rem 1.125rem;
+		border-bottom: 0.188rem solid var(--navbar-color);
+	}
+
+	.container-logo-header-govco .logo-header-govco {
+		height: 2.188rem;
+	}
+	.barra-superior-govco {
+		justify-content: center;
+		padding: 0;
+  	}
+
+  	.barra-superior-govco .idioma-icon-barra-superior-govco  {
+    	right: 1rem;
+  	}
+}

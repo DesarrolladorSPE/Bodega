@@ -1,18 +1,20 @@
 import React from "react";
 import { AppContext, AppProvider } from '../../Context';
-import { BrowserRouter, useLocation, Navigate, useRoutes, } from "react-router-dom";
+import { useLocation, Navigate, useRoutes, HashRouter, } from "react-router-dom";
 
 import './App.css'
 
 import { Home } from '../Screens/Home';
 import { Login } from "../Screens/Login";
 
+import { GovNavbar } from "../components/GovNavbars";
 import { Navbar } from "../components/NavBar";
-import { NavBarResponsive } from "../components/NavBarResponsive";
 import { Footer } from "../components/Footer";
+
 import { MainContainer } from "../components/MainContainer";
 import { LoadingCard } from "../components/LoadingCard";
 import { Users } from "../Screens/Users";
+import { NavButtons } from "../components/NavButtons";
 
 const Wrapper = ({children}) => {
 const location = useLocation();
@@ -44,17 +46,17 @@ const App = () =>  {
 
 return (
 	<AppProvider>
-		<BrowserRouter basename="/consolidainfo">
+		<HashRouter>
 			<Wrapper>
-				<Navbar/>
-				<NavBarResponsive/>
+				<GovNavbar/>
 				<MainContainer>
+					<NavButtons/>
 					<AppRoutes/>
 				</MainContainer>
 				<LoadingCard/>
 				<Footer/>
 			</Wrapper>
-		</BrowserRouter>
+		</HashRouter>
 	</AppProvider>
 );
 }

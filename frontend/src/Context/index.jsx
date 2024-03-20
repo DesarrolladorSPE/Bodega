@@ -4,12 +4,10 @@ import * as XLSX from "xlsx";
 export const AppContext = React.createContext();
 
 const AppProvider = ({children}) => {
-	//API -- Cambiar el valor de la variable domain segun la infraestructura de produccion
-		//DEV
-    const domain = "http://localhost:3080";
-		//PROD
-    // const domain = "http://10.140.0.16:15107";
-	const api = `${domain}/api/v1`;
+    const domain = import.meta.env.VITE_API_DOMAIN;
+    const apiStructure = import.meta.env.VITE_API_STRUCTURE;
+
+    const api = `${domain}/${apiStructure}/v1`;
 
 	//-------------------------------------
     const [apiUri, setApiUri] = React.useState(api);
@@ -43,7 +41,6 @@ const AppProvider = ({children}) => {
 				setStatusMessage("");
 			}, 4000)
 		}
-
 	}
 
 
@@ -66,6 +63,7 @@ const AppProvider = ({children}) => {
         }
         catch (err) {
 			messageHandler("error", `Error fetching ${endpoint}: ${err.message}`);
+			console.log(err)
             // throw new Error(`Error fetching ${endpoint}: ${err.message}`);
         }
     };

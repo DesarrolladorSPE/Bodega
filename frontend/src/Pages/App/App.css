@@ -1,12 +1,11 @@
 :root{
+    ----main-body-color: #EEFAFF;
+    
 	--error-container-color: rgba(220, 37, 73, 0.75);
 	--allok-container-color: rgba(37, 220, 73, 0.75);
 
-    /* --navbar-color: #4172FF; */
     --navbar-color: #00589c;
-    /* --navbar-color: #6ABFE1; */
     --navbar-responsive-color: rgba(65, 114, 255, 0.75);
-    /* --navbar-responsive-color: rgba(106, 191, 225, 0.85); */
 
     --containers-color: rgba(255, 255, 255, 0.2);
     --cards-container-color: rgba(255,255,255, 0.5);
@@ -34,4 +33,19 @@
     --login-color: #64C8BD;
     --label-color: #FFF;
     --button-color: #EBEBEB;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--main-body-color);
+}
+*{
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
 }

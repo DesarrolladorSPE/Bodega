@@ -1,0 +1,130 @@
+.footer-container {
+    background-color: var(--navbar-color);
+    width: 100%;
+    padding: 30px 100px;
+
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    justify-content: center;
+    gap: 25px;
+
+    box-sizing: border-box; 
+}
+.footer-container p, .footer-container a{
+    font-family: "WorkSans-Regular" !important;
+}
+
+.footer-image-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-image-container a {
+    width: 125px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+.footer-image-container a:nth-child(2) {
+    padding: 25px;
+}
+.footer-image-container a img {
+    width: 100%;
+    object-fit: contain;
+}
+
+.footer-info-container {
+    width: 100%;
+    border-left: 1px solid var(--white);
+
+    padding-left: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+	box-sizing: border-box;
+}
+.footer-info-container p:nth-child(2){
+    width: 100%;
+    color: var(--white);
+    font-size: 14px;
+}
+
+
+.footer-contact-container {
+    width: 100%;
+    border-left: 1px solid var(--white);
+
+    padding-left: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+
+	box-sizing: border-box;
+}
+
+.sub-title-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+    width: 150px;
+}
+
+.footer-contact-container p {
+    color: var(--white);
+    font-size: 14px;
+}
+.footer-contact-container p a {
+    color: var(--white);
+    font-size: 14px;
+    transition: transform 0.25s ease;
+}
+.footer-contact-container p a:hover {
+    font-size: 14px;
+}
+
+
+@media (max-width: 870px) {
+	.footer-container {
+
+		padding: 30px 10px;
+		grid-template-columns: 1fr;
+		gap: 25px;
+
+	}
+	.footer-info-container {
+		border-top: 1px solid var(--white);
+		border-left: none;
+
+		padding-left: 0;
+		padding-top: 15px;
+		padding-bottom: 0;
+		text-align: center;
+	}
+
+	.footer-contact-container {
+		align-items: center;
+		border-top: 1px solid var(--white);
+		border-left: none;
+
+		padding-left: 0;
+		padding-top: 15px;
+		padding-bottom: 0;
+		text-align: center;
+
+	}
+}
