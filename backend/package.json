@@ -4,7 +4,7 @@
   "description": "Bodega de Fuentes de datos",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -e .ini index.js",
+    "dev": "nodemon -e ini, js, msj, json index.js",
     "prod": "node index.js"
   },
   "author": "",
