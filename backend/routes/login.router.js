@@ -15,11 +15,11 @@ router.post('/', (request, response) => {
 
             if (results.length > 0) {
                 // Usuario autenticado
-                response.status(200).json({ message: "Inicio de sesión exitoso", type: results[0].tipo });
+                return response.status(200).json({ message: "Inicio de sesión exitoso", type: results[0].tipo });
             }
             else {
                 // Usuario no encontrado en la base de datos
-                response.status(401).json({ message: "Correo o contraseña invalidos, intetelo de nuevo." });
+                return response.status(401).json({ message: "Correo o contraseña invalidos, intentelo de nuevo." });
             }
         }
     );

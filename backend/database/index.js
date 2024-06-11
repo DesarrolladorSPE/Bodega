@@ -10,8 +10,8 @@ var connection = mysql.createConnection({
     host     : `${properties.get('app.database.server')}`,
     user     : `${properties.get('app.database.user')}`,
     password : `${properties.get('app.database.password')}`,
-    database: `${properties.get('app.database.database')}`,
-	port: `${properties.get('app.database.port')}`
+    database : `${properties.get('app.database.database')}`,
+	port     : `${properties.get('app.database.port')}`
 });
 
 
