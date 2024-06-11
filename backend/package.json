@@ -1,14 +1,14 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "Bodega de Fuentes de datos",
+  "description": "Backend for bodega de Fuentes de datos",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -e ini, js, msj, json index.js",
+    "dev": "nodemon index.js",
     "prod": "node index.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "5arSanti <santiari05@hotmail.com>",
+  "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
     "exceljs": "^4.4.0",

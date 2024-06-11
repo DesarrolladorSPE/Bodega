@@ -5,7 +5,7 @@ const path = require("path");
 //Multer config
 let storage = multer.diskStorage({
     destination: (request, file, callback) => {
-        callback(null, "./uploads/");
+        callback(null, "../uploads/");
     },
     filename:(request, file, callback) => {
 		const selectedOption = request.get('selectedOption');
