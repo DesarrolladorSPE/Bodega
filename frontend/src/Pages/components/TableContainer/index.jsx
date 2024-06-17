@@ -10,12 +10,28 @@ import { MessageCard } from "../MessageCard";
 
 import "./styles.css";
 import { NotFoundCard } from "../NotFoundCard";
+import { handleNotifications } from "../../../utils/handleNotifications";
+import { tableToExcel } from "../../../utils/exportToExcel";
 
 const TableContainer = () => {
 	const context = React.useContext(AppContext)
 
-	const data = context.consolidado;
+	const data = context.responseData?.consolidado || [];
 	let columns = Array.from(new Set(data?.flatMap((row) => Object.keys(row))));
+
+	const exportToExcel = async (columns) => {
+		try {
+			context.setLoading(true);
+			const name = await tableToExcel(columns, context.filters?.ano, context.filters?.mes);
+			handleNotifications("success", `Archivo ${name}.xlsx exportado correctamente.`);
+		}
+		catch (err) {
+			handleNotifications("error", err.message);
+		}
+		finally {
+			context.setLoading(false)
+		}
+	};
 
 	return(
 		<div className="consolidado-table-container">
@@ -26,13 +42,10 @@ const TableContainer = () => {
 				>
 					Consolidado
 				</Title>
-				<button onClick={() => context.setShowConsolidado(false)}>
-					<AiOutlineClose/>
-				</button>
 			</div>
 			<div className="button-and-filters-container">
-				{context.consolidado.length > 0 &&
-					<button onClick={() => {context.exportToExcel(columns)}}>
+				{data.length > 0 &&
+					<button onClick={() => {exportToExcel(columns)}}>
 						Exportar a Excel
 					</button>
 				}
@@ -42,7 +55,7 @@ const TableContainer = () => {
 			<MessageCard/>
 
 			<div className="scroll-wrapper">
-				{context.consolidado.length > 0 ?
+				{data.length > 0 ?
 					<ReactTable
 						data={data}
 						columns={columns}

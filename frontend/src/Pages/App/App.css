@@ -1,11 +1,25 @@
 :root{
-    ----main-body-color: #EEFAFF;
+    --navbar-color: #3366cc;
+    --main-body-color: #EEFAFF;
+    --main-title-color: #681d35;
+    --light-gray-color: rgba(236,236,236,0.7);
+    --confirm-color: #069169;
+    --cancel-color: #D31F3F;
+    --time-color: #3366cc;
+    --gov-accesibility-card: #E0161E;
+    --black-to-white-color: #000000;
+    --white-to-black-color: #FFFFFF;
+    --lines-color: #681d35;
+    --lines-color2: #681d35;
+    --text-color: #717171;
+    --all-info-container-color: #E6EFFD;
+
+
+    --navbar-color: #3366cc;
 
 	--error-container-color: rgba(220, 37, 73, 0.75);
 	--allok-container-color: rgba(37, 220, 73, 0.75);
 
-    --navbar-color: #00589c;
-    --navbar-responsive-color: rgba(65, 114, 255, 0.75);
 
     --containers-color: rgba(255, 255, 255, 0.2);
     --cards-container-color: rgba(255,255,255, 0.5);

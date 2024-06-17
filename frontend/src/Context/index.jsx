@@ -1,5 +1,7 @@
 import React from "react";
-import * as XLSX from "xlsx";
+
+import { fetchAllData } from "../utils/handleData/handleFetchData";
+import { handleNotifications } from "../utils/handleNotifications";
 
 export const AppContext = React.createContext();
 
@@ -49,53 +51,47 @@ const AppProvider = ({children}) => {
     const [users, setUsers] = React.useState();
     const [ isLoged, setIsLoged ] = React.useState(false);
 
-	const fetchData = async (endpoint) => {
-        try {
-            const response = await fetch(`${apiUri}/${endpoint}`);
-
-            if (!response.status === 200) {
-				messageHandler("error", `Error fetching ${endpoint}: ${response.statusText}`);
-                // throw new Error(`Error fetching ${endpoint}: ${response.statusText}`);
-            }
-
-            return await response.json();
-
-        }
-        catch (err) {
-			messageHandler("error", `Error fetching ${endpoint}: ${err.message}`);
-			console.log(err)
-            // throw new Error(`Error fetching ${endpoint}: ${err.message}`);
-        }
-    };
-
-    const fetchAllData = async () => {
+    const fetchData = async (endpoints) => {
         try {
             setLoading(true);
-            const endpoints = [
-				"info"
-            ];
-
-            // Realizar todas las solicitudes en paralelo
-            const resultsArray = await Promise.all(endpoints.map(fetchData));
-
-            const combinedResults = resultsArray.reduce((acc, result) => {
-                return { ...acc, ...result };
-            }, {});
-
-            setResponseData(combinedResults);
-			setUsers(combinedResults.users)
-
-        } catch (err) {
-			messageHandler("error", `${err.message}`);
+            const data = await fetchAllData(endpoints);
+            setResponseData((prevData) => ({
+                ...prevData,
+                ...data
+            }));
+        }
+        catch (err) {
+            handleNotifications("error", err.message)
         }
         finally {
             setLoading(false);
         }
-    };
+    }
+
 
     React.useEffect(() => {
-        fetchAllData();
+        const endpoints = [
+            `info`,
+        ]
+        fetchData(endpoints)
     }, [isLoged]);
+
+
+	//CONSOLIDADO
+	const [filters, setFilters] = React.useState({
+		"mes": "",
+		"ano": "",
+	});
+
+	React.useEffect(() => {
+		const filterParams = new URLSearchParams(filters);
+		const endpoints = [
+			`consolidado/tablas?${filterParams.toString()}`
+		];
+
+        fetchData(endpoints);
+    }, [filters]);
+
 
     //Login
 		//CERRAR SESION
@@ -125,97 +121,7 @@ const AppProvider = ({children}) => {
 	const resetUsersInfo = () => {
 		setCreatingUser(null);
 		setEditingUser(null);
-		setShowConsolidado(null);
-		setToggleNavBarResponsive(false);
 	}
-
-
-    //CONSOLIDADO
-	const [filters, setFilters] = React.useState({
-		// "mes": currentMonth,
-		// "ano": currentYear,
-		"mes": "",
-		"ano": "",
-    });
-
-	const handleFilterChange = (filterName, value) => {
-        setFilters((prevFilters) => ({ ...prevFilters, [filterName]: value }));
-    };
-
-    const [showConsolidado, setShowConsolidado] = React.useState(false);
-    const [consolidado, setConsolidado] = React.useState([]);
-
-	const fetchConsolidadoData = async () => {
-        try {
-            setLoading(true);
-            const filterParams = new URLSearchParams(filters);
-            const endpoints = [
-				// `consolidado?${filterParams.toString()}`
-				`consolidado/tablas?${filterParams.toString()}`
-            ];
-
-            const resultsArray = await Promise.all(endpoints.map(fetchData));
-
-			setConsolidado(resultsArray[0]);
-
-        } catch (err) {
-			messageHandler("error", `${err.message}`);
-        }
-        finally {
-            setLoading(false);
-        }
-    };
-
-    React.useEffect(() => {
-        fetchConsolidadoData();
-    }, [filters, showConsolidado]);
-
-
-	//Exportar Consolidado a Excel
-	const formatConsolidadoName = (mes, ano) => {
-		const formattedMes = mes.length === 1 ? `0${mes}` : mes;
-
-		if (formattedMes === "" && ano === "") {
-			return "Consolidado_Completo";
-		}
-
-		// Construir el nombre formateado
-		const name = `Consolidado-${formattedMes}-${ano}`;
-		return name;
-	};
-
-	const exportToExcel = (columns) => {
-		try {
-			setLoading(true);
-			const table = document.getElementById("dataTable");
-
-			// Obtener datos de la tabla
-			const rows = table.querySelectorAll("tbody tr");
-			const exportedData = Array.from(rows).map((row) => {
-				const cells = row.querySelectorAll("td");
-				return Array.from(cells).map((cell) => cell.textContent);
-			});
-
-			// Crear una hoja de trabajo
-			const ws = XLSX.utils.aoa_to_sheet([columns, ...exportedData]);
-
-			let name = formatConsolidadoName(filters.mes, filters.ano);
-
-			// Crear un libro de trabajo
-			const wb = XLSX.utils.book_new();
-			XLSX.utils.book_append_sheet(wb, ws, name);
-
-			// Guardar el archivo
-			XLSX.writeFile(wb, `${name}.xlsx`);
-			messageHandler("all-ok", `Archivo ${name}.xlsx exportado correctamente.`);
-		}
-		catch (err) {
-			messageHandler("error", `${err.message}`);
-		}
-		finally {
-			setLoading(false)
-		}
-	};
 
 
 	// Screen width manager
@@ -228,9 +134,6 @@ const AppProvider = ({children}) => {
 		window.addEventListener('resize', handleResize);
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
-
-
-	const [toggleNavBarResponsive, setToggleNavBarResponsive] = React.useState(false);
 
     return(
         <AppContext.Provider
@@ -258,8 +161,6 @@ const AppProvider = ({children}) => {
 
                 windowWidth,
                 setWindowWidth,
-                toggleNavBarResponsive,
-                setToggleNavBarResponsive,
 
 
 
@@ -285,16 +186,6 @@ const AppProvider = ({children}) => {
 				handleCloseEditForm,
 
 				resetUsersInfo,
-
-				//Consolidado
-				handleFilterChange,
-				consolidado,
-				setConsolidado,
-				showConsolidado,
-				setShowConsolidado,
-
-				//Exportar a excel
-				exportToExcel,
             }}
         >
             { children }

@@ -1,0 +1,47 @@
+.container-logo-header-govco {
+	padding: 0 5.375rem 0 5.375rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+    width: 100%;
+	margin-bottom: 30px;
+}
+  
+.container-logo-header-govco .logo-header-govco {
+	height: 3.5rem;
+	padding: 5px 15px;
+}
+.container-logo-header-govco .logo-header-govco a img {
+	height: 100%;
+	object-fit: contain;
+}
+.container-logo-header-govco .logo-header-govco a:nth-child(1) img {
+	padding-right: 24px;
+	border-right: 2px solid black;
+}
+.container-logo-header-govco .logo-header-govco a:nth-child(2) img {
+	padding-left: 24px;
+}
+
+
+  
+.container-logo-header-govco .container-search-header-govco {
+	max-width: 21.875rem;
+}
+
+@media (max-width: 991px) {
+    .container-logo-header-govco .logo-header-govco {
+        padding: 0px;
+    }
+    .container-logo-header-govco {
+        justify-content: center;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 500px) {
+    .container-logo-header-govco .logo-header-govco {
+        height: 2rem;
+    }
+}

@@ -17,15 +17,15 @@ const router = express.Router();
 router.post("/upload", upload.single("file"), async (request, response) => {
 	try {
 		const uploadedFile = request.file;
-		const selectedOption = request.body.selectedOption;
+		const { selectedOption } = request.body;
 
 		validateFiles(uploadedFile, selectedOption);
 
-		let fileDate = moment(uploadedFile.uploadDate).format("YYYY-MM-DD HH:mm:ss"); //Fecha
+		let fileDate = moment(uploadedFile.uploadDate).format("YYYY-MM-DD HH:mm:ss");
 
+		const fileExtension = uploadedFile.filename.split('.').pop();
+		const route = __dirname + "/../uploads/" + uploadedFile.filename;
 
-		const fileExtension = uploadedFile.filename.split('.').pop(); //Verifica la extension del archivo
-		let route = __dirname + "/../uploads/" + uploadedFile.filename; //Carpeta donde se guarda el archivo temporalmente
 		let rowLog = {};
 
 		switch(fileExtension) {
@@ -43,9 +43,8 @@ router.post("/upload", upload.single("file"), async (request, response) => {
 		})
 
 		return response.json({Status: "Success", message: "Archivo procesado correctamente", rowLog });
-
-
-	} catch (err) {
+	}
+	catch (err) {
 		return response.json({Error: err.message});
 	}
 });

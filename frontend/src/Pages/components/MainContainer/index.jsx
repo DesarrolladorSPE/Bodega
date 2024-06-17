@@ -1,10 +1,9 @@
-import { GovNavbar } from "../GovNavbars";
 import "./styles.css"
 
 const MainContainer = ({children}) => {
     return(
         <div className="main-container">
-			<div className="color-container">
+			<div className="home-container">
 				{children}
 			</div>
         </div>

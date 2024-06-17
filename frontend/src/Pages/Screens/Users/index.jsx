@@ -54,7 +54,6 @@ const Users = () => {
 	const handleCreateUser = async (newUserData) => {
 		context.setLoading(true);
 		try {
-			// Realiza una solicitud al servidor para crear un nuevo usuario
 			const response = await fetch(`${context.apiUri}/users`, {
 				method: 'POST',
 				headers: {
@@ -107,12 +106,12 @@ const Users = () => {
 					</button>
 
 					<div className="users-grid-container">
-						{context.users?.map((item, index) => (
+						{context.responseData?.users?.map((item, index) => (
 							<>
 								<UserCard
 									key={index}
 									data={item}
-									handleEditClick={() => {handleEditClick(item)}}
+									handleEditClick={() => { handleEditClick(item) }}
 									handleDeleteClick={() => handleDelelteClick(item.id)}
 								/>
 							</>

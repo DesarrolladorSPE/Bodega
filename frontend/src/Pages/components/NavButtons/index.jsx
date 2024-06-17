@@ -1,55 +1,65 @@
 import React from "react";
 
 import { AppContext } from "../../../Context";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import "./styles.css";
 
 
-const NavButtons = ({NavBar=true,flexDirection}) => {
-    const context = React.useContext(AppContext);
+const NavButtons = ({className="idioma-icon-barra-superior-govco"}) => {
+    const context = React.useContext(AppContext)
 
-    const showUsersButton = () => {
-        if(context.admin && NavBar) {
+	const { isLoged, admin } = context;
+
+    const handleNavButtons = () => {
+        if(admin) {
             return(
-                <NavLink className="anchor-no-animation" to={"/users"}>
-                    <button className="nav-button users-button">Usuarios</button>
-                </NavLink>
+                <>
+                    <Link to={"/home"} className={`${className}`}>
+                        Home
+                    </Link>
+                    <Link to={"/consolidado"} className={`${className}`}>
+						Consolidado
+                    </Link>
+                    <Link to={"/users"} className={`${className}`}>
+                        Usuarios
+                    </Link>
+                      <button
+                        className={`${className}`}
+                        onClick={context.closeSession}
+                    >
+                        Cerrar Sesión
+                    </button>
+                </>
+
+            );
+        } else if (isLoged) {
+            return(
+                <>
+                    <Link to={"/home"} className={`${className}`}>
+                        Home
+                    </Link>
+                    <Link to={"/consolidado"} className={`${className}`}>
+						Consolidado
+                    </Link>
+                    <Link to={"/users"} className={`${className}`}>
+                        Usuarios
+                    </Link>
+                      <button
+                        className={`${className}`}
+                        onClick={context.closeSession}
+                    >
+                        Cerrar Sesión
+                    </button>
+                </>
+
             );
         }
     }
 
-	const showCloseSessionButton = () => {
-        if(context.isLoged && NavBar) {
-            return(
-				<>
-					<button
-						className="nav-button users-button"
-						onClick={() => context.setShowConsolidado(!context.showConsolidado)}
-					>
-						Consolidar
-					</button>
-
-					<button
-						className="nav-button close-session-button"
-						onClick={() => context.closeSession()}
-					>
-						Cerrar Sesión
-					</button>
-				</>
-
-            );
-        }
-    }
-
-    return (
-        <div className="nav-buttons-container" style={{
-            flexDirection: flexDirection,
-        }}>
-            <div className="nav-icons-container">
-                {showUsersButton()}
-                {showCloseSessionButton()}
-            </div>
+    return(
+        <div className="nav-buttons-container">
+            {handleNavButtons()}
         </div>
     );
 

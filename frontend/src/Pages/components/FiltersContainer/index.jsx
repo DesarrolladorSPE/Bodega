@@ -3,6 +3,7 @@ import { AppContext } from "../../../Context";
 import { FiltersCard } from "../FiltersCards";
 
 import "./styles.css";
+import { handleInputChange } from "../../../utils/handleInputChange";
 
 const FiltersContainer = () => {
 	const context = React.useContext(AppContext);
@@ -27,13 +28,13 @@ const FiltersContainer = () => {
 				id={"month-input"}
 				title={"Mes"}
 				array={monthArray}
-				onChange={(value) => context.handleFilterChange("mes", value)}
+				onChange={(value) => handleInputChange("mes", value, context.setFilters)}
 			/>
 			<FiltersCard
 				id={"year-input"}
 				title={"Año"}
 				array={yearArray}
-				onChange={(value) => context.handleFilterChange("ano", value)}
+				onChange={(value) => handleInputChange("ano", value, context.setFilters)}
 			/>
 		</div>
 	);

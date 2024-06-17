@@ -18,6 +18,8 @@ import { LoadingCard } from "../components/LoadingCard";
 import { Users } from "../Screens/Users";
 import { NavButtons } from "../components/NavButtons";
 import { ToastContainer } from "react-toastify";
+import { ConsolidadoScreen } from "../Screens/ConsolidadoScreen";
+import { NavImagesCard } from "../components/NavImagesCard";
 
 const Wrapper = ({children}) => {
 	const location = useLocation();
@@ -30,14 +32,15 @@ const Wrapper = ({children}) => {
 
 const AppRoutes = () => {
 	const context = React.useContext(AppContext);
+	const { isLoged, admin } = context;
 
 	let routes = useRoutes([
-		{path: "/", element: context.isLoged ? <Home/> : <Navigate replace to={"/login"}/> },
-		{path: "/home", element: context.isLoged ? <Home/> : <Navigate replace to={"/login"}/>},
-		{path: "/*", element: context.isLoged ? <Home/> : <Navigate replace to={"/login"}/>},
+		{path: "/*", element: isLoged ? <Home/> : <Navigate replace to={"/login"}/>},
+		{path: "/home", element: isLoged ? <Home/> : <Navigate replace to={"/login"}/>},
+		{path: "/consolidado", element: isLoged ? <ConsolidadoScreen/> : <Navigate replace to={"home"}/>},
 
-		{path: "/login", element: context.isLoged ? <Home/> : <Login/>},
-		{path: "/users", element: context.isLoged && context.admin ? <Users/> : <Navigate replace to={"home"}/>},
+		{path: "/login", element: isLoged ? <Home/> : <Login/>},
+		{path: "/users", element: isLoged && admin ? <Users/> : <Navigate replace to={"home"}/>},
 
 	]);
 
@@ -53,7 +56,7 @@ return (
 			<Wrapper>
 				<GovNavbar/>
 				<MainContainer>
-					<NavButtons/>
+					<NavImagesCard/>
 					<AppRoutes/>
 				</MainContainer>
 				<LoadingCard/>
