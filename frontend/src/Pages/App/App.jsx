@@ -2,27 +2,30 @@ import React from "react";
 import { AppContext, AppProvider } from '../../Context';
 import { useLocation, Navigate, useRoutes, HashRouter, } from "react-router-dom";
 
+import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import './App.css'
 
 import { Home } from '../Screens/Home';
 import { Login } from "../Screens/Login";
 
 import { GovNavbar } from "../components/GovNavbars";
-import { Navbar } from "../components/NavBar";
 import { Footer } from "../components/Footer";
 
 import { MainContainer } from "../components/MainContainer";
 import { LoadingCard } from "../components/LoadingCard";
 import { Users } from "../Screens/Users";
 import { NavButtons } from "../components/NavButtons";
+import { ToastContainer } from "react-toastify";
 
 const Wrapper = ({children}) => {
-const location = useLocation();
-React.useLayoutEffect(() => {
-	document.documentElement.scrollTo(0, 0)
-}, [location.pathname]);
+	const location = useLocation();
+	React.useLayoutEffect(() => {
+		document.documentElement.scrollTo(0, 0)
+	}, [location.pathname]);
 
-return children;
+	return children;
 }
 
 const AppRoutes = () => {
@@ -55,6 +58,7 @@ return (
 				</MainContainer>
 				<LoadingCard/>
 				<Footer/>
+				<ToastContainer/>
 			</Wrapper>
 		</HashRouter>
 	</AppProvider>

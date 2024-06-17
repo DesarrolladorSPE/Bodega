@@ -7,54 +7,46 @@ const { uploadCsv } = require("../FilesReader/csv.reader");
 const readFileName = require("../FilesNameDatabase/fileName");
 const upload =require("../middlewares/multer.config");
 const { uploadExcel } = require("../FilesReader/excel.reader");
+const { validateFiles } = require("../utils/validateFiles");
+const { postQuery } = require("../utils/querys");
 
 
 //Routing
 const router = express.Router();
 
 router.post("/upload", upload.single("file"), async (request, response) => {
-	// Informacion enviada desde el Front
-    const uploadedFile = request.file;
-    const selectedOption = request.get('selectedOption');
-
-	if (!uploadedFile || !selectedOption) {
-        return response.status(400).json({ message: 'No se ha subido ningún archivo o no se ha seleccionado ninguna fuente.' });
-    }
-
-	// Nombre y fecha del archivo enviado
-	let fileName = uploadedFile.filename; //Nombre
-	let fileDate = moment(uploadedFile.uploadDate).format("YYYY-MM-DD HH:mm:ss"); //Fecha
-
-
-	const fileExtension = uploadedFile.filename.split('.').pop(); //Verifica la extension del archivo
-	let route = __dirname + "/../uploads/" + uploadedFile.filename; //Carpeta donde se guarda el archivo temporalmente
-	let rowLog = {};
-
 	try {
+		const uploadedFile = request.file;
+		const selectedOption = request.body.selectedOption;
+
+		validateFiles(uploadedFile, selectedOption);
+
+		let fileDate = moment(uploadedFile.uploadDate).format("YYYY-MM-DD HH:mm:ss"); //Fecha
+
+
+		const fileExtension = uploadedFile.filename.split('.').pop(); //Verifica la extension del archivo
+		let route = __dirname + "/../uploads/" + uploadedFile.filename; //Carpeta donde se guarda el archivo temporalmente
+		let rowLog = {};
+
 		switch(fileExtension) {
 			case "csv":
 				rowLog = await uploadCsv(route, selectedOption); break;
 			case "xlsx":
 				rowLog = await uploadExcel(route, selectedOption); break;
-			default: response.status(500).json({ message: 'El archivo subido no es valido' });
+			default: response.json({ Error: "El archivo subido no es valido"});
 		}
 
-		readFileName(fileName, fileDate);
+		await postQuery("INSERT INTO archivos (nombre, fecha) VALUES (?, ?)", [uploadedFile.filename, fileDate])
 
-		try {
-			fs.unlink(route, (err) => {
-				if(err) {
-					throw err;
-				}
-			})
-		} catch (err) {
-			response.status(500).json({message: "Error Borrando el archivo en el servidor. Vuelvalo a intentar"})
-		}
+		fs.unlink(route, (err) => {
+			if (err) { throw new Error(err) }
+		})
 
-		response.status(200).json({ message: "Guardado Correctamente", rowLog});
+		return response.json({Status: "Success", message: "Archivo procesado correctamente", rowLog });
+
+
 	} catch (err) {
-		console.error(err);
-		response.status(500).json({ message: 'Error procesando el archivo, o el archivo esta corrupto' });
+		return response.json({Error: err.message});
 	}
 });
 

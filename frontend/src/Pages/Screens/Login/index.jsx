@@ -5,12 +5,17 @@ import { Title } from "../../components/Title";
 import "./styles.css";
 import { AppContext } from "../../../Context";
 import { MessageCard } from "../../components/MessageCard";
+import { InputCard } from "../../components/InputsCards";
+import { handleInputChange } from "../../../utils/handleInputChange";
+import { handleNotifications } from "../../../utils/handleNotifications";
 
 const Login = () => {
     const context = React.useContext(AppContext);
 
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
+	const [values, setValues] = React.useState({
+		email: null,
+		password: null,
+	})
 
     const navigate = useNavigate();
 
@@ -23,30 +28,26 @@ const Login = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    email,
-                    password
-                }),
+                body: JSON.stringify(values),
             });
             const data = await response.json();
 
             if(response.status === 200) {
-				context.messageHandler("all-ok", data.message)
+				handleNotifications("success", data.message);
 				handleUserRol(data.type);
 
 				navigate("/home");
 				context.setIsLoged(true);
-				context.setLoading(false);
 
             } else {
-				context.messageHandler("error", data.message)
-				context.setLoading(false);
+				handleNotifications("error", data.message);
 			}
         }
         catch (err) {
-			context.errorMessageHandler("error", err.message)
+			handleNotifications("error", err.message);
+        } finally {
 			context.setLoading(false);
-        }
+		}
     };
 
 	const handleUserRol = async (type) => {
@@ -69,39 +70,29 @@ const Login = () => {
 				Bienvenido a  la Bodega de Archivos del SPE
 			</Title>
 			<div className="login-container">
-				<Title
-					color="#FFF"
-					borderColor="#FFF"
-				>
+				<Title color="#FFF" borderColor="#FFF">
 					Iniciar Sesión
 				</Title>
 
 				<form className="login-form-container" onSubmit={handleLogin}>
-					<MessageCard/>
-					<div className="form-input-container">
-						<label htmlFor="login-email">Correo:</label>
-						<input
-							type="email"
-							name="login-email"
-							placeholder="Correo"
-							value={email}
-							onChange={(event) => {
-								setEmail(event.target.value)
-							}}
-						/>
-					</div>
-					<div className="form-input-container">
-						<label htmlFor="login-password">Contraseña:</label>
-						<input
-							type="password"
-							name="login-password"
-							placeholder="Contraseña"
-							value={password}
-							onChange={(event) => {
-								setPassword(event.target.value)
-							}}
-						/>
-					</div>
+					<InputCard
+						type="email"
+						id={"email"}
+						label={"Correo:"}
+						placeholder="Ingrese su correo"
+						onChange={(event) => handleInputChange("email", event, setValues)}
+						defaultValue={values?.email}
+						className="form-input-container"
+					/>
+					<InputCard
+						type="password"
+						id={"password"}
+						label={"Contraseña:"}
+						placeholder="Ingrese su contraseña"
+						onChange={(event) => handleInputChange("password", event, setValues)}
+						defaultValue={values?.password}
+						className="form-input-container"
+					/>
 					<button type="submit">Iniciar sesion</button>
 				</form>
 			</div>

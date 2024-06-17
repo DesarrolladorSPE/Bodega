@@ -20,6 +20,7 @@ const whiteList = [
 
 	//PROD
 	"http://10.140.0.16:15203",
+	"https://ambientesdepruebas.serviciodeempleo.gov.co/"
 ];
 const options = {
     origin: (origin, callback) => {

@@ -1,6 +1,6 @@
 :root{
     ----main-body-color: #EEFAFF;
-    
+
 	--error-container-color: rgba(220, 37, 73, 0.75);
 	--allok-container-color: rgba(37, 220, 73, 0.75);
 
@@ -35,17 +35,38 @@
     --button-color: #EBEBEB;
 }
 
+
+html {
+    scroll-behavior: smooth;
+}
+
+p, span, div {
+    margin: 0;
+}
+
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
     background: var(--main-body-color);
+
+    transition: all 0.2s ease;
+    box-sizing: border-box;
 }
-*{
+* {
     padding: 0;
     margin: 0;
 }
 
 a {
     text-decoration: none;
+    color: transparent;
+}
+button {
+    border: none;
+}
+
+svg {
+    width: 30px;
+    height: 30px;
 }

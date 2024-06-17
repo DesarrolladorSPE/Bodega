@@ -1,0 +1,145 @@
+textarea {
+    resize: vertical;
+}
+
+.input-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input-container label{
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--text-color);
+    padding-left: 5px;
+}
+
+/* Inputs de Texto */
+.input-container textarea {
+    min-height: 75px;
+}
+.input-container input, .input-container textarea {
+    background-color: transparent;
+    color: var(--black-to-white-color);
+    padding: 15px;
+
+    border: 1px solid var(--lines-color);
+    outline: none;
+}
+.input-container input::placeholder, .input-container textarea::placeholder{
+	color: var(--lines-color);
+
+}
+.input-container input:focus, .input-container textarea:focus{
+    outline: none;
+}
+
+/* Select */
+.input-container select {
+    background-color: transparent;
+    padding: 15px;
+    border: 1px solid var(--lines-color);
+	color: var(--lines-color);
+    cursor: pointer;
+}
+.input-container select:focus {
+    outline: none;
+}
+
+/* Input Card 2 */
+.input2-card-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.input2-card-container label{
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--text-color);
+    padding-left: 5px;
+}
+.input2-card-container input{
+	background-color: transparent;
+    color: var(--lines-color);
+    padding: 15px 20px;
+    border-radius: 30px;
+
+    border: 1px solid var(--lines-color);
+    outline: none;
+
+	transition: all 0.1s ease;
+}
+.input2-card-container input::placeholder{
+	color: var(--lines-color);
+}
+.input2-card-container input:focus, .input2-container input:hover{
+    border: 1px solid var(--gov-accesibility-card);
+	box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.14);
+	-webkit-box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.14);
+	-moz-box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.14);
+}
+
+/* Input File */
+
+.upload-file-container {
+	width: 100%;
+	padding: 20px 30px;
+	background-color: var(--lines-color);
+	border-radius: 10px;
+
+	box-sizing: border-box;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 15px;
+
+	cursor: pointer;
+}
+.upload-file-container input {
+	display: none;
+}
+
+.upload-file-container span {
+	border-radius: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	background-color: var(--white-to-black-color);
+	
+    padding: 10px;
+	box-sizing: border-box;
+
+	transition: all 0.2s ease;
+}
+.upload-file-container:hover span {
+	transform: scale(1.1);
+}
+.upload-file-container span svg {
+	width: 30px;
+	height: 30px;
+	color: var(--lines-color);
+}
+
+.upload-file-info-container {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	color: var(--white-to-black-color);
+	font-size: 12px;
+}
+.upload-file-info-container p:nth-child(1){
+	font-size: 16px;
+	font-weight: bold;
+}
+.info-text {
+	max-width: 350px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}

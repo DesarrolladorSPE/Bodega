@@ -6,74 +6,45 @@ import { SubTitle } from "../SubTitle";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 
 import "./styles.css";
+import { OptionInputCard, UploadFileCard } from "../InputsCards";
+import { validateFiles } from "../../../utils/validate/validateFiles";
+import { handlePostFile } from "../../../utils/handleData/handlePostData";
+import { handleNotifications } from "../../../utils/handleNotifications";
+import { handleFileChange } from "../../../utils/handleFileChange";
+import { handleInputChange } from "../../../utils/handleInputChange";
 
 const UploadFile = () => {
     const context = React.useContext(AppContext);
 
-    const [selectedFile, setSelectedFile] = React.useState(null);
-    const [selectedOption, setSelectedOption] = React.useState(null);
+	const [values, setValues] = React.useState({
+        files: null,
+        selectedOption: null,
+    });
 
-	const [selectedFileName, setSelectedFileName] = React.useState(null);
+	const handleFileUpload = async (event) => {
+        try {
+            context.setLoading(true);
 
-    const handleFileChange = (event) => {
-		context.setLoading(true);
-		let file = null;
-        file = event.target.files[0];
+            event.preventDefault();
 
-        if (file) {
-            const allowedExtensions = ['.xlsx', '.csv'];
-            const fileExtension = file.name.slice(((file.name.lastIndexOf(".") - 1) >>> 0) + 2);
+            validateFiles(values?.files, values?.selectedOption);
 
-            if (allowedExtensions.includes(`.${fileExtension}`)) {
-                setSelectedFile(file);
-				setSelectedFileName(file.name)
-            } else {
-				context.errorMessageHandler("Por favor, seleccione un archivo .xlsx o .csv válido.")
-            }
-        }
-		context.setLoading(false);
-    };
-
-    const handleFileUpload = async (event) => {
-        event.preventDefault();
-		context.setLoading(true);
-		context.setData(null);
-        if (selectedFile && selectedOption) {
             const formData = new FormData();
-            formData.append('file', selectedFile);
+            formData.append("selectedOption", values?.selectedOption)
 
-            try {
-                const response = await fetch( `${context.apiUri}/files/upload`, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        "selectedOption": selectedOption,
-                    }
-                });
-                const data = await response.json();
-				switch (response.status) {
-					case 400: context.messageHandler("error", data.message); break;
-					case 500: context.messageHandler("error", data.message); break;
-					case 200:
-						context.messageHandler("all-ok", data.message);
-						context.setData(data.rowLog);
-					break;
-				}
+            for (let i = 0; i < values.files.length; i++) {
+                formData.append('file', values.files[i]);
+            }
 
-            }
-            catch (err) {
-				context.messageHandler("error", err.message)
-            }
-        } else {
-			context.messageHandler("error", "Por favor, seleccione un archivo o fuente válido antes de cargar.")
+            const data = await handlePostFile(event, formData, "/files/upload");
+			context.setData(data.rowLog);
         }
-		setSelectedOption(null);
-		setSelectedFile(null);
-		setSelectedFileName(null);
-		context.setLoading(false);
+        catch (err) {
+            return handleNotifications("error", err.message);
+        } finally {
+            context.setLoading(false);
+        }
     };
-
-
 
     return(
         <form encType="multipart/form-data" onSubmit={handleFileUpload} className="form-container">
@@ -84,64 +55,29 @@ const UploadFile = () => {
 				>
 					Por favor seleccione un archivo
 				</SubTitle>
-				<label htmlFor="file" className="upload-file-container">
-					<input
-						id="file"
-						type="file"
-						accept=".xlsx, .csv"
-						onChange={handleFileChange}
-						onClick={(event) => event.target.value = null}
-						name="file"
-					/>
-					<span>
-						<AiOutlineCloudUpload/>
-					</span>
-					<div className="upload-file-info-container">
-						<p>Subir Archivo</p>
-						<p>{selectedFileName ?? "Archivos Excel (.xlsx) o CSV (.csx)"}</p>
-					</div>
 
-				</label>
+				<UploadFileCard
+					id={"file"}
+					onChange={(event) => handleFileChange(event, ['.xlsx', '.csv'], setValues)}
+
+                    filesArray={values?.files}
+				/>
 			</div>
 
 
 			<div className="inputs-container">
-				<SubTitle
-					color="#FFF"
-					textAlign="start"
-				>
-					Por favor seleccione una fuente
-				</SubTitle>
-
-				<select
-					className="select-fuente-container"
-					name="fuente"
-					id="fuente"
-					type="select"
-					onChange={(event) => {
-						setSelectedOption(event.target.value)
-					}}
-				>
-
-					<option
-						selected={selectedOption === null ? true : false }
-						value={null}
-					>
-						Seleccione una fuente
-					</option>
-					{context.responseData.fuentes?.map((item) => (
-						<option
-							key={item.id_fuente}
-							value={item.id_fuente}
-						>
-							{item.nombre}
-						</option>
-					))}
-				</select>
+                <OptionInputCard
+                    id={"fuente"}
+                    label={"Seleccione una fuente"}
+                    array={context.responseData?.fuentes}
+                    onChange={(event) => {handleInputChange("selectedOption", event, setValues)}}
+                    defaultValue={values?.selectedOption}
+                    none={true}
+                />
 			</div>
 
 
-			<button onClick={handleFileUpload}>Cargar Archivo</button>
+			<button type="submit" title="Cargar archivo">Cargar Archivo</button>
         </form>
 
     );

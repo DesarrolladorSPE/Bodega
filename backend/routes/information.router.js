@@ -14,7 +14,7 @@ const fetchData = async () => {
     try {
         const users = await query("SELECT * FROM login");
         const fuentes = await query("SELECT * FROM fuentes");
-		const column1 = [await getColumnNamesInDataBase(1), await getColumnNamesInDataBase(2),await getColumnNamesInDataBase(3), await getColumnNamesInDataBase(4)]
+		const column1 = [await getColumnNamesInDataBase(1), await getColumnNamesInDataBase(2), await getColumnNamesInDataBase(3), await getColumnNamesInDataBase(4)]
         return {
 			users,
 			fuentes,
