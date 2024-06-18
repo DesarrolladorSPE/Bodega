@@ -4,6 +4,12 @@ import { AppContext } from "../../../Context";
 import "./styles.css";
 import { Title } from "../Title";
 import { SubTitle } from "../SubTitle";
+import { handleNotifications } from "../../../utils/handleNotifications";
+import { WrapperContainer1 } from "../WrapperContainers";
+import { InputCard } from "../InputsCards";
+import { AllInfoGridContainer } from "../AllInfoContainer";
+import { ButtonCard } from "../ButtonCard";
+import { reloadLocation } from "../../../utils/realoadLocation";
 
 const EditionForm = ({ user, onClose }) => {
 	const context = React.useContext(AppContext);
@@ -33,97 +39,77 @@ const EditionForm = ({ user, onClose }) => {
 			const data = await response.json();
 
 			if (response.status === 200) {
-				const updatedUsers = context.users?.map((user) =>
+				const updatedUsers = context.responseData?.users?.map((user) =>
 					user.id === context.editingUser.id ? { ...user, ...updatedData } : user
 				);
 				context.setUsers(updatedUsers);
-				context.messageHandler("all-ok", data.message);
+				handleNotifications("success", data.message);
+
+				reloadLocation();
 			}
 			else {
-				context.messageHandler("error", data.message);
+				handleNotifications("error", data.message);
 			}
-		} catch (err) {
-			context.messageHandler("error", err.message);
-		} finally {
+		}
+		catch (err) {
+			handleNotifications("error", err.message);
+		}
+		finally {
 			context.handleCloseEditForm();
 			context.setLoading(false);
 		}
 	};
 
 	return (
-		<div className="edit-user-form-container">
-			<div className="edit-user-form">
-				<Title
-					color={"#FFF"}
-					borderColor={"#FFF"}
-				>
-					Editar Usuario:
-				</Title>
-				<form
-					onSubmit={submitForm}
-				>
-					<div className="edit-user-input-container">
-						<SubTitle
-							textAlign="start"
-						>
-							Nombre:
-						</SubTitle>
-						<input
-							type="text"
-							name="nombre"
-							value={editedData.nombre}
-							onChange={handleInputChange}
-						/>
-					</div>
-					<div className="edit-user-input-container">
-						<SubTitle
-							textAlign="start"
-						>
-							Correo:
-						</SubTitle>
-						<input
-							type="text"
-							name="correo"
-							value={editedData.correo}
-							onChange={handleInputChange}
-						/>
-					</div>
-					<div className="edit-user-input-container">
-						<SubTitle
-							textAlign="start"
-						>
-							Rol de Usuario:
-						</SubTitle>
-						<select
-							className="select-rol-container"
-							name="tipo"
-							id="tipo"
-							type="select"
-							onChange={handleInputChange}
-							defaultValue={editedData.tipo}
-						>
-							<option name="tipo" value={0}>
-								Usuario Basico
-							</option>
-							<option name="tipo" value={1}>
-								Administrador
-							</option>
+		<form onSubmit={submitForm}>
+			<WrapperContainer1>
+				<SubTitle>Editar Usuario</SubTitle>
 
-						</select>
-					</div>
-					<div className="buttons-container">
-						<button className="form-button save" type="submit">
-							Guardar Cambios
-						</button>
-						<button className="form-button cancel" type="button" onClick={onClose}>
-							Cancelar
-						</button>
-					</div>
+				<InputCard
+					id={"nombre"}
+					defaultValue={editedData.nombre}
+					onChange={(event) => {handleInputChange("nombre", event, setEditedData)}}
+					haveLabel={false}
+					placeholder="Ingrese el nombre"
+				/>
+				<InputCard
+					type="email"
+					id={"correo"}
+					defaultValue={editedData.correo}
+					onChange={(event) => {handleInputChange("correo", event, setEditedData)}}
+					haveLabel={false}
+					placeholder="Ingrese el correo"
+				/>
+				<InputCard
+					type="password"
+					id={"contraseña"}
+					defaultValue={editedData.clave}
+					onChange={(event) => {handleInputChange("clave", event, setEditedData)}}
+					haveLabel={false}
+					placeholder="Ingrese la contraseña"
+				/>
 
-				</form>
-			</div>
-		</div>
+				<div className="input-container">
+					<label htmlFor={"tipo"}>Seleccione el tipo de usuario</label>
+					<select
+						name={"tipo"}
+						id={"tipo"}
+						onChange={(event) => {handleInputChange("tipo", event.target.value, setEditedData)}}
+						value={editedData.tipo}
+					>
+						<option value={0}>Usuario Basico</option>
+						<option value={1}>Administrador</option>
+					</select>
+				</div>
 
+				<AllInfoGridContainer className="grid-1-1">
+					<ButtonCard type="submit" title="Guardar Usuario">Guardar</ButtonCard>
+					<ButtonCard title="Guardar Usuario" onClick={onClose}>Cancelar</ButtonCard>
+				</AllInfoGridContainer>
+
+			</WrapperContainer1>
+
+		</form>
 	);
 }
 

@@ -1,39 +1,29 @@
 import React from "react";
+
 import { AppContext } from "../../../Context";
-import { MessageCard } from "../../components/MessageCard";
 import { Title } from "../../components/Title";
 import { UploadFile } from "../../components/UploadFile";
 
 import "./styles.css";
 import { RowAffectedCard } from "../../components/RowAffectedCard";
-import { TableContainer } from "../../components/TableContainer";
+
+import { AllInfoGridContainer } from "../../components/AllInfoContainer";
+import { WrapperContainer2 } from "../../components/WrapperContainers";
 
 const Home = () => {
 	const context = React.useContext(AppContext)
 
     return(
-		<div className="home-container">
-			<Title
-				color={"#FFF"}
-				borderColor={"#FFF"}
-			>
-				{context.admin ? "Bienvenido Administrador" : "Bienvenido"}
-			</Title>
+		<WrapperContainer2>
+			<Title>{context.admin ? "Bienvenido Administrador" : "Bienvenido"}</Title>
 
-
-			<div className="upload-and-info-container">
+			<AllInfoGridContainer className="grid-075-125">
 				<UploadFile/>
-				<div className="info-cards-container">
-					<MessageCard/>
-					<RowAffectedCard/>
+				<RowAffectedCard/>
 
-				</div>
-			</div>
+			</AllInfoGridContainer>
 
-			{context.showConsolidado &&
-				<TableContainer/>
-			}
-		</div>
+		</WrapperContainer2>
     );
 }
 export { Home };

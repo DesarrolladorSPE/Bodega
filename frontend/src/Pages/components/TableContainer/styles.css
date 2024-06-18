@@ -84,24 +84,3 @@
 	flex-direction: column;
 	gap: 10px;
 }
-.scroll-wrapper::-webkit-scrollbar {
-    height: 10px;
-}
-
-  /* Track */
-.scroll-wrapper::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.15);
-    border-radius: 50px;
-	margin-bottom: 5px;
-}
-
-  /* Handle */
-.scroll-wrapper::-webkit-scrollbar-thumb {
-    background: #FFF;
-    border-radius: 10px;
-}
-
-  /* Handle on hover */
-.scroll-wrapper::-webkit-scrollbar-thumb:hover {
-    background: #738BFF;
-}

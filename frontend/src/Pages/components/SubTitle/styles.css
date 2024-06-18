@@ -1,5 +1,28 @@
-.secondary-sub-title {
+.sub-title {
     width: 100%;
-    font-size: 16px;
-    font-weight: bold;
+    position: relative;
+}
+.sub-title h2 {
+    width: 100%;
+
+    font-size: 18px;
+    font-weight: 300;
+
+    display: inline-block;
+    position: relative;
+
+    padding: 10px 0 13px;
+
+    color: var(--text-color);
+}
+.sub-title h2::before {
+    content: '';
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 30%;
+    height: 3px;
+    background-color: var(--lines-color2);
 }

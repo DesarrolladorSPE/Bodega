@@ -1,13 +1,15 @@
 import "./styles.css";
 
-const SubTitle = ({children, color = "#FFF", textAlign = "center"}) => {
+const SubTitle = ({children, textAlign = "start"}) => {
+
     return(
-        <p className="sub-title" style={{
-            color: color,
-            textAlign: textAlign
-        }}>
-            {children}
-        </p>
+        <div className="sub-title">
+            <h2  style={{
+                textAlign: textAlign,
+            }}>
+                {children}
+            </h2>
+        </div>
     );
 }
 

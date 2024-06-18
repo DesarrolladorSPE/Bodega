@@ -98,7 +98,7 @@ const uploadCsv = async (path, fuente) => {
 								recordsAlreadyInDatabase = recordsAlreadyInDatabase +  databaseInfo.recordsAlreadyInDatabase;
 							}
 						} catch (err) {
-							console.error(`Error en el registro ${rowNumber}: ${err.message}`)
+							// console.error(`Error en el registro ${rowNumber}: ${err.message}`)
 							wrongRecordsArray.push(element);
 						}
 

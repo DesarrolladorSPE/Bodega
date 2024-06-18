@@ -1,58 +1,30 @@
-import { BiEdit } from "react-icons/bi";
-import { AiFillDelete } from "react-icons/ai";
+import { WrapperContainer1, WrapperContainer2 } from "../WrapperContainers";
+import { AllInfoGridContainer } from "../AllInfoContainer";
+import { SpanCard, TextCard } from "../TextComponents";
+import { EditDeleteCard } from "../EditDeleteCard";
 
-import { SubTitle } from "../SubTitle";
 import "./styles.css";
 
-const UserCard = ({data, handleEditClick, handleDeleteClick}) => {
-    const RolUser = (type) => {
-        if(type === 1) {
-            return(
-                <SubTitle textAlign="start">Administrador</SubTitle>
-            );
-        }
-        else if(type === 0) {
-            return(
-                <SubTitle textAlign="start">Usuario Básico</SubTitle>
-            );
-        }
-    }
+const UserCard = ({item={}, handleEditClick, handleDeleteClick}) => {
+	const userType = {
+		1: "Administrador",
+		0: "Usuario Básico",
+	}
 
     return(
-        <div className="users-card-container">
-            <div className="users-all-info-container">
-				<div className="name-and-email-info-container">
-					<div className="users-info-container">
-						<p>Nombre:</p>
-						<SubTitle textAlign="start">{data?.nombre}</SubTitle>
-					</div>
-					<div className="users-info-container">
-						<p>Correo:</p>
-						<SubTitle textAlign="start">{data?.correo}</SubTitle>
-					</div>
-				</div>
 
-                <div className="users-info-container">
-                    <p>Rol:</p>
-                    {RolUser(data?.tipo)}
-                </div>
-            </div>
+		<WrapperContainer1 padding={10}>
+			<AllInfoGridContainer className="grid-175-025" gap={10}>
+				<WrapperContainer2 flexDirection="column" justifyContent="center" padding={20}>
+					<TextCard><SpanCard>Nombre: </SpanCard> {item?.nombre}</TextCard>
+					<TextCard><SpanCard>Correo: </SpanCard> {item?.correo}</TextCard>
+					<TextCard><SpanCard>Tipo de Usuario: </SpanCard> {userType[item?.tipo]}</TextCard>
+				</WrapperContainer2>
 
-			<div className="user-card-buttons-container">
-				<button className="users-edit-button"
-					onClick={handleEditClick}
-				>
-					<BiEdit/>
-				</button>
-				<button className="users-edit-button"
-					onClick={handleDeleteClick}
-				>
-					<AiFillDelete/>
-				</button>
-			</div>
+				<EditDeleteCard item={item} onDelete={handleDeleteClick} onEdit={handleEditClick}/>
+			</AllInfoGridContainer>
+		</WrapperContainer1>
 
-
-        </div>
     );
 }
 

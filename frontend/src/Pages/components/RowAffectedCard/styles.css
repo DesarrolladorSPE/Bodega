@@ -8,8 +8,6 @@
 	align-items: center;
 	gap: 20px;
 
-	border-radius: 10px;
-
 	box-sizing: border-box;
 
 	background-color: var(--buttons-color);

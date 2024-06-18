@@ -34,7 +34,7 @@ const OptionInputCard = ({id, label, array=[], onChange, defaultValue=0, none=fa
                 }
                 {array?.map((item, index) => (
                     <option
-						key={item.id_fuente}
+						key={index}
 						value={item.id_fuente}
 					>
 						{item.nombre}

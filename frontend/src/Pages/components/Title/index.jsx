@@ -1,12 +1,10 @@
 import "./styles.css";
 
-const Title = ({children, color, borderColor}) => {
+const Title = ({children, color}) => {
 
     return (
         <div className="title-container">
-            <h1 className="title" style={{
-                color: color
-            }}>
+            <h1 className="title">
                 {children}
             </h1>
         </div>

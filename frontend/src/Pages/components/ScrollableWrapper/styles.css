@@ -1,0 +1,57 @@
+.scrollable-wrapper-container {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px 10px 5px 5px;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: scroll;
+}
+
+div::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+  /* Track */
+div::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+  /* Handle */
+div::-webkit-scrollbar-thumb {
+    background: var(--text-color);
+    border-radius: 5px;
+}
+
+  /* Handle on hover */
+div::-webkit-scrollbar-thumb:hover {
+    background: var(--black-to-white-color);
+}
+
+
+
+
+
+
+textarea::-webkit-scrollbar {
+  width: 10px;
+  margin-left: 10px;
+}
+
+/* Track */
+textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+textarea::-webkit-scrollbar-thumb {
+  background: #EDEDED;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+textarea::-webkit-scrollbar-thumb:hover {
+  background: #DDDDDD;
+}

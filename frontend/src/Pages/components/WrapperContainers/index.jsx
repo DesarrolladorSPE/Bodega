@@ -1,12 +1,12 @@
 import "./styles.css";
 
-const WrapperContainer1 = ({children, flexDirection = "row", padding = 20, gap = 15, justifyContent="start", alignItems="center"}) => {
+const WrapperContainer1 = ({children, flexDirection = "column", padding = 30, gap = 15, justifyContent="start", alignItems="center"}) => {
     return(
-        <div className="filters-wrapper1 shadow-style" style={{
+        <div className="wrapper-container1 shadow-style" style={{
             flexDirection: flexDirection,
             padding: padding,
             gap: gap,
-            justifyContent: justifyContent, 
+            justifyContent: justifyContent,
             alignItems: alignItems,
         }}>
             {children}
@@ -14,9 +14,9 @@ const WrapperContainer1 = ({children, flexDirection = "row", padding = 20, gap =
     );
 }
 
-const WrapperContainer2 = ({children, flexDirection = "row", padding = 20, paddingVertical=null, gap = 15, justifyContent="start", alignItems="center", className=""}) => {
+const WrapperContainer2 = ({children, flexDirection = "column", padding = 20, paddingVertical=null, gap = 15, justifyContent="start", alignItems="center", className=""}) => {
     return(
-        <div className={`filters-wrapper2 ${className}`} style={{
+        <div className={`wrapper-container2 ${className}`} style={{
             flexDirection: flexDirection,
             padding: padding,
             paddingTop: paddingVertical || padding,

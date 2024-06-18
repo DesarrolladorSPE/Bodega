@@ -5,7 +5,7 @@
 }
 .span-card {
     font-weight: bold;
-    color: var(--gov-accesibility-card);
+    color: var(--lines-color);
     font-size: 16px;
 }
 .bold {

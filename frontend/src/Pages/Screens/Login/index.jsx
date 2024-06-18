@@ -8,6 +8,9 @@ import { MessageCard } from "../../components/MessageCard";
 import { InputCard } from "../../components/InputsCards";
 import { handleInputChange } from "../../../utils/handleInputChange";
 import { handleNotifications } from "../../../utils/handleNotifications";
+import { WrapperContainer2 } from "../../components/WrapperContainers";
+import { ButtonCard } from "../../components/ButtonCard";
+import { SubTitle } from "../../components/SubTitle";
 
 const Login = () => {
     const context = React.useContext(AppContext);
@@ -69,10 +72,9 @@ const Login = () => {
 			>
 				Bienvenido a  la Bodega de Archivos del SPE
 			</Title>
-			<div className="login-container">
-				<Title color="#FFF" borderColor="#FFF">
-					Iniciar Sesión
-				</Title>
+			<div className="login-container shadow-style">
+				<SubTitle>Iniciar Sesión</SubTitle>
+
 
 				<form className="login-form-container" onSubmit={handleLogin}>
 					<InputCard
@@ -82,7 +84,6 @@ const Login = () => {
 						placeholder="Ingrese su correo"
 						onChange={(event) => handleInputChange("email", event, setValues)}
 						defaultValue={values?.email}
-						className="form-input-container"
 					/>
 					<InputCard
 						type="password"
@@ -91,14 +92,14 @@ const Login = () => {
 						placeholder="Ingrese su contraseña"
 						onChange={(event) => handleInputChange("password", event, setValues)}
 						defaultValue={values?.password}
-						className="form-input-container"
 					/>
-					<button type="submit">Iniciar sesion</button>
+
+					<ButtonCard type="submit" title="Iniciar Sesión">
+						Iniciar sesion
+					</ButtonCard>
 				</form>
 			</div>
 		</>
-
-
     );
 }
 

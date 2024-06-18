@@ -7,6 +7,8 @@ import { UserCard } from "../../components/UserCard";
 
 import { Link } from "react-router-dom";
 
+import { WrapperContainer2 } from "../../components/WrapperContainers";
+
 import { BiArrowBack } from "react-icons/bi";
 import { FiPlus } from "react-icons/fi";
 
@@ -14,6 +16,10 @@ import { FiPlus } from "react-icons/fi";
 import { EditionForm } from "../../components/EditionForm";
 import { MessageCard } from "../../components/MessageCard";
 import { CreationUserForm } from "../../components/CreationUserForm";
+import { handleNotifications } from "../../../utils/handleNotifications";
+import { AllInfoGridContainer } from "../../components/AllInfoContainer";
+import { ButtonCard } from "../../components/ButtonCard";
+import { reloadLocation } from "../../../utils/realoadLocation";
 
 const Users = () => {
     const context = React.useContext(AppContext);
@@ -37,16 +43,20 @@ const Users = () => {
 			const data = await response.json();
 
 			if (response.status === 200) {
-				const updatedUsers = context.users.filter((user) => user.id !== userId);
+				const updatedUsers = context.responseData.users.filter((user) => user.id !== userId);
 				context.setUsers(updatedUsers);
-				context.messageHandler("all-ok", data.message);
+
+				handleNotifications("success", data.message);
+				reloadLocation();
 
 			} else {
-				context.messageHandler("error", data.message);
+				handleNotifications("error", data.message);
 			}
-		} catch (err) {
-			console.error('Error en la solicitud de eliminación:', err);
-		} finally {
+		}
+		catch (err) {
+			handleNotifications("error", err.message);
+		}
+		finally {
 			context.setLoading(false);
 		}
 	};
@@ -64,13 +74,15 @@ const Users = () => {
 			const data = await response.json();
 
 			if (response.status === 201) {
-				context.setUsers([...context.users, data.newUser]);
-				context.messageHandler("all-ok", data.message);
+				context.setUsers([...context.responseData.users, data.newUser]);
+				handleNotifications("success", data.message);
+				reloadLocation();
+
 			} else {
-				context.messageHandler("error", data.message);
+				handleNotifications("error", data.message);
 			}
 		} catch (err) {
-			context.messageHandler("error", err.message);
+			handleNotifications("error", err.message);
 		} finally {
 			context.setLoading(false);
 			context.setCreatingUser(false);
@@ -78,46 +90,29 @@ const Users = () => {
 	};
 
     return(
-        <div className="users-container">
-			<div className="back-button-and-title-container">
-				<Link to={"/home"}>
-					<BiArrowBack/>
-				</Link>
-				<Title
-					color={"#FFF"}
-					borderColor={"#FFF"}
-				>
-					Usuarios
-				</Title>
-			</div>
+        <WrapperContainer2>
+			<Title>Usuarios</Title>
 
-            <div className="users-main-container">
-				<div>
-					<button
-						className="add-user-button"
-						onClick={() => {
-							context.resetUsersInfo();
-							context.handleCloseEditForm();
-							context.setCreatingUser(true)
-						}}
-					>
-						<FiPlus/>
-						Crear Usuario
-					</button>
+			<AllInfoGridContainer className="grid-075-125">
+				<WrapperContainer2 padding={0}>
+					<ButtonCard title="Crear usuario" onClick={() => {
+						context.resetUsersInfo();
+						context.handleCloseEditForm();
+						context.setCreatingUser(true)
+					}}>
+						Crear usuario
+					</ButtonCard>
 
-					<div className="users-grid-container">
-						{context.responseData?.users?.map((item, index) => (
-							<>
-								<UserCard
-									key={index}
-									data={item}
-									handleEditClick={() => { handleEditClick(item) }}
-									handleDeleteClick={() => handleDelelteClick(item.id)}
-								/>
-							</>
-						))}
-					</div>
-				</div>
+					{context.responseData?.users?.map((item, index) => (
+						<UserCard
+							key={index}
+							item={item}
+							handleEditClick={() => { handleEditClick(item) }}
+							handleDeleteClick={() => handleDelelteClick(item.id)}
+						/>
+
+					))}
+				</WrapperContainer2>
 
 				<div>
 					<MessageCard/>
@@ -134,9 +129,8 @@ const Users = () => {
 						/>
 					}
 				</div>
-
-            </div>
-        </div>
+			</AllInfoGridContainer>
+        </WrapperContainer2>
     );
 }
 

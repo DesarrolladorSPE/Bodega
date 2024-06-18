@@ -3,8 +3,6 @@ import { AppContext } from "../../../Context";
 
 import { SubTitle } from "../SubTitle";
 
-import { AiOutlineCloudUpload } from "react-icons/ai";
-
 import "./styles.css";
 import { OptionInputCard, UploadFileCard } from "../InputsCards";
 import { validateFiles } from "../../../utils/validate/validateFiles";
@@ -12,6 +10,8 @@ import { handlePostFile } from "../../../utils/handleData/handlePostData";
 import { handleNotifications } from "../../../utils/handleNotifications";
 import { handleFileChange } from "../../../utils/handleFileChange";
 import { handleInputChange } from "../../../utils/handleInputChange";
+import { WrapperContainer1 } from "../WrapperContainers";
+import { ButtonCard } from "../ButtonCard";
 
 const UploadFile = () => {
     const context = React.useContext(AppContext);
@@ -47,39 +47,31 @@ const UploadFile = () => {
     };
 
     return(
-        <form encType="multipart/form-data" onSubmit={handleFileUpload} className="form-container">
-			<div className="inputs-container">
-				<SubTitle
-					color="#FFF"
-					textAlign="start"
-				>
-					Por favor seleccione un archivo
-				</SubTitle>
+		<form encType="multipart/form-data" onSubmit={handleFileUpload}>
+			<WrapperContainer1 padding={30} gap={30}>
+				<SubTitle>Por favor seleccione un archivo</SubTitle>
 
 				<UploadFileCard
 					id={"file"}
 					onChange={(event) => handleFileChange(event, ['.xlsx', '.csv'], setValues)}
 
-                    filesArray={values?.files}
+					filesArray={values?.files}
 				/>
-			</div>
+
+				<OptionInputCard
+					id={"fuente"}
+					label={"Seleccione una fuente"}
+					array={context.responseData?.fuentes}
+					onChange={(event) => {handleInputChange("selectedOption", event, setValues)}}
+					defaultValue={values?.selectedOption}
+					none={true}
+				/>
 
 
-			<div className="inputs-container">
-                <OptionInputCard
-                    id={"fuente"}
-                    label={"Seleccione una fuente"}
-                    array={context.responseData?.fuentes}
-                    onChange={(event) => {handleInputChange("selectedOption", event, setValues)}}
-                    defaultValue={values?.selectedOption}
-                    none={true}
-                />
-			</div>
+				<ButtonCard type="submit" title="Cargar archivo">Cargar Archivo</ButtonCard>
+			</WrapperContainer1>
 
-
-			<button type="submit" title="Cargar archivo">Cargar Archivo</button>
-        </form>
-
+		</form>
     );
 }
 

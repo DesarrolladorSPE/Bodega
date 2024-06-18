@@ -62,7 +62,7 @@ const insertDataFileToDatabase = async (
 			await new Promise((resolve, reject) => {
 				connection.query(query, flattenedValues, (err, result) => {
 					if (err) {
-						console.error(err);
+						// console.error(err);
 						// console.log("No se pudo insertar el registro", idValue ? `ID: ${idValue}, Fila: ${rowNumber}` : `Fila: ${rowNumber}, debido a datos erroneos:`);
 						// console.log(`Error: \n ${err}`)
 						wrongRecordsArray = [{
@@ -130,7 +130,7 @@ const insertBaseDeCaracterizacionFileToDatabase = async (
 						if (err) {
 							// console.log("No se pudo insertar el registro", idValue ? `ID: ${idValue}, Fila: ${rowNumber}` : `Fila: ${rowNumber}, debido a datos erroneos:`);
 							// console.log(`Error: \n ${err}`)
-							console.error(err);
+							// console.error(err);
 							wrongRecordsArray = [{
 								ID: idValue,
 								fila: rowNumber,
@@ -181,7 +181,7 @@ const insertBaseDeCaracterizacionFileToDatabase = async (
 		return {recordsEnteredCount, recordsAlreadyInDatabase, wrongRecordsArray};
 	}
 	catch (err) {
-		console.error(err.message);
+		throw new Error(err);
 	}
 };
 

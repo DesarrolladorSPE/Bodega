@@ -1,9 +1,12 @@
 import React from "react";
-import { AppContext } from "../../../Context";
 
 import "./styles.css";
-import { Title } from "../Title";
 import { SubTitle } from "../SubTitle";
+import { WrapperContainer1 } from "../WrapperContainers";
+import { InputCard } from "../InputsCards";
+import { handleInputChange } from "../../../utils/handleInputChange";
+import { AllInfoGridContainer } from "../AllInfoContainer";
+import { ButtonCard } from "../ButtonCard";
 
 const CreationUserForm = ({ onClose, handleCreateUser }) => {
 	const [newUserData, setNewUserData] = React.useState({
@@ -11,13 +14,8 @@ const CreationUserForm = ({ onClose, handleCreateUser }) => {
 		correo: "",
 		recuperar: "pl",
 		clave: "",
-		tipo: 0, // Puedes configurar el valor inicial según tus necesidades
+		tipo: 0,
 	});
-
-	const handleInputChange = (event) => {
-		const { name, value } = event.target;
-		setNewUserData({ ...newUserData, [name]: value });
-	};
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -25,94 +23,56 @@ const CreationUserForm = ({ onClose, handleCreateUser }) => {
 	};
 
 	return (
-		<div className="edit-user-form-container">
-			<div className="edit-user-form">
-				<Title
-					color={"#FFF"}
-					borderColor={"#FFF"}
-				>
-					Crear Usuario
-				</Title>
+		<form onSubmit={handleSubmit}>
+			<WrapperContainer1>
+				<SubTitle>Crear Usuario</SubTitle>
 
-				<form
-					onSubmit={handleSubmit}
-				>
-					<div className="edit-user-input-container">
-						<SubTitle
-							textAlign="start"
-						>
-							Nombre:
-						</SubTitle>
-						<input
-							type="text"
-							name="nombre"
-							value={newUserData.nombre}
-							onChange={handleInputChange}
-							required
-						/>
-					</div>
-					<div className="edit-user-input-container">
-						<SubTitle
-							textAlign="start"
-						>
-							Correo:
-						</SubTitle>
-						<input
-							type="email"
-							name="correo"
-							value={newUserData.correo}
-							onChange={handleInputChange}
-							required
-						/>
-					</div>
-					<div className="edit-user-input-container">
-						<SubTitle
-							textAlign="start"
-						>
-							Contraseña:
-						</SubTitle>
-						<input
-							type="password"
-							name="clave"
-							value={newUserData.clave}
-							onChange={handleInputChange}
-							required
-						/>
-					</div>
-					<div className="edit-user-input-container">
-						<SubTitle
-							textAlign="start"
-						>
-							Rol:
-						</SubTitle>
-						<select
-							name="tipo"
-							value={null}
-							onChange={handleInputChange}
-							required
-						>
-							<option selected value={0}>Usuario Básico</option>
-							<option value={1}>Administrador</option>
-						</select>
-					</div>
-					<div className="buttons-container">
-						<button
-							type="submit"
-							className="form-button save"
-						>
-							Crear Usuario
-						</button>
-						<button
-							type="button"
-							className="form-button cancel"
-							onClick={onClose}
-						>
-							Cancelar
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
+				<InputCard
+					id={"nombre"}
+					defaultValue={newUserData.nombre}
+					onChange={(event) => {handleInputChange("nombre", event, setNewUserData)}}
+					haveLabel={false}
+					placeholder="Ingrese el nombre"
+				/>
+				<InputCard
+					type="email"
+					id={"correo"}
+					defaultValue={newUserData.correo}
+					onChange={(event) => {handleInputChange("correo", event, setNewUserData)}}
+					haveLabel={false}
+					placeholder="Ingrese el correo"
+				/>
+				<InputCard
+					type="password"
+					id={"contraseña"}
+					defaultValue={newUserData.clave}
+					onChange={(event) => {handleInputChange("clave", event, setNewUserData)}}
+					haveLabel={false}
+					placeholder="Ingrese la contraseña"
+				/>
+
+				<div className="input-container">
+					<label htmlFor={"tipo"}>Seleccione el tipo de usuario</label>
+					<select
+						name={"tipo"}
+						id={"tipo"}
+						onChange={(event) => {handleInputChange("tipo", event.target.value, setNewUserData)}}
+						value={newUserData.tipo}
+					>
+						<option value={0}>Usuario Basico</option>
+						<option value={1}>Administrador</option>
+					</select>
+				</div>
+
+				<AllInfoGridContainer className="grid-1-1">
+					<ButtonCard type="submit" title="Guardar Usuario">Guardar</ButtonCard>
+					<ButtonCard title="Guardar Usuario" onClick={onClose}>Cancelar</ButtonCard>
+				</AllInfoGridContainer>
+
+			</WrapperContainer1>
+
+		</form>
+
 	);
 };
 

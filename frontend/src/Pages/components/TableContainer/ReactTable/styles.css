@@ -2,7 +2,6 @@
 	border-collapse: collapse;
 	width: 100%;
 
-	background-color: rgba(255,255,255,0.35);
 	box-sizing: border-box;
 	border: 1px solid #FFF;
 }
@@ -15,9 +14,10 @@
 .table-container th {
 	max-width: 250px;
 
-	background-color: var(--footer-color);
-	border: 1px solid #FFF;
+	background-color: var(--lines-color);
+	border: 1px solid var(--white);
 	border-top: none;
+
 	padding: 10px 15px;
 
 	overflow: hidden;
@@ -30,7 +30,7 @@
 	max-width: 250px;
 
 	box-sizing: border-box;
-	border: 1px solid var(--white-025);
+	border: 1px solid var(--white);
 	padding: 7px 15px;
 
 	overflow: hidden;

@@ -22,8 +22,8 @@ const fetchData = async () => {
 		 };
 
     } catch (err) {
-        console.error(err);
-        throw err; // Propagar el error para que pueda ser manejado externamente
+        // console.error(err);
+        throw new Error(err); // Propagar el error para que pueda ser manejado externamente
     }
 };
 
@@ -35,7 +35,6 @@ router.get("/", async (request, response) => {
 
     }
 	catch (err) {
-        console.error(err);
         return response.status(500).json({
             message: err.message || "Internal Server Error",
         });

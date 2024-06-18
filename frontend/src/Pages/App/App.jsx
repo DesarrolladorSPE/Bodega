@@ -20,6 +20,7 @@ import { NavButtons } from "../components/NavButtons";
 import { ToastContainer } from "react-toastify";
 import { ConsolidadoScreen } from "../Screens/ConsolidadoScreen";
 import { NavImagesCard } from "../components/NavImagesCard";
+import { ConfirmationModal } from "../components/ConfirmationModal";
 
 const Wrapper = ({children}) => {
 	const location = useLocation();
@@ -55,6 +56,7 @@ return (
 		<HashRouter>
 			<Wrapper>
 				<GovNavbar/>
+				<ConfirmationModal/>
 				<MainContainer>
 					<NavImagesCard/>
 					<AppRoutes/>

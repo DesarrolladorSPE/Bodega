@@ -9,13 +9,10 @@
     --gov-accesibility-card: #E0161E;
     --black-to-white-color: #000000;
     --white-to-black-color: #FFFFFF;
-    --lines-color: #681d35;
-    --lines-color2: #681d35;
-    --text-color: #717171;
+    --lines-color: #4072FF;
+    --lines-color2: #4072FF;
+    --text-color: #858585;
     --all-info-container-color: #E6EFFD;
-
-
-    --navbar-color: #3366cc;
 
 	--error-container-color: rgba(220, 37, 73, 0.75);
 	--allok-container-color: rgba(37, 220, 73, 0.75);
@@ -54,7 +51,7 @@ html {
     scroll-behavior: smooth;
 }
 
-p, span, div {
+p, span, div, h1 {
     margin: 0;
 }
 
@@ -83,4 +80,17 @@ button {
 svg {
     width: 30px;
     height: 30px;
+}
+
+.shadow-style {
+    border: none !important;
+    border-left: 1px solid var(--lines-color) !important;
+	border-radius: 20px !important;
+
+    transition: all 0.15s ease !important;
+}
+.shadow-style:hover {
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.25) !important;
+    -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.25) !important;
+    -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.25) !important;
 }

@@ -9,7 +9,7 @@ router.post('/', (request, response) => {
 
 		connection.query('INSERT INTO login SET ?', newUserData, (err, results) => {
 			if (err) {
-				console.error(err);
+				// console.error(err);
 				return response.status(500).json({ message: 'Error al crear el usuario' });
 			}
 
@@ -17,7 +17,7 @@ router.post('/', (request, response) => {
 			return response.status(201).json({message: "Usuario creado Correctamente", newUser: newUser});
 	  });
 	} catch (err) {
-		console.error(error);
+		// console.error(error);
 		return response.status(500).json({ message: 'Error al crear el usuario' });
 	}
 });
@@ -45,7 +45,7 @@ router.put('/:userId', (request, response) => {
 		);
 
 	} catch (err) {
-		console.error(err);
+		// console.error(err);
 		return response.status(500).json({ error: 'Error al actualizar el usuario' });
 	}
 });
@@ -56,7 +56,7 @@ router.delete('/:userId', (request, response) => {
 
 		connection.query('DELETE FROM login WHERE id = ?', [userId], (err, results) => {
 			if (err) {
-				console.error(err);
+				// console.error(err);
 				return response.status(500).json({ message: 'Error al eliminar el usuario' });
 			}
 
@@ -68,7 +68,7 @@ router.delete('/:userId', (request, response) => {
 			return response.status(200).json({ message: 'Usuario eliminado correctamente' });
 		});
 	} catch (err) {
-		console.error(err);
+		// console.error(err);
 		return response.status(500).json({ message: 'Error al eliminar el usuario' });
 	}
 });

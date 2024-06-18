@@ -135,6 +135,15 @@ const AppProvider = ({children}) => {
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
 
+	// Modal de Confirmacion:
+
+	const [openConfirmationModal, setOpenConfirmationModal] = React.useState({
+		status: false,
+		title: "",
+		onConfirm: null,
+		onCancel: null,
+	});
+
     return(
         <AppContext.Provider
             value={{
@@ -186,6 +195,9 @@ const AppProvider = ({children}) => {
 				handleCloseEditForm,
 
 				resetUsersInfo,
+
+				openConfirmationModal,
+				setOpenConfirmationModal
             }}
         >
             { children }

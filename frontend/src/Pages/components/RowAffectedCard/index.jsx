@@ -4,13 +4,15 @@ import { AppContext } from "../../../Context";
 import { AiOutlineClose } from "react-icons/ai";
 
 import "./styles.css";
+import { WrapperContainer1, WrapperContainer2 } from "../WrapperContainers";
 
 const RowAffectedCard = () => {
 	const context = React.useContext(AppContext);
 
 	return(
-		<>
-			{ context.data &&
+		context.data &&
+		<WrapperContainer2 padding={0}>
+			<WrapperContainer1 padding={0}>
 				<div className="row-log-card-container">
 					<div className="all-info-main-container">
 						<div className="already-and-total-data-container">
@@ -38,9 +40,8 @@ const RowAffectedCard = () => {
 						<AiOutlineClose/>
 					</button>
 				</div>
-			}
-		</>
-
+			</WrapperContainer1>
+		</WrapperContainer2>
 	);
 }
 

@@ -35,8 +35,8 @@ const fetchConsolidadoData = async (month = "", year = "") => {
         return registrosFinales;
 
     } catch (err) {
-        console.error(err);
-        throw err;
+        // console.error(err);
+        throw new Error(err);
     }
 };
 

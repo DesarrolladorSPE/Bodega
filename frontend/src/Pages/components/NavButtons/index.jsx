@@ -42,9 +42,6 @@ const NavButtons = ({className="idioma-icon-barra-superior-govco"}) => {
                     <Link to={"/consolidado"} className={`${className}`}>
 						Consolidado
                     </Link>
-                    <Link to={"/users"} className={`${className}`}>
-                        Usuarios
-                    </Link>
                       <button
                         className={`${className}`}
                         onClick={context.closeSession}

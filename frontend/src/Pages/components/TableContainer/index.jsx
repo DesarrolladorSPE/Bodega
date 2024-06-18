@@ -12,6 +12,9 @@ import "./styles.css";
 import { NotFoundCard } from "../NotFoundCard";
 import { handleNotifications } from "../../../utils/handleNotifications";
 import { tableToExcel } from "../../../utils/exportToExcel";
+import { WrapperContainer1 } from "../WrapperContainers";
+import { SubTitle } from "../SubTitle";
+import { ScrollableWrapper } from "../ScrollableWrapper";
 
 const TableContainer = () => {
 	const context = React.useContext(AppContext)
@@ -34,38 +37,36 @@ const TableContainer = () => {
 	};
 
 	return(
-		<div className="consolidado-table-container">
-			<div className="back-button-and-title-container">
-				<Title
-					color={"#FFF"}
-					borderColor={"#FFF"}
-				>
-					Consolidado
-				</Title>
-			</div>
+		<WrapperContainer1 padding={30}>
+			<SubTitle>Consolidado</SubTitle>
+
 			<div className="button-and-filters-container">
 				{data.length > 0 &&
 					<button onClick={() => {exportToExcel(columns)}}>
 						Exportar a Excel
 					</button>
 				}
+
 				<FiltersContainer/>
-
 			</div>
-			<MessageCard/>
 
-			<div className="scroll-wrapper">
-				{data.length > 0 ?
-					<ReactTable
-						data={data}
-						columns={columns}
-					/>
-					:
-					<NotFoundCard/>
-				}
+			<ScrollableWrapper maxHeight={550}>
+				<div className="scroll-wrapper">
+					{data.length > 0 ?
+						<ReactTable
+							data={data}
+							columns={columns}
+						/>
+						:
+						<NotFoundCard/>
+					}
+				</div>
 
-			</div>
-		</div>
+			</ScrollableWrapper>
+
+
+
+		</WrapperContainer1>
 	);
 }
 
