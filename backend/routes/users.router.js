@@ -39,7 +39,6 @@ router.put('/', async (request, response) => {
 		const { id, nombre, correo, clave, tipo } = request.body;
 
 		const user = await getQuery(`SELECT * FROM login WHERE id = ${id}`)
-		console.log(user);
 
 		if (!(user.length != 0)) {
 			return response.json({Error: "Usuario no encontrado"})
