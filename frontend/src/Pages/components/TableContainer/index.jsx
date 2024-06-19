@@ -1,12 +1,8 @@
 import React from "react";
 import { AppContext } from "../../../Context";
-import { Title } from "../Title";
 import { ReactTable } from "./ReactTable";
 
-import { AiOutlineClose } from "react-icons/ai";
-
 import { FiltersContainer } from "../FiltersContainer";
-import { MessageCard } from "../MessageCard";
 
 import "./styles.css";
 import { NotFoundCard } from "../NotFoundCard";

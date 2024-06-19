@@ -3,9 +3,9 @@ const express = require("express");
 const fs = require("fs");
 const moment = require("moment");
 
+const upload = require("../middlewares/multer.config");
+
 const { uploadCsv } = require("../FilesReader/csv.reader");
-const readFileName = require("../FilesNameDatabase/fileName");
-const upload =require("../middlewares/multer.config");
 const { uploadExcel } = require("../FilesReader/excel.reader");
 const { validateFiles } = require("../utils/validateFiles");
 const { postQuery } = require("../utils/querys");

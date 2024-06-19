@@ -1,7 +1,22 @@
 const express = require("express");
-const { connection } = require("../database")
+const { connection } = require("../database");
+const { getQuery } = require("../utils/querys");
 
 const router = express.Router();
+
+router.get("/", async (request, response) => {
+	try {
+		const users = await getQuery("SELECT nombre, correo, tipo FROM login");
+
+        return response.status(200).json({users});
+
+    }
+	catch (err) {
+        return response.status(500).json({
+            message: err.message || "Internal Server Error",
+        });
+    }
+})
 
 router.post('/', (request, response) => {
 	try {

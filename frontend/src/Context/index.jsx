@@ -20,31 +20,6 @@ const AppProvider = ({children}) => {
     const [data, setData] = React.useState(null);
     const [loading, setLoading] = React.useState(false);
 
-    const [error, setError] = React.useState(false);
-	const [allOk, setAllOk] = React.useState(false);
-
-    const [statusMessage, setStatusMessage] = React.useState("");
-
-
-	const messageHandler = (type, message) => {
-		if(type === "error") {
-			let errorMessage = `Ocurrio un error: ${message}`;
-			setStatusMessage(errorMessage);
-			setError(true);
-			setTimeout(() => {
-				setError(false);
-				setStatusMessage("");
-			}, 6000)
-		} else if (type === "all-ok") {
-			setStatusMessage(message);
-			setAllOk(true);
-			setTimeout(() => {
-				setAllOk(false);
-				setStatusMessage("");
-			}, 4000)
-		}
-	}
-
 
 	// FETCH DATA
 	const [responseData, setResponseData ] = React.useState(null);
@@ -71,7 +46,8 @@ const AppProvider = ({children}) => {
 
     React.useEffect(() => {
         const endpoints = [
-            `info`,
+			`users`,
+			`fuentes`
         ]
         fetchData(endpoints)
     }, [isLoged]);
@@ -100,7 +76,7 @@ const AppProvider = ({children}) => {
 		setIsLoged(false);
 		resetUsersInfo();
 
-		messageHandler("all-ok", "Sesión cerrada correctamente")
+		handleNotifications("Success", "Sesión cerrada correctamente")
 	}
 
 	//CREACION, EDICION y ELIMINACION DE USUARIOS
@@ -158,14 +134,6 @@ const AppProvider = ({children}) => {
                 setData,
 				loading,
 				setLoading,
-				error,
-				setError,
-				allOk,
-				setAllOk,
-				statusMessage,
-				setStatusMessage,
-
-				messageHandler,
 
 
                 windowWidth,

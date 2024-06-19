@@ -7,7 +7,6 @@ import { UserCard } from "../../components/UserCard";
 import { WrapperContainer2 } from "../../components/WrapperContainers";
 
 import { EditionForm } from "../../components/EditionForm";
-import { MessageCard } from "../../components/MessageCard";
 import { CreationUserForm } from "../../components/CreationUserForm";
 import { AllInfoGridContainer } from "../../components/AllInfoContainer";
 import { ButtonCard } from "../../components/ButtonCard";
@@ -61,20 +60,18 @@ const Users = () => {
 					))}
 				</WrapperContainer2>
 
-				<div>
-					<MessageCard/>
-					{context.creatingUser &&
-						<CreationUserForm
-							onClose={context.handleCloseCreateForm}
-						/>
-					}
-					{context.editingUser &&
-						<EditionForm
-							user={context.editingUser}
-							onClose={context.handleCloseEditForm}
-						/>
-					}
-				</div>
+				{context.creatingUser &&
+					<CreationUserForm
+						onClose={context.handleCloseCreateForm}
+					/>
+				}
+				{context.editingUser &&
+					<EditionForm
+						user={context.editingUser}
+						onClose={context.handleCloseEditForm}
+					/>
+				}
+
 			</AllInfoGridContainer>
         </WrapperContainer2>
     );
