@@ -19,31 +19,28 @@ router.post('/', (request, response) => {
 	}
 });
 
-router.put('/:userId', (request, response) => {
-	const userId = request.params.userId;
-	const {nombre, correo, tipo} = request.body;
-
+router.put('/', (request, response) => {
 	try {
-		// Encuentra y actualiza el usuario en la base de datos
+		const { id, nombre, correo, tipo } = request.body;
+
 		connection.query('UPDATE login SET nombre = ?, correo = ?, tipo = ? WHERE id = ?',
-			[nombre, correo, tipo, userId],
+			[nombre, correo, tipo, id],
 			(err, results) => {
 				if (err) {
-					return res.status(500).json({ error: 'Error al actualizar el usuario' });
+					return res.status(500).json({ Error: 'Error al actualizar el usuario' });
 				}
 
 				if (results.affectedRows === 0) {
-					return res.status(404).json({ error: 'Usuario no encontrado' });
+					return res.status(404).json({ Error: 'Usuario no encontrado' });
 				}
 
 				// Envía una respuesta exitosa
-				return response.status(200).json({ message: 'Usuario actualizado correctamente'});
+				return response.status(200).json({ Status: "Success", message: 'Usuario actualizado correctamente'});
 			}
 		);
 
 	} catch (err) {
-		// console.error(err);
-		return response.status(500).json({ error: 'Error al actualizar el usuario' });
+		return response.status(500).json({ Error: 'Error al actualizar el usuario' });
 	}
 });
 

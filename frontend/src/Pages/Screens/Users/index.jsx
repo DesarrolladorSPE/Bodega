@@ -21,11 +21,12 @@ const Users = () => {
 	const handleEditClick = (user) => {
 		if(context.editingUser) {
 			context.handleCloseEditForm();
-		} else {
-			context.resetUsersInfo();
-			context.handleCloseCreateForm();
-			context.setEditingUser(user);
+			return;
 		}
+
+		context.resetUsersInfo();
+		context.handleCloseCreateForm();
+		context.setEditingUser(user);
 	};
 
 	const handleDelelteClick = async (item) => {
