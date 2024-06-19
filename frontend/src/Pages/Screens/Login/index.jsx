@@ -12,6 +12,7 @@ import { handlePostData } from "../../../utils/handleData/handlePostData";
 import { WrapperContainer2 } from "../../components/WrapperContainers";
 
 import "./styles.css";
+import { ScrollToWrapper } from "../../components/ScrollToWrapper";
 
 const Login = () => {
     const context = React.useContext(AppContext);
@@ -29,12 +30,14 @@ const Login = () => {
 			context.setLoading(true);
 
 			const data = await handlePostData(event, values, "/login", null);
+			console.log(data)
 
-			handleUserRol(data.type);
+			if (data?.type != (undefined || null)) {
+				handleUserRol(data?.type);
 
-			navigate("/home");
-			context.setIsLoged(true);
-
+				navigate("/home");
+				context.setIsLoged(true);
+			}
         }
         catch (err) {
 			handleNotifications("error", err.message);
@@ -50,46 +53,49 @@ const Login = () => {
 			context.setAdmin(false);
 		} else {
 			context.setAdmin(false);
-			context.setAdmin(context.setIsLoged(false));
+			context.setIsLoged(false)
 			handleNotifications("error", "Usuario Invalido");
 		}
 	}
 
     return(
-		<WrapperContainer2 padding={0}>
-			<Title
-				color="#FFF"
-				borderColor="#FFF"
-			>
-				Bienvenido a  la Bodega de Archivos del SPE
-			</Title>
+		<ScrollToWrapper>
 
-			<form onSubmit={handleLogin} className="login-container shadow-style">
-				<SubTitle>Iniciar Sesión</SubTitle>
+			<WrapperContainer2 padding={0}>
+				<Title
+					color="#FFF"
+					borderColor="#FFF"
+				>
+					Bienvenido a  la Bodega de Archivos del SPE
+				</Title>
 
-				<InputCard
-					type="email"
-					id={"email"}
-					label={"Correo:"}
-					placeholder="Ingrese su correo"
-					onChange={(event) => handleInputChange("email", event, setValues)}
-					defaultValue={values?.email}
-				/>
-				<InputCard
-					type="password"
-					id={"password"}
-					label={"Contraseña:"}
-					placeholder="Ingrese su contraseña"
-					onChange={(event) => handleInputChange("password", event, setValues)}
-					defaultValue={values?.password}
-				/>
+				<form onSubmit={handleLogin} className="login-container shadow-style">
+					<SubTitle>Iniciar Sesión</SubTitle>
 
-				<ButtonCard type="submit" title="Iniciar Sesión">
-					Iniciar sesion
-				</ButtonCard>
+					<InputCard
+						type="email"
+						id={"email"}
+						label={"Correo:"}
+						placeholder="Ingrese su correo"
+						onChange={(event) => handleInputChange("email", event, setValues)}
+						defaultValue={values?.email}
+					/>
+					<InputCard
+						type="password"
+						id={"password"}
+						label={"Contraseña:"}
+						placeholder="Ingrese su contraseña"
+						onChange={(event) => handleInputChange("password", event, setValues)}
+						defaultValue={values?.password}
+					/>
 
-			</form>
-		</WrapperContainer2>
+					<ButtonCard type="submit" title="Iniciar Sesión">
+						Iniciar sesion
+					</ButtonCard>
+
+				</form>
+			</WrapperContainer2>
+		</ScrollToWrapper>
     );
 }
 

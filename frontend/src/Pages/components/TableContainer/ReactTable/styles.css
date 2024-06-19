@@ -16,6 +16,7 @@
 
 	background-color: var(--lines-color);
 	border: 1px solid var(--white);
+	color: var(--white);
 	border-top: none;
 
 	padding: 10px 15px;

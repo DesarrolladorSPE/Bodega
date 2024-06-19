@@ -1,23 +1,31 @@
 const express = require('express');
 
-const { connection } = require("../database")
+const { connection } = require("../database");
+const { getQuery } = require('../utils/querys');
 const router = express.Router();
 
-router.post('/', (request, response) => {
-  const { email, password } = request.body;
+router.post('/', async (request, response) => {
+	try {
+		const { email, password } = request.body;
 
-    connection.query("SELECT * FROM login WHERE correo=? AND clave=?", [email, password],
-        (err, results) => {
-            if (err) { return response.json({Error: "Error en el servidor" }); }
+		const userRegistered = await getQuery(`SELECT * FROM login WHERE correo ='${email}'`);
 
-            if (results.length > 0) {
-                return response.status(200).json({ Status: "Success", message: "Inicio de sesión exitoso", type: results[0].tipo });
-            }
-            else {
-                return response.status(401).json({ Error: "Correo o contraseña invalidos, intentelo de nuevo." });
-            }
-        }
-    );
+		if (userRegistered.length == 0) {
+			return response.json({Error: "Usuario no registrado"});
+		}
+
+		const user = await getQuery(`SELECT * FROM login WHERE correo ='${email}' AND clave = '${password}'`)
+
+		if (!(user.length > 0)) {
+			return response.json({ Error: "Contraseña invalida, intentelo de nuevo." });
+		}
+
+		return response.json({ Status: "Success", message: "Inicio de sesión exitoso", type: user[0].tipo });
+
+	} catch (err) {
+		return response.json({Error: err.message});
+	}
+
 });
 
 module.exports = router;

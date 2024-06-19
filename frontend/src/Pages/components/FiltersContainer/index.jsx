@@ -33,7 +33,7 @@ const FiltersContainer = () => {
 			<FiltersCard
 				id={"year-input"}
 				title={"Año"}
-				array={yearArray}
+				array={yearArray.reverse()}
 				onChange={(value) => handleInputChange("ano", value, context.setFilters)}
 			/>
 		</div>

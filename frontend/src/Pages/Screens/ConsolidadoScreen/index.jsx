@@ -1,8 +1,11 @@
+import { ScrollToWrapper } from "../../components/ScrollToWrapper";
 import { TableContainer } from "../../components/TableContainer";
 
 const ConsolidadoScreen = () => {
 	return(
-		<TableContainer/>
+		<ScrollToWrapper>
+			<TableContainer/>
+		</ScrollToWrapper>
 	);
 }
 
