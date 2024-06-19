@@ -7,8 +7,12 @@ import { InputCard } from "../InputsCards";
 import { handleInputChange } from "../../../utils/handleInputChange";
 import { AllInfoGridContainer } from "../AllInfoContainer";
 import { ButtonCard } from "../ButtonCard";
+import { handlePostData } from "../../../utils/handleData/handlePostData";
+import { AppContext } from "../../../Context";
 
-const CreationUserForm = ({ onClose, handleCreateUser }) => {
+const CreationUserForm = ({ onClose }) => {
+	const context = React.useContext(AppContext)
+
 	const [newUserData, setNewUserData] = React.useState({
 		nombre: "",
 		correo: "",
@@ -17,9 +21,13 @@ const CreationUserForm = ({ onClose, handleCreateUser }) => {
 		tipo: 0,
 	});
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
-		handleCreateUser(newUserData);
+		context.setLoading(true);
+
+		await handlePostData(event, newUserData, "/users")
+
+		context.setLoading(false);
 	};
 
 	return (

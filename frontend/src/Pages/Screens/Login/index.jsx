@@ -2,15 +2,16 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Title } from "../../components/Title";
-import "./styles.css";
 import { AppContext } from "../../../Context";
-import { MessageCard } from "../../components/MessageCard";
 import { InputCard } from "../../components/InputsCards";
 import { handleInputChange } from "../../../utils/handleInputChange";
 import { handleNotifications } from "../../../utils/handleNotifications";
-import { WrapperContainer2 } from "../../components/WrapperContainers";
 import { ButtonCard } from "../../components/ButtonCard";
 import { SubTitle } from "../../components/SubTitle";
+import { handlePostData } from "../../../utils/handleData/handlePostData";
+import { WrapperContainer2 } from "../../components/WrapperContainers";
+
+import "./styles.css";
 
 const Login = () => {
     const context = React.useContext(AppContext);
@@ -23,28 +24,17 @@ const Login = () => {
     const navigate = useNavigate();
 
     const handleLogin = async (event) => {
-        event.preventDefault();
-		context.setLoading(true);
         try {
-            const response = await fetch( `${context.apiUri}/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(values),
-            });
-            const data = await response.json();
+			event.preventDefault();
+			context.setLoading(true);
 
-            if(response.status === 200) {
-				handleNotifications("success", data.message);
-				handleUserRol(data.type);
+			const data = await handlePostData(event, values, "/login", null);
 
-				navigate("/home");
-				context.setIsLoged(true);
+			handleUserRol(data.type);
 
-            } else {
-				handleNotifications("error", data.message);
-			}
+			navigate("/home");
+			context.setIsLoged(true);
+
         }
         catch (err) {
 			handleNotifications("error", err.message);
@@ -60,46 +50,46 @@ const Login = () => {
 			context.setAdmin(false);
 		} else {
 			context.setAdmin(false);
-			context.errorMessageHandler("error", "Usuario invalido")
+			context.setAdmin(context.setIsLoged(false));
+			handleNotifications("error", "Usuario Invalido");
 		}
 	}
 
     return(
-		<>
+		<WrapperContainer2 padding={0}>
 			<Title
 				color="#FFF"
 				borderColor="#FFF"
 			>
 				Bienvenido a  la Bodega de Archivos del SPE
 			</Title>
-			<div className="login-container shadow-style">
+
+			<form onSubmit={handleLogin} className="login-container shadow-style">
 				<SubTitle>Iniciar Sesión</SubTitle>
 
+				<InputCard
+					type="email"
+					id={"email"}
+					label={"Correo:"}
+					placeholder="Ingrese su correo"
+					onChange={(event) => handleInputChange("email", event, setValues)}
+					defaultValue={values?.email}
+				/>
+				<InputCard
+					type="password"
+					id={"password"}
+					label={"Contraseña:"}
+					placeholder="Ingrese su contraseña"
+					onChange={(event) => handleInputChange("password", event, setValues)}
+					defaultValue={values?.password}
+				/>
 
-				<form className="login-form-container" onSubmit={handleLogin}>
-					<InputCard
-						type="email"
-						id={"email"}
-						label={"Correo:"}
-						placeholder="Ingrese su correo"
-						onChange={(event) => handleInputChange("email", event, setValues)}
-						defaultValue={values?.email}
-					/>
-					<InputCard
-						type="password"
-						id={"password"}
-						label={"Contraseña:"}
-						placeholder="Ingrese su contraseña"
-						onChange={(event) => handleInputChange("password", event, setValues)}
-						defaultValue={values?.password}
-					/>
+				<ButtonCard type="submit" title="Iniciar Sesión">
+					Iniciar sesion
+				</ButtonCard>
 
-					<ButtonCard type="submit" title="Iniciar Sesión">
-						Iniciar sesion
-					</ButtonCard>
-				</form>
-			</div>
-		</>
+			</form>
+		</WrapperContainer2>
     );
 }
 

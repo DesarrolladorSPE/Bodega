@@ -1,25 +1,19 @@
 import React from "react";
 import { Title } from "../../components/Title";
 
-import "./styles.css";
 import { AppContext } from "../../../Context";
 import { UserCard } from "../../components/UserCard";
 
-import { Link } from "react-router-dom";
-
 import { WrapperContainer2 } from "../../components/WrapperContainers";
-
-import { BiArrowBack } from "react-icons/bi";
-import { FiPlus } from "react-icons/fi";
-
 
 import { EditionForm } from "../../components/EditionForm";
 import { MessageCard } from "../../components/MessageCard";
 import { CreationUserForm } from "../../components/CreationUserForm";
-import { handleNotifications } from "../../../utils/handleNotifications";
 import { AllInfoGridContainer } from "../../components/AllInfoContainer";
 import { ButtonCard } from "../../components/ButtonCard";
-import { reloadLocation } from "../../../utils/realoadLocation";
+import { handleDeleteData } from "../../../utils/handleData/handleDeleteData";
+
+import "./styles.css";
 
 const Users = () => {
     const context = React.useContext(AppContext);
@@ -34,59 +28,11 @@ const Users = () => {
 		}
 	};
 
-	const handleDelelteClick = async (userId) => {
+	const handleDelelteClick = async (item) => {
 		context.setLoading(true);
-		try {
-			const response = await fetch(`${context.apiUri}/users/${userId}`, {
-				method: 'DELETE',
-			});
-			const data = await response.json();
 
-			if (response.status === 200) {
-				const updatedUsers = context.responseData.users.filter((user) => user.id !== userId);
-				context.setUsers(updatedUsers);
-
-				handleNotifications("success", data.message);
-				reloadLocation();
-
-			} else {
-				handleNotifications("error", data.message);
-			}
-		}
-		catch (err) {
-			handleNotifications("error", err.message);
-		}
-		finally {
-			context.setLoading(false);
-		}
-	};
-
-	const handleCreateUser = async (newUserData) => {
-		context.setLoading(true);
-		try {
-			const response = await fetch(`${context.apiUri}/users`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(newUserData),
-			});
-			const data = await response.json();
-
-			if (response.status === 201) {
-				context.setUsers([...context.responseData.users, data.newUser]);
-				handleNotifications("success", data.message);
-				reloadLocation();
-
-			} else {
-				handleNotifications("error", data.message);
-			}
-		} catch (err) {
-			handleNotifications("error", err.message);
-		} finally {
-			context.setLoading(false);
-			context.setCreatingUser(false);
-		}
+		await handleDeleteData(item, "/users")
+		context.setLoading(false);
 	};
 
     return(
@@ -108,7 +54,7 @@ const Users = () => {
 							key={index}
 							item={item}
 							handleEditClick={() => { handleEditClick(item) }}
-							handleDeleteClick={() => handleDelelteClick(item.id)}
+							handleDeleteClick={() => { handleDelelteClick(item) }}
 						/>
 
 					))}
@@ -119,7 +65,6 @@ const Users = () => {
 					{context.creatingUser &&
 						<CreationUserForm
 							onClose={context.handleCloseCreateForm}
-							handleCreateUser={handleCreateUser}
 						/>
 					}
 					{context.editingUser &&

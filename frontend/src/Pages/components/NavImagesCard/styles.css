@@ -5,9 +5,8 @@
 	justify-content: space-between;
 
     width: 100%;
-	margin-bottom: 30px;
 }
-  
+
 .container-logo-header-govco .logo-header-govco {
 	height: 3.5rem;
 	padding: 5px 15px;
@@ -25,7 +24,7 @@
 }
 
 
-  
+
 .container-logo-header-govco .container-search-header-govco {
 	max-width: 21.875rem;
 }

@@ -3,7 +3,7 @@ import { handleNotifications } from "../handleNotifications";
 import { reloadLocation } from "../realoadLocation";
 
 
-const handlePostData = async (event, object, endpoint, callback = reloadLocation, headers={}) => {
+const handlePostData = async (event, object, endpoint, callback = reloadLocation(), headers={}) => {
     event.preventDefault();
 
     try {
@@ -25,9 +25,9 @@ const handlePostData = async (event, object, endpoint, callback = reloadLocation
 
         if(data.Status === "Success") {
             handleNotifications("success", data.message);
-            callback();
+            callback;
 
-            return data.Status;
+            return data;
         } else {
             handleNotifications("error", data.Error)
         }

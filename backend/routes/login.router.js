@@ -8,18 +8,13 @@ router.post('/', (request, response) => {
 
     connection.query("SELECT * FROM login WHERE correo=? AND clave=?", [email, password],
         (err, results) => {
-            if (err) {
-                response.status(500).json({ message: "Error en el servidor" });
-                return;
-            }
+            if (err) { return response.json({Error: "Error en el servidor" }); }
 
             if (results.length > 0) {
-                // Usuario autenticado
-                return response.status(200).json({ message: "Inicio de sesión exitoso", type: results[0].tipo });
+                return response.status(200).json({ Status: "Success", message: "Inicio de sesión exitoso", type: results[0].tipo });
             }
             else {
-                // Usuario no encontrado en la base de datos
-                return response.status(401).json({ message: "Correo o contraseña invalidos, intentelo de nuevo." });
+                return response.status(401).json({ Error: "Correo o contraseña invalidos, intentelo de nuevo." });
             }
         }
     );
