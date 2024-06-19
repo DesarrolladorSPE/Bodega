@@ -1,6 +1,4 @@
 const express = require("express");
-
-const path = require("path");
 const cors = require("cors");
 
 const routerApi = require("./routes");
@@ -26,13 +24,15 @@ const whiteList = [
 	// PROD
 ];
 const options = {
-    origin: (origin, callback) => {
+	origin: (origin, callback) => {
         if(whiteList.includes(origin) || !origin) {
             callback(null, true);
         } else {
-            callback(new Error("No permitido"));
+            callback(new Error("Acceso denegado"));
         }
-    }
+    },
+	methods: ["POST", "GET", "DELETE","PUT"],
+	credentials: true,
 }
 app.use(cors(options));
 

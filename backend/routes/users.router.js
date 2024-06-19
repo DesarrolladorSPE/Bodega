@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/", async (request, response) => {
 	try {
-		const users = await getQuery("SELECT nombre, correo, tipo FROM login");
+		const users = await getQuery("SELECT id, nombre, correo, tipo FROM login");
 
         return response.status(200).json({users});
 
@@ -34,22 +34,23 @@ router.post('/', (request, response) => {
 	}
 });
 
-router.put('/', (request, response) => {
+router.put('/', async (request, response) => {
 	try {
-		const { id, nombre, correo, tipo } = request.body;
+		const { id, nombre, correo, clave, tipo } = request.body;
 
-		connection.query('UPDATE login SET nombre = ?, correo = ?, tipo = ? WHERE id = ?',
-			[nombre, correo, tipo, id],
-			(err, results) => {
+		const user = await getQuery(`SELECT * FROM login WHERE id = ${id}`)
+		console.log(user);
+
+		if (!(user.length != 0)) {
+			return response.json({Error: "Usuario no encontrado"})
+		}
+
+		connection.query('UPDATE login SET nombre = ?, correo = ?, tipo = ?, clave = ? WHERE id = ?',
+			[nombre, correo, tipo, clave, id], (err) => {
 				if (err) {
-					return res.status(500).json({ Error: 'Error al actualizar el usuario' });
+					return response.json({ Error: err.message });
 				}
 
-				if (results.affectedRows === 0) {
-					return res.status(404).json({ Error: 'Usuario no encontrado' });
-				}
-
-				// Envía una respuesta exitosa
 				return response.status(200).json({ Status: "Success", message: 'Usuario actualizado correctamente'});
 			}
 		);

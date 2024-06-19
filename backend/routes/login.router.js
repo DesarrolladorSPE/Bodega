@@ -1,6 +1,5 @@
 const express = require('express');
 
-const { connection } = require("../database");
 const { getQuery } = require('../utils/querys');
 const router = express.Router();
 
@@ -23,9 +22,8 @@ router.post('/', async (request, response) => {
 		return response.json({ Status: "Success", message: "Inicio de sesión exitoso", type: user[0].tipo });
 
 	} catch (err) {
-		return response.json({Error: err.message});
+		return response.json({ Error: err.message });
 	}
-
 });
 
 module.exports = router;
