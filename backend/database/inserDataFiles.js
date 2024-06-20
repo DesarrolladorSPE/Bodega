@@ -130,7 +130,7 @@ const insertBaseDeCaracterizacionFileToDatabase = async (
 						if (err) {
 							// console.log("No se pudo insertar el registro", idValue ? `ID: ${idValue}, Fila: ${rowNumber}` : `Fila: ${rowNumber}, debido a datos erroneos:`);
 							// console.log(`Error: \n ${err}`)
-							// console.error(err);
+							// console.error(err.message);
 							wrongRecordsArray = [{
 								ID: idValue,
 								fila: rowNumber,
