@@ -1,11 +1,12 @@
+import { AuthWrapper } from "../../components/AuthWrapper";
 import { ScrollToWrapper } from "../../components/ScrollToWrapper";
 import { TableContainer } from "../../components/TableContainer";
 
 const ConsolidadoScreen = () => {
 	return(
-		<ScrollToWrapper>
+		<AuthWrapper>
 			<TableContainer/>
-		</ScrollToWrapper>
+		</AuthWrapper>
 	);
 }
 

@@ -33,15 +33,16 @@ const Wrapper = ({children}) => {
 
 const AppRoutes = () => {
 	const context = React.useContext(AppContext);
-	const { isLoged, admin } = context;
+	const { isLoged } = context;
 
 	let routes = useRoutes([
-		{path: "/*", element: isLoged ? <Home/> : <Navigate replace to={"/login"}/>},
-		{path: "/home", element: isLoged ? <Home/> : <Navigate replace to={"/login"}/>},
-		{path: "/consolidado", element: isLoged ? <ConsolidadoScreen/> : <Navigate replace to={"home"}/>},
+		{path: "/home", element: <Home/>},
+        {path: "/*", element: <Navigate replace to={"/home"}/>},
 
-		{path: "/login", element: isLoged ? <Home/> : <Login/>},
-		{path: "/users", element: isLoged && admin ? <Users/> : <Navigate replace to={"home"}/>},
+		{path: "/users", element: <Users/>},
+		{path: "/consolidado", element: <ConsolidadoScreen/>},
+
+		{path: "/login", element: !isLoged ? <Login/> : <Navigate replace to={"/home"}/>},
 
 	]);
 

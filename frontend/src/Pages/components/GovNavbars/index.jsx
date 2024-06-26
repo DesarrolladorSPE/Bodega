@@ -1,5 +1,5 @@
-import { banner, iconComplete } from "../../../assets";
 import { NavButtons } from "../NavButtons";
+
 import "./styles.css";
 
 const GovNavbar = () => {

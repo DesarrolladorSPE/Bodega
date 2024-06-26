@@ -1,14 +1,7 @@
-import React from "react";
-
-import { Link } from "react-router-dom";
-
-import { AppContext } from "../../../Context";
 import { banner, iconComplete } from "../../../assets";
 import "./styles.css";
-import { TextCard } from "../TextComponents";
 
 const NavImagesCard = () => {
-    const context = React.useContext(AppContext);
 
     return(
         <div className="container-logo-header-govco">

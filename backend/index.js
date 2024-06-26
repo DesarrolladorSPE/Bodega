@@ -1,7 +1,9 @@
 const express = require("express");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const routerApi = require("./routes");
+
 
 //APP and Port
 const app = express();
@@ -31,10 +33,11 @@ const options = {
             callback(new Error("Acceso denegado"));
         }
     },
-	methods: ["POST", "GET", "DELETE","PUT"],
+	methods: ["POST", "GET", "DELETE", "PUT"],
 	credentials: true,
 }
 app.use(cors(options));
+app.use(cookieParser());
 
 routerApi(app);
 

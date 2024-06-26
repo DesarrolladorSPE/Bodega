@@ -16,6 +16,9 @@ const AppProvider = ({children}) => {
 
     //ADMIN
     const [admin, setAdmin] = React.useState(false);
+	// User Name
+	const [name, setName] = React.useState(null);
+
 	//Data, loading, Error
     const [data, setData] = React.useState(null);
     const [loading, setLoading] = React.useState(false);
@@ -129,6 +132,10 @@ const AppProvider = ({children}) => {
                 //ADMIN
                 admin,
                 setAdmin,
+
+				//USER NAME
+				name,
+				setName,
 
                 data,
                 setData,

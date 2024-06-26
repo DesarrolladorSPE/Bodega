@@ -4,6 +4,7 @@ import { SpanCard, TextCard } from "../TextComponents";
 import { EditDeleteCard } from "../EditDeleteCard";
 
 import "./styles.css";
+import { DeleteButtonCard } from "../EditDeleteCard/DeleteButtonCard";
 
 const UserCard = ({item={}, handleEditClick, handleDeleteClick}) => {
 	const userType = {
@@ -21,7 +22,9 @@ const UserCard = ({item={}, handleEditClick, handleDeleteClick}) => {
 					<TextCard><SpanCard>Tipo de Usuario: </SpanCard> {userType[item?.tipo]}</TextCard>
 				</WrapperContainer2>
 
-				<EditDeleteCard item={item} onDelete={handleDeleteClick} onEdit={handleEditClick}/>
+				<WrapperContainer2 alignItems="center" justifyContent="center" padding={10}>
+					<DeleteButtonCard item={item} onDelete={handleDeleteClick} padding={10}/>
+				</WrapperContainer2>
 			</AllInfoGridContainer>
 		</WrapperContainer1>
 

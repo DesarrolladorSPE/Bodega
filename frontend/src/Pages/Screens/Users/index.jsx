@@ -14,6 +14,7 @@ import { handleDeleteData } from "../../../utils/handleData/handleDeleteData";
 
 import "./styles.css";
 import { ScrollToWrapper } from "../../components/ScrollToWrapper";
+import { AuthWrapper, IsAdminWrapper } from "../../components/AuthWrapper";
 
 const Users = () => {
     const context = React.useContext(AppContext);
@@ -37,46 +38,51 @@ const Users = () => {
 	};
 
     return(
-		<ScrollToWrapper>
-			<WrapperContainer2>
-				<Title>Usuarios</Title>
+		<AuthWrapper>
+			<IsAdminWrapper>
 
-				<AllInfoGridContainer className="grid-075-125">
-					<WrapperContainer2 padding={0}>
-						<ButtonCard title="Crear usuario" onClick={() => {
-							context.resetUsersInfo();
-							context.handleCloseEditForm();
-							context.setCreatingUser(true)
-						}}>
-							Crear usuario
-						</ButtonCard>
+				<WrapperContainer2>
+					<Title>Usuarios</Title>
 
-						{context.responseData?.users?.map((item, index) => (
-							<UserCard
-								key={index}
-								item={item}
-								handleEditClick={() => { handleEditClick(item) }}
-								handleDeleteClick={() => { handleDelelteClick(item) }}
+					<AllInfoGridContainer className="grid-075-125">
+						<WrapperContainer2 padding={0}>
+							<ButtonCard title="Crear usuario" onClick={() => {
+								context.resetUsersInfo();
+								context.handleCloseEditForm();
+								context.setCreatingUser(true)
+							}}>
+								Crear usuario
+							</ButtonCard>
+
+							{context.responseData?.users?.map((item, index) => (
+								<UserCard
+									key={index}
+									item={item}
+									handleEditClick={() => { handleEditClick(item) }}
+									handleDeleteClick={() => { handleDelelteClick(item) }}
+								/>
+
+							))}
+						</WrapperContainer2>
+
+						{context.creatingUser &&
+							<CreationUserForm
+								onClose={context.handleCloseCreateForm}
 							/>
+						}
+						{context.editingUser &&
+							<EditionForm
+								user={context.editingUser}
+								onClose={context.handleCloseEditForm}
+							/>
+						}
 
-						))}
-					</WrapperContainer2>
+					</AllInfoGridContainer>
+				</WrapperContainer2>
+			</IsAdminWrapper>
+		</AuthWrapper>
 
-					{context.creatingUser &&
-						<CreationUserForm
-							onClose={context.handleCloseCreateForm}
-						/>
-					}
-					{context.editingUser &&
-						<EditionForm
-							user={context.editingUser}
-							onClose={context.handleCloseEditForm}
-						/>
-					}
 
-				</AllInfoGridContainer>
-			</WrapperContainer2>
-		</ScrollToWrapper>
 
     );
 }

@@ -3,17 +3,19 @@ import { api } from "../api";
 import { handleNotifications } from "../handleNotifications";
 import { reloadLocation } from "../realoadLocation";
 
-const handleLogout = () => {
-    axios.get(`${api}/user/logout`)
+const handleLogout = async () => {
+    await axios.get(`${api}/user/logout`)
         .then(res => {
             const { data } = res;
 
             if(data.Status == "Success") {
-                handleNotifications("info", "Sesión Cerrada Correctamente")
-                reloadLocation()
-            }
+                handleNotifications("info", data.message);
+                reloadLocation();
+            } else {
+                handleNotifications("error", data.Error);
+			}
         })
-        .catch(err => { handleNotifications("error", err) })
+        .catch(err => { handleNotifications("error", err.message) })
 }
 
 export { handleLogout };

@@ -9,15 +9,15 @@ import { RowAffectedCard } from "../../components/RowAffectedCard";
 
 import { AllInfoGridContainer } from "../../components/AllInfoContainer";
 import { WrapperContainer2 } from "../../components/WrapperContainers";
-import { ScrollToWrapper } from "../../components/ScrollToWrapper";
+import { AuthWrapper } from "../../components/AuthWrapper";
 
 const Home = () => {
 	const context = React.useContext(AppContext)
 
     return(
-		<ScrollToWrapper>
+		<AuthWrapper>
 			<WrapperContainer2>
-				<Title>{context.admin ? "Bienvenido Administrador" : "Bienvenido"}</Title>
+				<Title>Bienvenido {context.name}</Title>
 
 				<AllInfoGridContainer className="grid-075-125">
 					<UploadFile/>
@@ -26,7 +26,7 @@ const Home = () => {
 				</AllInfoGridContainer>
 
 			</WrapperContainer2>
-		</ScrollToWrapper>
+		</AuthWrapper>
 
     );
 }

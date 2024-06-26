@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import { Title } from "../../components/Title";
@@ -8,11 +9,11 @@ import { handleInputChange } from "../../../utils/handleInputChange";
 import { handleNotifications } from "../../../utils/handleNotifications";
 import { ButtonCard } from "../../components/ButtonCard";
 import { SubTitle } from "../../components/SubTitle";
-import { handlePostData } from "../../../utils/handleData/handlePostData";
 import { WrapperContainer2 } from "../../components/WrapperContainers";
+import { ScrollToWrapper } from "../../components/ScrollToWrapper";
 
 import "./styles.css";
-import { ScrollToWrapper } from "../../components/ScrollToWrapper";
+
 
 const Login = () => {
     const context = React.useContext(AppContext);
@@ -22,45 +23,32 @@ const Login = () => {
 		password: null,
 	})
 
-    const navigate = useNavigate();
+	const navigate = useNavigate();
+    axios.defaults.withCredentials = true;
 
-    const handleLogin = async (event) => {
-        try {
-			event.preventDefault();
-			context.setLoading(true);
+    const handleSubmit = (event) => {
+        context.setLoading(true);
+        event.preventDefault();
 
-			const data = await handlePostData(event, values, "/login", null);
-			console.log(data)
+        axios.post(`${context.apiUri}/user/login`, values)
+            .then(response => {
+                const {data} = response;
 
-			if (data?.type != (undefined || null)) {
-				handleUserRol(data?.type);
+                if(data.Status === "Success") {
+                    handleNotifications("success", data.message);
+                    navigate("/home");
+                } else {
+                    handleNotifications("error", data.Error)
+                }
 
-				navigate("/home");
-				context.setIsLoged(true);
-			}
-        }
-        catch (err) {
-			handleNotifications("error", err.message);
-        } finally {
-			context.setLoading(false);
-		}
-    };
-
-	const handleUserRol = async (type) => {
-		if (type == 1) {
-			context.setAdmin(true)
-		} else if (type == 0) {
-			context.setAdmin(false);
-		} else {
-			context.setAdmin(false);
-			context.setIsLoged(false)
-			handleNotifications("error", "Usuario Invalido");
-		}
-	}
+                return;
+            })
+            .catch(err => { handleNotifications("error", err.message) })
+            .finally(() => { context.setLoading(false); });
+    }
 
     return(
 		<ScrollToWrapper>
-
 			<WrapperContainer2 padding={0}>
 				<Title
 					color="#FFF"
@@ -69,7 +57,7 @@ const Login = () => {
 					Bienvenido a  la Bodega de Archivos del SPE
 				</Title>
 
-				<form onSubmit={handleLogin} className="login-container shadow-style">
+				<form onSubmit={handleSubmit} className="login-container shadow-style">
 					<SubTitle>Iniciar Sesión</SubTitle>
 
 					<InputCard
